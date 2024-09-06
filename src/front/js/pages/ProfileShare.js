@@ -1,101 +1,78 @@
 import React from "react";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
 
 const ProfileShare = () => {
   return (
-    <Container className="text-center mt-5">
+    <div className="container text-center mt-5">
       {/* Texto "Start Searching" */}
-      <Row>
-        <Col>
+      <div className="row">
+        <div className="col">
           <h1>Start Searching!</h1>
-        </Col>
-      </Row>
+        </div>
+      </div>
 
       {/* Barra de busca */}
-      <Row className="justify-content-center mt-3">
-        <Col md={8}>
-          <Form className="d-flex">
-            <Form.Control
+      <div className="row justify-content-center mt-3">
+        <div className="col-md-8">
+          <div className="d-flex">
+            <input
               type="search"
+              className="form-control me-2"
               placeholder="Search"
-              className="me-2"
               aria-label="Search"
             />
-            <Button variant="primary">Search</Button>
-          </Form>
-        </Col>
-      </Row>
-
-        {/* Barra de Categorias */}
-      <Row className="justify-content-center mt-4">
-        <Col md={10}>
-          <div className="category-bar d-flex justify-content-around">
-            <Button variant="outline-secondary" className="category-btn">
-              <FontAwesomeIcon icon={faMusic} /> Music
-            </Button>
-            <Button variant="outline-secondary" className="category-btn">
-              <FontAwesomeIcon icon={faDumbbell} /> Sports
-            </Button>
-            <Button variant="outline-secondary" className="category-btn">
-              <FontAwesomeIcon icon={faTheaterMasks} /> Dance
-            </Button>
-            <Button variant="outline-secondary" className="category-btn">
-              <FontAwesomeIcon icon={faUtensils} /> Cookink
-            </Button>
-            <Button variant="outline-secondary" className="category-btn">
-              <FontAwesomeIcon icon={faLanguage} /> Language
-            </Button>
-            <Button variant="outline-secondary" className="category-btn">
-              <FontAwesomeIcon icon={faBook} /> Studies
-            </Button>
+            <button className="btn btn-primary">Search</button>
           </div>
-        </Col>
-      </Row>
+        </div>
+      </div>
 
-      {/* Sugestões de perfis */}
-      <Row className="justify-content-center mt-5">
-        <Col md={4}>
-          <Card>
-            <Card.Img variant="top" src="https://via.placeholder.com/150" />
-            <Card.Body>
-              <Card.Title>John Doe</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">Main Skill: Guitar</Card.Subtitle>
-              <Card.Text>
+      {/* Sugestões de perfis e placeholders */}
+      <div className="row justify-content-center mt-5">
+        {/* Card com conteúdo real */}
+        <div className="col-md-4">
+          <div className="card">
+            <img
+              src="https://via.placeholder.com/150"
+              className="card-img-top"
+              alt="Profile"
+            />
+            <div className="card-body">
+              <h5 className="card-title">John Doe</h5>
+              <p className="card-text">
                 John is an experienced musician with over 10 years of playing guitar professionally.
-              </Card.Text>
-              <Button variant="primary">View Profile</Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={4}>
-          <Card>
-            <Card.Img variant="top" src="https://via.placeholder.com/150" />
-            <Card.Body>
-              <Card.Title>Samantha Smith</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">Main Skill: Cooking</Card.Subtitle>
-              <Card.Text>
-                Samantha is a talented chef specializing in French cuisine, with a passion for teaching.
-              </Card.Text>
-              <Button variant="primary">View Profile</Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={4}>
-          <Card>
-            <Card.Img variant="top" src="https://via.placeholder.com/150" />
-            <Card.Body>
-              <Card.Title>Michael Johnson</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">Main Skill: Fitness</Card.Subtitle>
-              <Card.Text>
-                Michael is a personal trainer focused on helping people achieve their fitness goals.
-              </Card.Text>
-              <Button variant="primary">View Profile</Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+              </p>
+              <a href="#" className="btn btn-primary">
+                View Profile
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Placeholder para carregar dados */}
+        <div className="col-md-4">
+          <div className="card" aria-hidden="true">
+            <img
+              src="https://via.placeholder.com/150"
+              className="card-img-top"
+              alt="Placeholder"
+            />
+            <div className="card-body">
+              <h5 className="card-title placeholder-glow">
+                <span className="placeholder col-6"></span>
+              </h5>
+              <p className="card-text placeholder-glow">
+                <span className="placeholder col-7"></span>
+                <span className="placeholder col-4"></span>
+                <span className="placeholder col-4"></span>
+                <span className="placeholder col-6"></span>
+                <span className="placeholder col-8"></span>
+              </p>
+              <a href="#" className="btn btn-primary disabled placeholder col-6" aria-disabled="true"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export ProfileShare
+export default ProfileShare;
