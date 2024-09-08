@@ -12,6 +12,8 @@ export const Home = () => {
 			<p>
 				<img src={rigoImageUrl} />
 			</p>
+			<a href="/profileShare" className="btn btn-primary mt-3">Go to Profile Search</a>
+
 			<div className="alert alert-info">
 				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
 			</div>

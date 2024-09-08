@@ -5,3 +5,55 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+
+body {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: white; 
+  }
+  
+  h1 {
+    color: #ffffff;
+  }
+  
+  .card {
+    background-color: rgba(255, 255, 255, 0.9); 
+  }
+  
+.form-control {
+    border-radius: 25px; 
+  }
+  
+  .btn {
+    border-radius: 25px; 
+  }
+  
+  /* Arredondar os cards */
+  .card {
+    border-radius: 15px; 
+    overflow: hidden; 
+  }
+  
+  .card-img-top {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }
+  
+  .btn-primary {
+    border-radius: 20px; 
+  }
+  
+  /* Start searching */
+  .custom-title {
+    background-color: #ffffff;
+    border: 6px solid #f2c3b6; 
+    border-radius: 30px; 
+    padding: 10px 30px; 
+    font-size: 24px; 
+    color: #6F7CB2; 
+    display: inline-block; 
+    text-align: center; 
+    font-family: Arial, sans-serif; 
+  }
+  
+  
+  

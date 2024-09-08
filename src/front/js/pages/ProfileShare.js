@@ -1,12 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 
 const ProfileShare = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const profiles = [
+    { name: "John Doe", description: "Musician with 10 years of experience.", category: "music", rating: 4 },
+    { name: "Jane Smith", description: "Professional painter and artist.", category: "art", rating: 5 },
+    { name: "Mike Johnson", description: "Software engineer and developer.", category: "technology", rating: 3 },
+  ];
+
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  const filteredProfiles = profiles.filter((profile) => {
+    return (
+      profile.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      (selectedCategory === "" || profile.category === selectedCategory)
+    );
+  });
+
+  // Função para renderizar estrelas com base na avaliação
+  const renderStars = (rating) => {
+    const totalStars = 5;
+    let stars = [];
+    for (let i = 1; i <= totalStars; i++) {
+      stars.push(
+        <span key={i} className="star">
+          {i <= rating ? "★" : "☆"}
+        </span>
+      );
+    }
+    return stars;
+  };
+
   return (
     <div className="container text-center mt-5">
-      {/* Texto "Start Searching" */}
       <div className="row">
         <div className="col">
-          <h1>Start Searching!</h1>
+          <h1 className="custom-title">Start Searching!</h1>
         </div>
       </div>
 
@@ -17,59 +46,69 @@ const ProfileShare = () => {
             <input
               type="search"
               className="form-control me-2"
-              placeholder="Search"
+              placeholder="Learn something new"
               aria-label="Search"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <button className="btn btn-primary">Search</button>
+            <button className="btn btn-primary"><i className="fas fa-search"></i></button>
           </div>
         </div>
       </div>
 
-      {/* Sugestões de perfis e placeholders */}
-      <div className="row justify-content-center mt-5">
-        {/* Card com conteúdo real */}
-        <div className="col-md-4">
-          <div className="card">
-            <img
-              src="https://via.placeholder.com/150"
-              className="card-img-top"
-              alt="Profile"
-            />
-            <div className="card-body">
-              <h5 className="card-title">John Doe</h5>
-              <p className="card-text">
-                John is an experienced musician with over 10 years of playing guitar professionally.
-              </p>
-              <a href="#" className="btn btn-primary">
-                View Profile
-              </a>
-            </div>
+      {/* Emojis com categorias */}
+      <div className="row justify-content-center mt-3">
+        <div className="col-md-8">
+          <div className="d-flex justify-content-around">
+            <button className="btn btn-light" onClick={() => setSelectedCategory("sports")}>
+              🏀 Sports
+            </button>
+            <button className="btn btn-light" onClick={() => setSelectedCategory("studies")}>
+              📚 Studies
+            </button>
+            <button className="btn btn-light" onClick={() => setSelectedCategory("dance")}>
+              💃 Dance
+            </button>
+            <button className="btn btn-light" onClick={() => setSelectedCategory("languages")}>
+              🌍 Languages
+            </button>
+            <button className="btn btn-light" onClick={() => setSelectedCategory("cooking")}>
+              🍳 Cooking
+            </button>
+            <button className="btn btn-light" onClick={() => setSelectedCategory("music")}>
+              🎶 Music
+            </button>
+            <button className="btn btn-light" onClick={() => setSelectedCategory("")}>
+              All
+            </button>
           </div>
         </div>
+      </div>
 
-        {/* Placeholder para carregar dados */}
-        <div className="col-md-4">
-          <div className="card" aria-hidden="true">
-            <img
-              src="https://via.placeholder.com/150"
-              className="card-img-top"
-              alt="Placeholder"
-            />
-            <div className="card-body">
-              <h5 className="card-title placeholder-glow">
-                <span className="placeholder col-6"></span>
-              </h5>
-              <p className="card-text placeholder-glow">
-                <span className="placeholder col-7"></span>
-                <span className="placeholder col-4"></span>
-                <span className="placeholder col-4"></span>
-                <span className="placeholder col-6"></span>
-                <span className="placeholder col-8"></span>
-              </p>
-              <a href="#" className="btn btn-primary disabled placeholder col-6" aria-disabled="true"></a>
+      {/* Perfis filtrados */}
+      <div className="row justify-content-center mt-5">
+        {filteredProfiles.map((profile, index) => (
+          <div className="col-md-4" key={index}>
+            <div className="card">
+              <img
+                src="https://via.placeholder.com/150"
+                className="card-img-top"
+                alt="Profile"
+              />
+              <div className="card-body">
+                <h5 className="card-title">{profile.name}</h5>
+                <p className="card-text">{profile.description}</p>
+                {/* Exibição das estrelas */}
+                <div className="stars">
+                  {renderStars(profile.rating)}
+                </div>
+                <a href="#" className="btn btn-primary mt-2">
+                  View Profile
+                </a>
+              </div>
             </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );
