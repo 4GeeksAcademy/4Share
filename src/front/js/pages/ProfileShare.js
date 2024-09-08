@@ -3,9 +3,12 @@ import React, { useState } from "react";
 const ProfileShare = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const profiles = [
-    { name: "John Doe", description: "Musician with 10 years of experience.", category: "music", rating: 4 },
-    { name: "Jane Smith", description: "Professional painter and artist.", category: "art", rating: 5 },
-    { name: "Mike Johnson", description: "Software engineer and developer.", category: "technology", rating: 3 },
+    { name: "John Doe", description: "I am a musician with 10 years of experience. I love teaching and learning new things.", category: "music", rating: 4 },
+    { name: "Jane Smith", description: "I've worked with languages and am currently fluent in four: English, Portuguese, Spanish, and Italian.", category: "languages", rating: 5 },
+    { name: "Mike Johnson", description: "I love cooking and know various recipes; my specialty is desserts.", category: "cooking", rating: 3 },
+    { name: "Emily Davis", description: "I'm passionate about sports and fitness. With 5 years as a pro athlete, I enjoy helping others.", category: "sports", rating: 4 },
+    { name: "Sophia Lee", description: "I've been a dancer for over 8 years, focusing on contemporary. I love teaching dance to others.", category: "dance", rating: 5 },
+    { name: "David Brown", description: "Education is a big part of my life. I have experience helping students improve their academic skills.", category: "studies", rating: 5 },
   ];
 
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -17,7 +20,7 @@ const ProfileShare = () => {
     );
   });
 
-  // Função para renderizar estrelas com base na avaliação
+  // Function to render stars based on rating
   const renderStars = (rating) => {
     const totalStars = 5;
     let stars = [];
@@ -39,7 +42,7 @@ const ProfileShare = () => {
         </div>
       </div>
 
-      {/* Barra de busca */}
+      {/* search bar */}
       <div className="row justify-content-center mt-3">
         <div className="col-md-8">
           <div className="d-flex">
@@ -56,7 +59,7 @@ const ProfileShare = () => {
         </div>
       </div>
 
-      {/* Emojis com categorias */}
+      {/* Emojis categories */}
       <div className="row justify-content-center mt-3">
         <div className="col-md-8">
           <div className="d-flex justify-content-around">
@@ -85,7 +88,7 @@ const ProfileShare = () => {
         </div>
       </div>
 
-      {/* Perfis filtrados */}
+      {/* Filter profiles */}
       <div className="row justify-content-center mt-5">
         {filteredProfiles.map((profile, index) => (
           <div className="col-md-4" key={index}>
@@ -98,7 +101,7 @@ const ProfileShare = () => {
               <div className="card-body">
                 <h5 className="card-title">{profile.name}</h5>
                 <p className="card-text">{profile.description}</p>
-                {/* Exibição das estrelas */}
+                {/* Stars */}
                 <div className="stars">
                   {renderStars(profile.rating)}
                 </div>
