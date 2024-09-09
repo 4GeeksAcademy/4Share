@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import '../../styles/ProfileShare.css';
 
 const ProfileShare = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -44,24 +45,22 @@ const ProfileShare = () => {
 
       {/* search bar */}
       <div className="row justify-content-center mt-3">
-  <div className="col-md-8">
-    <div className="d-flex">
-      <input
-        type="search"
-        className="form-control custom-search-bar me-2"
-        placeholder="Find by person's name"
-        aria-label="Search"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <button className="btn custom-search-button">
-        <i className="fas fa-search"></i>
-      </button>
-    </div>
-  </div>
-</div>
-
-
+        <div className="col-md-8">
+          <div className="d-flex">
+            <input
+              type="search"
+              className="form-control custom-search-bar me-2"
+              placeholder="Find by person's name"
+              aria-label="Search"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <button className="btn custom-search-button">
+              <i className="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
 
       {/* Emojis categories */}
       <div className="row justify-content-center mt-3">
@@ -109,7 +108,7 @@ const ProfileShare = () => {
                 <div className="stars">
                   {renderStars(profile.rating)}
                 </div>
-                <a href="#" className="btn btn-primary mt-2">
+                <a href="#" className="btn custom-btn mt-2">
                   View Profile
                 </a>
               </div>
