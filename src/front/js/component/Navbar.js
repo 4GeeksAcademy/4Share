@@ -1,12 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { FaHome, FaUsers, FaSignInAlt, FaSignOutAlt, FaClipboardList,FaPowerOff,FaUser } from "react-icons/fa";
 import "../../styles/navbar.css";
 
 export const Navbar = () => {
-  // This would be replaced with a store variable but works for now
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
   return (
     <nav className="navbar mainDiv">
       <img
@@ -33,47 +29,28 @@ export const Navbar = () => {
         <div className="d-flex justify-content-end buttonsList" id="navbarSupportedContent">
           <button className="btn">
             <Link to="/">
-              <FaHome className="icon" />
+              <i className="fas fa-home icon"></i>
               <span className="m-0 h6">Home</span>
             </Link>
           </button>
           <button className="btn">
             <Link to="/">
-              <FaUsers className="icon" />
+              <i className="fas fa-users icon"></i>
               <span className="m-0 h6">About Us</span>
             </Link>
           </button>
-          {isAuthenticated ? (
-            <>
-              <button className="btn">
-                <Link to="/profile">
-                  <FaUser className="icon" />
-                  <span className="m-0 h6">Profile</span>
-                </Link>
-              </button>
-              <button className="btn">
-                <Link to="/logout">
-                  <FaPowerOff className="icon" />
-                  <span className="m-0 h6">Logout</span>
-                </Link>
-              </button>
-            </>
-          ) : (
-            <>
-              <button className="btn">
-                <Link to="/login">
-                  <FaSignInAlt className="icon" />
-                  <span className="m-0 h6">Login</span>
-                </Link>
-              </button>
-              <button className="btn">
-                <Link to="/register">
-                  <FaClipboardList className="icon" />
-                  <span className="m-0 h6">Register</span>
-                </Link>
-              </button>
-            </>
-          )}
+          <button className="btn">
+            <Link to="/">
+              <i className="fas fa-sign-in-alt icon"></i>
+              <span className="m-0 h6">Login</span>
+            </Link>
+          </button>
+          <button className="btn">
+            <Link to="/">
+              <i className="fas fa-clipboard-list icon"></i>
+              <span className="m-0 h6">Register</span>
+            </Link>
+          </button>
         </div>
       </div>
     </nav>
