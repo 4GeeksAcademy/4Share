@@ -15,46 +15,63 @@ body {
     color: #ffffff;
   }
   
-  .card {
-    background-color: rgba(255, 255, 255, 0.9); 
-    margin-bottom: 20px;
-  }
-  
-.form-control {
-    border-radius: 25px; 
-  }
-  
-  .btn {
-    border-radius: 25px; 
-  }
-  
-  /* Arredondar os cards */
-  .card {
-    border-radius: 15px; 
-    overflow: hidden; 
-  }
-  
-  .card-img-top {
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-  }
-  
-  .btn-primary {
-    border-radius: 20px; 
-  }
-  
-  /* Start searching */
-  .custom-title {
-    background-color: #ffffff;
-    border: 6px solid #f2c3b6; 
-    border-radius: 30px; 
-    padding: 10px 30px; 
-    font-size: 24px; 
-    color: #6F7CB2; 
-    display: inline-block; 
-    text-align: center; 
-    font-family: Arial, sans-serif; 
-  }
-  
-  
-  
+/* Estilizar os cards */
+.card {
+  background-color: rgba(255, 255, 255, 0.9); 
+  margin-bottom: 20px;
+  border-radius: 15px; /* Um único border-radius nos cards */
+  overflow: hidden;
+  box-shadow: 5px 5px #f2c3b6;
+}
+
+
+
+/* Estilizar os botões */
+.btn, .btn-primary {
+  border-radius: 25px;
+}
+
+/* Estilo para o título "Start Searching" */
+.custom-title {
+  background-color: #ffffff;
+  box-shadow: 3px 3px #f2c3b6;
+  border-radius: 30px;
+  padding: 10px 30px;
+  font-size: 24px;
+  color: #6F7CB2;
+  display: inline-block;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+/* Estilizar o botão de busca (com a lupa) */
+.custom-search-button {
+  background-color: #f2c3b6;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.custom-search-button:hover {
+  background-color: #e0b2a3;
+}
+
+/* Estilizar a barra de busca */
+.custom-search-bar {
+  border-radius: 30px;
+  border-color: #f2c3b6;
+  transition: border-color 0.5s ease;
+}
+
+.custom-search-bar:focus {
+  border-color: #f2c3b6;
+  box-shadow: 0 0 5px rgba(242, 195, 182, 0.5);
+  outline: none;
+}
+
+/* Estilo de hover para os botões */
+.btn:hover {
+  background-color: #f2c3b6 !important;
+  color: #ffffff !important;
+}
+
+
