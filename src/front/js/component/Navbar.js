@@ -22,8 +22,8 @@ export const Navbar = () => {
       />
       <div className="container-fluid">
         <img
-          className="logo"
-          src="https://res.cloudinary.com/dmkw4vacw/image/upload/v1725897267/Logo_in_White_text_ddxzuv.png"
+          className="logo ms-2"
+          src="https://res.cloudinary.com/dmkw4vacw/image/upload/v1725907654/Logo_in_White_text_Right_kwlc3g.png"
           alt="Logo"
         />
         <div className="d-flex justify-content-end buttonsList" id="navbarSupportedContent">
