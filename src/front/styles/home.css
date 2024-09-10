@@ -1,7 +1,46 @@
-/*
-    home.css: This website contains selectors only used in home.css
+/* General style */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+body {
+    margin-top: 40px;
+    background-color:#1B1328;
+    min-height: 200vh;
+    overflow-x: hidden;
+}
+
+.parallax {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.parallax img{
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+}
+
+.mainHome{
+    position: relative;
+    padding: 100px;
+    padding-top: 350px;
+}
+
+.mainHome h2{
+    color: white;
+    font-size: 3rem;
+}
+
+.mainHome p{
+    color: white;
+    font-size: 1rem;
+}
