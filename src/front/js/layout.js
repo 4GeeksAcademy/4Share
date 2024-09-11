@@ -9,7 +9,7 @@ import { Single } from "./pages/single";
 import ProfileShare from "./pages/ProfileShare";
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
+import  Navbar  from "./component/Navbar";
 import { Footer } from "./component/footer";
 
 //create your first component
