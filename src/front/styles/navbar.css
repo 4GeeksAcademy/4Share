@@ -1,0 +1,163 @@
+/* General style */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.logo {
+    margin-top: -0.4rem;
+    height: 3.6rem;
+    transition: all 0.3s ease;
+    /* Para que el cambio de tamaño sea suave */
+}
+
+.mainDiv {
+    height: 4rem;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+
+/* All the buttons things */
+.h6,
+h6 {
+    font-size: 0.8rem;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.icon {
+    margin-right: 8px;
+    display: none;
+}
+
+.buttonList {
+    display: flex;
+    justify-content: flex-end;
+    width: 20% !important;
+}
+
+.btn {
+    background: linear-gradient(to right, #FFF8F9, #F0C6BD);
+    border: 0.12rem solid black;
+    margin-left: 0.6rem;
+    margin-right: 0.6rem;
+    padding: 4px 18px;
+    display: flex;
+    align-items: center;
+}
+
+.btn:hover {
+    transform: scale(1.1);
+}
+
+.backgroundImg {
+    z-index: -4;
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+}
+
+/* The two background white images like constelations */
+.overlayImg1,
+.overlayImg2 {
+    position: absolute;
+    z-index: -3;
+    width: 15%;
+    height: auto;
+}
+
+.overlayImg1 {
+    top: 0%;
+    left: 10%;
+    transform: translateY(-50%);
+}
+
+.overlayImg2 {
+    top: 120%;
+    right: 10%;
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 770px) {
+    .logo {
+        height: 3rem;
+        /* Reduce el tamaño del logo */
+    }
+
+    .btn {
+        padding: 4px 12px;
+        /* Reduce padding de los botones */
+        margin-left: 0.3rem;
+        margin-right: 0.3rem;
+    }
+
+    .buttonList {
+        width: 25%;
+        /* Aumenta el ancho de los botones para que quepan mejor */
+    }
+}
+
+@media (max-width: 670px) {
+    .logo {
+        height: 2.8rem;
+        /* Reduce más el tamaño del logo */
+    }
+
+    .btn {
+        padding: 4px 10px;
+    }
+
+    .buttonList {
+        width: 30%;
+    }
+}
+
+@media (max-width: 576px) {
+    .btn span {
+        display: none;
+    }
+
+    .btn .icon {
+        display: initial;
+        height: 0.6rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 6px;
+        padding-bottom: 6px;    
+    }
+
+
+    .icon {
+        margin-right: 0;
+    }
+
+    .overlayImg1 {
+        top: 20%;
+        left: 20%;
+    }
+
+    .overlayImg2 {
+        top: 90%;
+        right: 22%;
+    }
+
+
+    .logo {
+        height: 1.8rem;
+        /* Más pequeño en pantallas muy pequeñas */
+        margin-left: 0 !important
+    }
+}
