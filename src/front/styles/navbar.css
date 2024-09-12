@@ -6,12 +6,19 @@
 
 .logo {
     margin-top: -0.4rem;
-    height: 3.2rem;
+    height: 3.6rem;
+    transition: all 0.3s ease;
+    /* Para que el cambio de tamaño sea suave */
 }
 
 .mainDiv {
     width: 100%;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     height: 5rem;
 }
@@ -30,7 +37,7 @@ a {
 
 .icon {
     margin-right: 8px;
-    display:none;
+    display: none;
 }
 
 .buttonList {
@@ -69,16 +76,52 @@ a {
     width: 15%;
     height: auto;
 }
+
 .overlayImg1 {
     top: 0%;
     left: 10%;
-    transform: translateY(-50%); 
+    transform: translateY(-50%);
 }
 
 .overlayImg2 {
     top: 120%;
-    right: 10%; 
-    transform: translateY(-50%)  rotate(180deg);
+    right: 10%;
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 770px) {
+    .logo {
+        height: 3rem;
+        /* Reduce el tamaño del logo */
+    }
+
+    .btn {
+        padding: 4px 12px;
+        /* Reduce padding de los botones */
+        margin-left: 0.3rem;
+        margin-right: 0.3rem;
+    }
+
+    .buttonList {
+        width: 25%;
+        /* Aumenta el ancho de los botones para que quepan mejor */
+    }
+}
+
+@media (max-width: 670px) {
+    .logo {
+        height: 2.8rem;
+        /* Reduce más el tamaño del logo */
+    }
+
+    .btn {
+        padding: 4px 10px;
+    }
+
+    .buttonList {
+        width: 30%;
+    }
 }
 
 @media (max-width: 576px) {
@@ -88,21 +131,33 @@ a {
 
     .btn .icon {
         display: initial;
+        height: 0.6rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 6px;
+        padding-bottom: 6px;    
     }
 
-    .btn {
-        padding: 8px;
-    }
 
     .icon {
         margin-right: 0;
     }
+
     .overlayImg1 {
         top: 20%;
         left: 20%;
     }
+
     .overlayImg2 {
         top: 90%;
-        right: 22%; 
+        right: 22%;
+    }
+
+
+    .logo {
+        height: 1.8rem;
+        /* Más pequeño en pantallas muy pequeñas */
+        margin-left: 0 !important
     }
 }
