@@ -45,12 +45,28 @@ export const Navbar = () => {
               <span className="m-0 h6">Login</span>
             </Link>
           </button>
-          <button className="btn">
+          <button className="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             <Link to="/">
               <i className="fas fa-clipboard-list icon"></i>
               <span className="m-0 h6">Register</span>
             </Link>
           </button>
+         
+<div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div className="modal-dialog">
+    <div className="modal-content">
+      <div className="modal-header">
+        <h1 className="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+        <input type="text" />
+      </div>
+      <div className="modal-header">
+        <h1 className="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+        <input type="text" />
+      </div>
+      
+    </div>
+  </div>
+</div>
         </div>
       </div>
     </nav>

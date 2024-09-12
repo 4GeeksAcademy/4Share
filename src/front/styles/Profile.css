@@ -138,3 +138,30 @@ footer {
     text-align: center;
     margin-top: 40px;
 }
+
+/* Tarjetas de reseñas */
+.review-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.review-card {
+    background-color: #EFC4E7; /* Color rosado para las tarjetas */
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.review-card .quote {
+    font-style: italic;
+}
+
+.review-card .review-title {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.review-card .reviewer-info {
+    font-size: 14px;
+    color: #666;
+}
