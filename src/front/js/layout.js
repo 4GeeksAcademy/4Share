@@ -8,16 +8,16 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
-import  Navbar  from "./component/Navbar";
 import { Footer } from "./component/footer";
+import { PrivateProfile } from "./component/profilePrivate";
+import { Navbar } from "./component/Navbar";
 
 //create your first component
 const Layout = () => {
-    //the basename is used when your project is published in a subdirectory and not in the root of the domain
-    // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
+    // the basename is used when your project is published in a subdirectory and not in the root of the domain
     const basename = process.env.BASENAME || "";
 
-    if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
+    if (!process.env.BACKEND_URL || process.env.BACKEND_URL === "") return <BackendURL />;
 
     return (
         <div>
@@ -28,6 +28,7 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<PrivateProfile />} path="/profileprivate" /> 
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

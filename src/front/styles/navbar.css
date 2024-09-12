@@ -10,10 +10,10 @@
 }
 
 .mainDiv {
-    height: 4rem;
     width: 100%;
     position: relative;
     overflow: hidden;
+    height: 5rem;
 }
 
 
