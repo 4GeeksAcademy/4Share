@@ -1,36 +1,13 @@
 import React from 'react';
-import { FaMusic, FaUtensils, FaStar } from "react-icons/fa"; // Ícones usados para aprender e ensinar
-import "/workspaces/4Share/src/front/styles/MessageMatch.css"; // Arquivo de estilo
-
-const MessageMatch = () => {
-    return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div className="container-fluid">
-                <a className="navbar-brand" href="#"></a>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarNav">
-                    <ul className="navbar-nav ms-auto">
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">My Account</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">My Requests</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    );
-};
+import { FaMusic, FaUtensils, FaStar } from "react-icons/fa";
+import "/workspaces/4Share/src/front/styles/MessageMatch.css";
 
 const RequestsPage = () => {
     return (
         <div>
-            {/* Conteúdo da página de requests */}
             <div className="container requests-container">
-                <h2>My Requests</h2>
+                {/* Título com a classe customizada */}
+                <h2 className="custom-title">My Requests</h2>
                 <div className="request-list">
                     {/* Request 1 */}
                     <div className="request-item">
@@ -79,7 +56,8 @@ const RequestsPage = () => {
                     </div>
                 </div>
 
-                <h2>Contacts Added</h2>
+                {/* Título com a classe customizada */}
+                <h2 className="custom-title">Contacts Added</h2>
                 <div className="contacts-list">
                     {/* Contact 1 */}
                     <div className="contact-item">

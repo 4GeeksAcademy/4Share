@@ -14,9 +14,9 @@ body {
 }
 
 /* Perfil en el lado derecho */
-.profile-sidebar {
+.profile-sidebar-public {
     width: 30%;
-    background-color: #f8f9fa; /* Fondo blanco */
+    background-color: #f8f9fa;
     padding: 20px;
     border-radius: 8px;
     text-align: center;
@@ -40,7 +40,7 @@ body {
 }
 
 /* Información de la izquierda */
-.profile-main {
+.profile-main-public {
     width: 65%;
     color: white;
 }

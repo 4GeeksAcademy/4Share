@@ -1,49 +1,80 @@
 body {
     background: linear-gradient(to right, #241E32, #322A45, #6D5B98);
-    color: white;
+    color: black;
     font-family: 'Arial', sans-serif;
     margin-top: 100px;
     padding: 0;
+    height: 100vh;
 }
 
-/* Estrutura geral */
+/* Estructura general */
 .container-private-profile {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 30px;
+    height: 100%;
     padding: 20px;
-    justify-content: space-between; /* Garantir que os itens fiquem distribuídos */
-    max-width: 1200px;
-    margin: 0 auto;
+    box-sizing: border-box;
 }
 
-/* Informação geral e configuração */
-.profile-main {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr; /* Três colunas iguais */
+/* Primera fila: General Info, Postal Address, Configuration */
+.profile-main-private {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px;
+}
+
+.profile-main-private > div {
+    flex-grow: 1;
+    flex-basis: 0;
+    min-width: 0;
+}
+
+/* Segunda fila: My Description y Add Skills */
+.profile-secondary {
+    display: flex;
+    justify-content: space-between;
     gap: 20px;
     width: 100%;
-    justify-items: stretch;
-    align-items: start;
+    padding: 0 20px;
+    box-sizing: border-box;
 }
 
-/* Unificar o estilo do profile-sidebar com os outros blocos */
-.general-info, .postal-address, .configuration, .profile-sidebar, .my-description, .skills-section {
-    background-color: rgba(250, 250, 250, 0.9);
+.profile-secondary > div {
+    flex-grow: 1;
+    flex-basis: 0;
+    min-width: 0;
+}
+
+/* Estilos unificados para las secciones */
+.general-info, .postal-address, .configuration, .profile-info-box, .skills-section {
+    background-color: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 10px;
-    margin-top: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
+}
+
+/* Caja de descripción */
+.description-box {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 /* Estilo para títulos */
 .general-info h2, .postal-address h2, .configuration h2, 
-.profile-sidebar h3, .my-description h3, .skills-section h2 {
-    margin-bottom: 10px;
-    color: #000000;
-    font-size: 18px;
+.profile-sidebar-private h3, .skills-section h2 {
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 20px;
+    font-weight: bold;
 }
 
-input, button {
+/* Inputs y botones */
+input, .button-private {
     display: block;
     width: 100%;
     padding: 10px;
@@ -53,68 +84,101 @@ input, button {
     font-size: 1em;
 }
 
-button {
-    background-color: #F96A86; /* Cor de fundo */
-    color: black;
+.button-private {
+    background-color: #F96A86;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #f0f0f0; /* Hover cinza claro */
+.button-private:hover {
+    background-color: #e55b78;
 }
 
-/* Tornar a imagem de perfil mais flexível */
-.profile-sidebar {
-    text-align: center;
-    grid-column: span 1; /* Garantir que o profile-sidebar ocupe uma coluna */
+/* Imagen de perfil - ahora dentro de una caja */
+.profile-info-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinha à esquerda */
+    gap: 20px;
+    justify-content: flex-start;
 }
 
+/* Tamaño de la imagen de perfil aumentado */
 .profile-img {
-    width: 150px;
-    height: 150px;
+    width: 300px;  /* Tamaño aumentado */
+    height: 300px;
     border-radius: 50%;
     object-fit: cover;
-    margin-bottom: 20px;
+    transition: transform 0.3s ease;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-    .profile-main {
-        grid-template-columns: 1fr; /* Coluna única em telas menores */
-    }
+.profile-img:hover {
+    transform: scale(1.05); /* Zoom al pasar el mouse */
+} /* Fechando o bloco aqui */
 
-    .profile-sidebar {
-        margin-bottom: 20px;
-    }
+/* Botón de cambiar imagen cerca de la foto */
+.change-image-label {
+    background-color: #F96A86;
+    color: white;
+    padding: 10px;
+    border-radius: 50%; /* Botón circular */
+    cursor: pointer;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
 }
 
-.profile-sidebar h3, .my-description h3 {
-    margin-top: 15px;
-    color: black;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); 
+.change-image-label:hover {
+    background-color: #e55b78; /* Efecto hover */
 }
 
-.profile-sidebar p, .my-description p {
-    font-size: 1em;
-    color: #000000;
+.change-image-input {
+    display: none; /* Esconde el campo de input */
 }
 
+.change-image-label svg {
+    font-size: 24px; /* Tamaño del icono de cámara */
+    color: white;
+}
+
+/* Hobbies */
 .my-hobbies {
-    margin-top: 80px;
-}
-
-.my-hobbies h3 {
-    color: black;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-    margin-bottom: 15px;
+    margin-top: 10px;
+    text-align: center;
 }
 
 .my-hobbies svg {
-    font-size: 1.5em;
+    font-size: 1.8em;
     margin: 0 10px;
-    color: black;
+    color: #F96A86;
 }
 
-/* Seção de habilidades */
+/* Descripción e información */
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.profile-info h3 {
+    margin-bottom: 10px;
+    color: black; /* Texto en negro para que se vea mejor */
+}
+
+.profile-info p {
+    color: black; /* Texto en negro */
+    line-height: 1.5;
+}
+
+/* Sección de habilidades */
 .skills-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -122,21 +186,35 @@ button:hover {
 }
 
 .skill-card {
-    background-color: white;
+    background-color: #fff;
     padding: 20px;
     border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.skill-card:hover {
+    transform: translateY(-5px);
 }
 
 .skill-card h4 {
-    color: black;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); 
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 18px;
 }
 
 .skill-card p {
-    color: black;
+    color: #666;
+    line-height: 1.6;
 }
 
-/* Espaçamento geral */
-.profile-main > div {
-    margin-bottom: 20px;
+/* Responsividad */
+@media (max-width: 768px) {
+    .profile-main-private, .profile-secondary, .profile-sidebar-private {
+        flex-direction: column;
+    }
+
+    .profile-sidebar-private {
+        align-items: center;
+    }
 }

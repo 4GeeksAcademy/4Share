@@ -1,12 +1,12 @@
 import React from "react";
-import { FaGuitar, FaUtensils, FaMusic, FaFutbol, FaStar } from "react-icons/fa"; // Íconos adicionales
-import "/workspaces/4Share/src/front/styles/ProfilePrivate.css"; // Asegúrate de adaptar el path según tu proyecto
+import { FaGuitar, FaUtensils, FaMusic, FaFutbol, FaCamera } from "react-icons/fa";
+import "/workspaces/4Share/src/front/styles/ProfilePrivate.css"; // Asegúrate de adaptar el camino según tu proyecto
 
 export const PrivateProfile = () => {
     return (
         <div className="container container-private-profile">
             {/* Parte superior con información general y configuración */}
-            <div className="profile-main">
+            <div className="profile-main-private">
                 {/* Información general del usuario */}
                 <div className="general-info">
                     <h2>General Information</h2>
@@ -15,7 +15,7 @@ export const PrivateProfile = () => {
                     <input type="text" placeholder="Last name" />
                     <input type="email" placeholder="Email address" />
                     <input type="password" placeholder="User phone" />
-                    <button>Check</button>
+                    <button className="button-private">Check</button>
                 </div>
 
                 {/* Dirección postal */}
@@ -35,37 +35,49 @@ export const PrivateProfile = () => {
                 {/* Configuración de cuenta */}
                 <div className="configuration">
                     <h2>Configuration</h2>
-                    <button>Change my password</button>
-                    <button>Notifications</button>
-                    <button>Change my skills</button>
-                    <button>Log out</button>
+                    <button className="button-private">Change my password</button>
+                    <button className="button-private">Notifications</button>
+                    <button className="button-private">Change my skills</button>
+                    <button className="button-private">Log out</button>
                 </div>
             </div>
 
-            {/* Parte derecha con la información del perfil */}
+            {/* Sección de imagen de perfil, descripción y hobbies */}
             <div className="profile-sidebar">
-                {/* Imagen de perfil */}
-                <img
-                    className="profile-img"
-                    src="https://images.ctfassets.net/pdf29us7flmy/7F5XUfHuv7dAW6joysWHxE/c5623a1d81518a813ad53b5020282bdb/GettyImages-583665183_optimized__1_.jpg?w=720&q=100&fm=jpg"
-                    alt="Profile"
-                />
-                <h3>My description</h3>
-                <p>
-                    Passionate about music, cooking, and sports. I enjoy learning
-                    new things and exploring new cultures.
-                </p>
-                <div className="my-hobbies">
-                    <h3>My Hobbies</h3>
-                    <FaGuitar /> <FaUtensils /> <FaMusic /> <FaFutbol />
+                <div className="profile-info-box"> {/* Nueva caja para foto, hobbies y descripción */}
+                    <div className="profile-image-section">
+                        <img
+                            className="profile-img"
+                            src="https://images.ctfassets.net/pdf29us7flmy/7F5XUfHuv7dAW6joysWHxE/c5623a1d81518a813ad53b5020282bdb/GettyImages-583665183_optimized__1_.jpg?w=720&q=100&fm=jpg"
+                            alt="Profile"
+                        />
+                        <label className="change-image-label">
+                            <FaCamera /> {/* Icono de cámara */}
+                            <input type="file" className="change-image-input" />
+                        </label>
+                    </div>
+
+                    {/* Hobbies debajo de la imagen */}
+                    <div className="my-hobbies">
+                        <h3>My Hobbies</h3>
+                        <FaGuitar /> <FaUtensils /> <FaMusic /> <FaFutbol />
+                    </div>
+                </div>
+
+                {/* Descripción al lado derecho dentro de la caja */}
+                <div className="profile-info-box description-box"> {/* Nueva clase para caja de descripción */}
+                    <h3>My description</h3>
+                    <p>
+                        Passionate about music, cooking, and sports. I enjoy learning
+                        new things and exploring new cultures.
+                    </p>
                 </div>
             </div>
 
             {/* Sección para agregar habilidades */}
             <div className="skills-section">
-                <button>Add Skills</button>
+                <button className="button-private">Add Skills</button>
 
-                {/* Ejemplo de habilidades */}
                 <div className="skills-list">
                     <div className="skill-card">
                         <h4>Music</h4>
