@@ -1,32 +1,46 @@
-/* Estructura general */
+body {
+    background: linear-gradient(to right, #241E32, #322A45, #6D5B98);
+    color: white;
+    font-family: 'Arial', sans-serif;
+    margin-top: 100px;
+    padding: 0;
+}
+
+/* Estrutura geral */
 .container-private-profile {
     display: flex;
     flex-wrap: wrap;
     padding: 20px;
-    background-color: #3A215E; /* Fondo púrpura oscuro */
-    color: white; /* Texto blanco */
-    font-family: 'Arial', sans-serif;
+    justify-content: space-between; /* Garantir que os itens fiquem distribuídos */
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-/* Información general y configuración */
+/* Informação geral e configuração */
 .profile-main {
-    flex: 1;
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr; /* Mantén tres columnas */
-    gap: 20px; /* Espacio entre las columnas */
-    padding: 20px;
+    grid-template-columns: 1fr 1fr 1fr; /* Três colunas iguais */
+    gap: 20px;
+    width: 100%;
+    justify-items: stretch;
+    align-items: start;
 }
 
-/* Estilo para las cajas de información */
-.general-info, .postal-address, .configuration {
-    background-color: #F8D0E6; /* Fondo rosa muy suave */
+/* Unificar o estilo do profile-sidebar com os outros blocos */
+.general-info, .postal-address, .configuration, .profile-sidebar, .my-description, .skills-section {
+    background-color: rgba(250, 250, 250, 0.9);
     padding: 20px;
     border-radius: 10px;
+    margin-top: 20px;
+    box-sizing: border-box;
 }
 
-.general-info h2, .postal-address h2, .configuration h2 {
+/* Estilo para títulos */
+.general-info h2, .postal-address h2, .configuration h2, 
+.profile-sidebar h3, .my-description h3, .skills-section h2 {
     margin-bottom: 10px;
-    color: #3A215E; /* Título en púrpura oscuro */
+    color: #000000;
+    font-size: 18px;
 }
 
 input, button {
@@ -36,76 +50,71 @@ input, button {
     margin: 10px 0;
     border: none;
     border-radius: 5px;
-    background-color: white; /* Botones en blanco */
-    color: #3A215E; /* Texto púrpura */
     font-size: 1em;
+}
+
+button {
+    background-color: #F96A86; /* Cor de fundo */
+    color: black;
 }
 
 button:hover {
-    background-color: #f0f0f0; /* Hover para los botones en gris claro */
+    background-color: #f0f0f0; /* Hover cinza claro */
 }
 
-/* Perfil y sidebar */
+/* Tornar a imagem de perfil mais flexível */
 .profile-sidebar {
-    flex-basis: 300px;
-    padding: 20px;
     text-align: center;
-    background-color: #F8D0E6; /* Fondo rosa claro */
-    border-radius: 10px;
-    margin-left: 20px;
+    grid-column: span 1; /* Garantir que o profile-sidebar ocupe uma coluna */
 }
 
 .profile-img {
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     object-fit: cover;
-    border: 4px solid white; /* Borde blanco alrededor de la imagen */
+    margin-bottom: 20px;
 }
 
-.profile-sidebar h3 {
+/* Responsividade */
+@media (max-width: 768px) {
+    .profile-main {
+        grid-template-columns: 1fr; /* Coluna única em telas menores */
+    }
+
+    .profile-sidebar {
+        margin-bottom: 20px;
+    }
+}
+
+.profile-sidebar h3, .my-description h3 {
     margin-top: 15px;
-    color: #3A215E; /* Título en púrpura */
+    color: black;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); 
 }
 
-.profile-sidebar p {
+.profile-sidebar p, .my-description p {
     font-size: 1em;
-    color: #3A215E; /* Texto en púrpura oscuro */
+    color: #000000;
 }
 
 .my-hobbies {
-    margin-top: 20px;
+    margin-top: 80px;
 }
 
 .my-hobbies h3 {
-    color: white; /* Títulos de hobbies en blanco */
-    margin-bottom: 10px;
+    color: black;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    margin-bottom: 15px;
 }
 
 .my-hobbies svg {
     font-size: 1.5em;
     margin: 0 10px;
-    color: white; /* Íconos en blanco */
+    color: black;
 }
 
-/* Sección de habilidades */
-.skills-section {
-    grid-column: span 3;
-    background-color: #4c0253; /* Fondo púrpura más oscuro */
-    padding: 20px;
-    border-radius: 10px;
-}
-
-.skills-section h2 {
-    color: white; /* Título en blanco */
-    margin-bottom: 15px;
-}
-
-.skills-section button {
-    background-color: white; /* Botón de añadir habilidades en blanco */
-    color: #3A215E; /* Texto púrpura */
-}
-
+/* Seção de habilidades */
 .skills-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -113,27 +122,21 @@ button:hover {
 }
 
 .skill-card {
-    background-color: #F8D0E6; /* Fondo rosa muy suave */
+    background-color: white;
     padding: 20px;
     border-radius: 10px;
 }
 
 .skill-card h4 {
-    color: #3A215E; /* Título en púrpura oscuro */
+    color: black;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); 
 }
 
 .skill-card p {
-    color: #3A215E; /* Texto púrpura oscuro */
+    color: black;
 }
 
-/* Estilo para la sección de postal address */
-.postal-address img {
-    max-width: 100%;
-    border-radius: 10px;
-    margin-bottom: 10px; /* Añadir margen debajo de la imagen */
-}
-
-/* Espaciado general */
+/* Espaçamento geral */
 .profile-main > div {
-    margin-bottom: 20px; /* Espacio inferior entre las secciones */
+    margin-bottom: 20px;
 }

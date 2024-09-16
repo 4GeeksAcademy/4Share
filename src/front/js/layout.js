@@ -32,7 +32,7 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<PrivateProfile />} path="/myaccount" />
-                        <Route element={<MessageMatch />} path="/messagematch" />
+                        <Route element={<MessageMatch />} path="/requests" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
@@ -41,5 +41,7 @@ const Layout = () => {
         </div>
     );
 };
+
+
 
 export default injectContext(Layout);
