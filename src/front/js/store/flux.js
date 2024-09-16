@@ -1,54 +1,41 @@
 const getState = ({ getStore, getActions, setStore }) => {
-	return {
-		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
-		},
-		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
-				}
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
-			}
-		}
-	};
+    return {
+        store: {
+            backendUrl: process.env.BACKEND_URL // Asegúrate de definir REACT_APP_BACKEND_URL en tu archivo .env
+        },
+        actions: {
+            updateProfile: async (id,name, email, gender, lastname, birthdate, phone) => {
+                const store = getStore();  // Obtén el store para acceder a la URL
+                const requestBody = {
+                    name: name,
+                    email: email,
+                    gender: gender,
+                    lastname: lastname,
+                    birthdate: birthdate,
+                    phone: phone,
+                };
+                try {
+                    const response = await fetch(`${store.backendUrl}/api/update_profile/${id}`, { // Ajusta el endpoint de la API según tu backend
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(requestBody)
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        console.log('Profile updated successfully:', data);
+                        return data;
+                    } else {
+                        console.error('Error updating profile:', data.error || data.message);
+                        return null;
+                    }
+                } catch (error) {
+                    console.error('Error during the update request:', error);
+                    return null;
+                }
+            }
+        }
+    };
 };
-
 export default getState;
