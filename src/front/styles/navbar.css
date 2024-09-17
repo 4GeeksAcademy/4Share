@@ -1,4 +1,4 @@
-/* General style */
+/* General styles */
 * {
     margin: 0;
     padding: 0;
@@ -8,9 +8,9 @@
     margin-top: -0.4rem;
     height: 3.6rem;
     transition: all 0.3s ease;
-    /* Para que el cambio de tamaño sea suave */
 }
 
+/* Navbar styles */
 .mainDiv {
     width: 100%;
     position: fixed;
@@ -23,8 +23,6 @@
     height: 5rem;
 }
 
-
-/* All the buttons things */
 .h6,
 h6 {
     font-size: 0.8rem;
@@ -68,7 +66,6 @@ a {
     object-fit: cover;
 }
 
-/* The two background white images like constelations */
 .overlayImg1,
 .overlayImg2 {
     position: absolute;
@@ -89,30 +86,80 @@ a {
     transform: translateY(-50%) rotate(180deg);
 }
 
+/* Modal styles */
+.custom-modal {
+    background-color: #2c2c54; /* Morado oscuro */
+    color: white;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.custom-btn {
+    background-color: #ff4081 !important; /* Fucsia */
+    border: none;
+    border-radius: 10px;
+}
+
+.custom-input {
+    background-color: white;
+    color: #333;
+    border-radius: 10px;
+    border: none;
+}
+
+.custom-input::placeholder {
+    color: #aaa;
+}
+
+.divider {
+    margin: 10px 0;
+    text-align: center;
+    color: #aaa;
+    position: relative;
+}
+
+.divider::before, .divider::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background: #aaa;
+}
+
+.divider::before {
+    left: 0;
+}
+
+.divider::after {
+    right: 0;
+}
+
+.btn-outline-light {
+    border-color: white;
+    color: white;
+}
+
 /* Responsive Adjustments */
 @media (max-width: 770px) {
     .logo {
         height: 3rem;
-        /* Reduce el tamaño del logo */
     }
 
     .btn {
         padding: 4px 12px;
-        /* Reduce padding de los botones */
         margin-left: 0.3rem;
         margin-right: 0.3rem;
     }
 
     .buttonList {
         width: 25%;
-        /* Aumenta el ancho de los botones para que quepan mejor */
     }
 }
 
 @media (max-width: 670px) {
     .logo {
         height: 2.8rem;
-        /* Reduce más el tamaño del logo */
     }
 
     .btn {
@@ -132,13 +179,11 @@ a {
     .btn .icon {
         display: initial;
         height: 0.6rem;
-        display: flex;
         justify-content: center;
         align-items: center;
         padding-top: 6px;
-        padding-bottom: 6px;    
+        padding-bottom: 6px;
     }
-
 
     .icon {
         margin-right: 0;
@@ -154,10 +199,7 @@ a {
         right: 22%;
     }
 
-
     .logo {
         height: 1.8rem;
-        /* Más pequeño en pantallas muy pequeñas */
-        margin-left: 0 !important
     }
 }

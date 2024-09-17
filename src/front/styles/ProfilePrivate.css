@@ -1,139 +1,205 @@
-/* Estructura general */
+
+/* Contenedor principal */
 .container-private-profile {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 20px;
-    background-color: #3A215E; /* Fondo púrpura oscuro */
-    color: white; /* Texto blanco */
-    font-family: 'Arial', sans-serif;
-}
-
-/* Información general y configuración */
-.profile-main {
-    flex: 1;
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr; /* Mantén tres columnas */
-    gap: 20px; /* Espacio entre las columnas */
-    padding: 20px;
+    grid-template-columns: 3fr 1fr; /* Columna principal más ancha, sidebar a la derecha */
+    grid-template-areas:
+        "main sidebar"
+        "skills sidebar"; /* El sidebar se mantendrá en el lado derecho */
+    gap: 30px; /* Espacio entre columnas */
+    background: linear-gradient(135deg, #3a2f5f, #5a3c81); /* Degradado en tonos morados */
+    padding: 30px;
+    border-radius: 15px;
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    overflow-y: auto; /* Scroll si es necesario */
 }
 
-/* Estilo para las cajas de información */
-.general-info, .postal-address, .configuration {
-    background-color: #F8D0E6; /* Fondo rosa muy suave */
-    padding: 20px;
-    border-radius: 10px;
+/* Estilo general del contenedor */
+.wrapper {
+    max-width: 1400px; /* Anchura máxima */
+    margin: 0 auto; /* Centra el contenedor */
+    padding: 20px; /* Espaciado adicional */
 }
 
-.general-info h2, .postal-address h2, .configuration h2 {
-    margin-bottom: 10px;
-    color: #3A215E; /* Título en púrpura oscuro */
-}
-
-input, button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: none;
-    border-radius: 5px;
-    background-color: white; /* Botones en blanco */
-    color: #3A215E; /* Texto púrpura */
-    font-size: 1em;
-}
-
-button:hover {
-    background-color: #f0f0f0; /* Hover para los botones en gris claro */
-}
-
-/* Perfil y sidebar */
+/* Barra lateral del perfil */
 .profile-sidebar {
-    flex-basis: 300px;
+    grid-area: sidebar; /* Sidebar a la derecha */
+    background-color: #ffffff; /* Fondo blanco */
     padding: 20px;
-    text-align: center;
-    background-color: #F8D0E6; /* Fondo rosa claro */
     border-radius: 10px;
-    margin-left: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
+/* Imagen de perfil */
 .profile-img {
-    width: 120px;
-    height: 120px;
     border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid white; /* Borde blanco alrededor de la imagen */
+    width: 160px;
+    height: 160px;
+    margin-bottom: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Sombra pronunciada */
 }
 
+/* Títulos en el sidebar */
 .profile-sidebar h3 {
-    margin-top: 15px;
-    color: #3A215E; /* Título en púrpura */
+    color: #333;
+    font-size: 18px;
+    margin-bottom: 10px;
 }
 
+/* Descripción de perfil */
 .profile-sidebar p {
-    font-size: 1em;
-    color: #3A215E; /* Texto en púrpura oscuro */
+    color: #555;
+    font-size: 14px;
+    text-align: center;
+    line-height: 1.6; /* Mejor legibilidad */
+    margin: 10px 0;
+    max-width: 90%;
 }
 
+/* Hobbies con íconos */
 .my-hobbies {
     margin-top: 20px;
 }
 
 .my-hobbies h3 {
-    color: white; /* Títulos de hobbies en blanco */
+    color: #333;
     margin-bottom: 10px;
 }
 
 .my-hobbies svg {
-    font-size: 1.5em;
-    margin: 0 10px;
-    color: white; /* Íconos en blanco */
+    font-size: 20px;
+    margin: 5px;
+    color: #ff4081; /* Color del ícono */
+}
+
+/* Sección de información general */
+.general-info, .postal-address, .configuration {
+    background-color: #ffffff; /* Fondo blanco */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    margin-bottom: 30px; /* Espaciado entre secciones */
+    color: #333;
+}
+
+/* Títulos de secciones */
+.general-info h2, .postal-address h2, .configuration h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+/* Estilo de los inputs */
+.general-info input, .postal-address input {
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    width: 100%;
+    margin-bottom: 20px; /* Más espacio entre inputs */
+}
+
+/* Botones con hover */
+button {
+    padding: 12px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    background-color: #ff4081; /* Rosado fuerte */
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: white;
+    color: #ff4081;
+    border: 2px solid #ff4081;
 }
 
 /* Sección de habilidades */
 .skills-section {
-    grid-column: span 3;
-    background-color: #4c0253; /* Fondo púrpura más oscuro */
-    padding: 20px;
+    grid-area: skills;
+    background-color: #ffffff;
+    padding: 30px;
     border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #333;
 }
 
 .skills-section h2 {
-    color: white; /* Título en blanco */
-    margin-bottom: 15px;
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #333;
 }
 
-.skills-section button {
-    background-color: white; /* Botón de añadir habilidades en blanco */
-    color: #3A215E; /* Texto púrpura */
-}
-
+/* Lista de habilidades */
 .skills-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-wrap: wrap;
     gap: 20px;
+    justify-content: space-between;
 }
 
 .skill-card {
-    background-color: #F8D0E6; /* Fondo rosa muy suave */
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 220px;
+    color: #333;
+    text-align: center;
 }
 
 .skill-card h4 {
-    color: #3A215E; /* Título en púrpura oscuro */
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #5a3c81; /* Color vibrante */
 }
 
 .skill-card p {
-    color: #3A215E; /* Texto púrpura oscuro */
+    font-size: 14px;
+    margin-bottom: 10px;
+    line-height: 1.4;
 }
 
-/* Estilo para la sección de postal address */
-.postal-address img {
-    max-width: 100%;
+/* Íconos en tarjetas de habilidades */
+.skill-card svg {
+    font-size: 24px;
+    color: #ff4081; /* Íconos de habilidades rosados */
+}
+
+/* Campo de Google Address */
+.postal-address {
+    grid-area: postal-address;
+    background-color: #ffffff;
+    padding: 30px;
     border-radius: 10px;
-    margin-bottom: 10px; /* Añadir margen debajo de la imagen */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #333;
+    margin-bottom: 30px;
 }
 
-/* Espaciado general */
-.profile-main > div {
-    margin-bottom: 20px; /* Espacio inferior entre las secciones */
+/* Media Queries para pantallas pequeñas */
+@media screen and (max-width: 768px) {
+    .container-private-profile {
+        grid-template-columns: 1fr; /* Apila las secciones en una columna */
+        grid-template-areas:
+            "main"
+            "skills"
+            "sidebar"; /* El sidebar se mostrará debajo en pantallas pequeñas */
+    }
+
+    .skills-list {
+        flex-direction: column; /* Las tarjetas de habilidades se apilan en móviles */
+    }
 }
