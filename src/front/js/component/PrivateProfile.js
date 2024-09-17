@@ -14,22 +14,8 @@ export const PrivateProfile = () => {
                     <input type="text" placeholder="Name" />
                     <input type="text" placeholder="Last name" />
                     <input type="email" placeholder="Email address" />
-                    <input type="password" placeholder="User phone" />
+                    <input type="number" placeholder="Phone Number" />
                     <button className="button-private">Check</button>
-                </div>
-
-                {/* Dirección postal */}
-                <div className="postal-address">
-                    <h2>Postal Address</h2>
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13333381.99881003!2d-17.581064739370582!3d35.3253526618782!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xc42e3783261bc8b%3A0xa6ec2c940768a3ec!2sEspanha!5e0!3m2!1spt-BR!2ses!4v1726490113789!5m2!1spt-BR!2ses"
-                        width="400"
-                        height="300"
-                        style={{ border: 0 }}
-                        allowFullScreen=""
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                    ></iframe>
                 </div>
 
                 {/* Configuración de cuenta */}
@@ -44,11 +30,11 @@ export const PrivateProfile = () => {
 
             {/* Sección de imagen de perfil, descripción y hobbies */}
             <div className="profile-sidebar">
-                <div className="profile-info-box"> {/* Nueva caja para foto, hobbies y descripción */}
+                <div className="profile-info-box"> {/* Caja combinada para foto, hobbies y descripción */}
                     <div className="profile-image-section">
                         <img
-                            className="profile-img"
-                            src="https://images.ctfassets.net/pdf29us7flmy/7F5XUfHuv7dAW6joysWHxE/c5623a1d81518a813ad53b5020282bdb/GettyImages-583665183_optimized__1_.jpg?w=720&q=100&fm=jpg"
+                            className="profile-img-private"
+                            src="https://cdn.create.vista.com/api/media/small/157947226/stock-photo-man-looking-at-camera"
                             alt="Profile"
                         />
                         <label className="change-image-label">
@@ -62,16 +48,30 @@ export const PrivateProfile = () => {
                         <h3>My Hobbies</h3>
                         <FaGuitar /> <FaUtensils /> <FaMusic /> <FaFutbol />
                     </div>
-                </div>
 
-                {/* Descripción al lado derecho dentro de la caja */}
-                <div className="profile-info-box description-box"> {/* Nueva clase para caja de descripción */}
-                    <h3>My description</h3>
-                    <p>
-                        Passionate about music, cooking, and sports. I enjoy learning
-                        new things and exploring new cultures.
-                    </p>
+                    {/* Descripción debajo de hobbies */}
+                    <div className="description-box">
+                        <h3>My description</h3>
+                        <p>
+                            Passionate about music, cooking, and sports. I enjoy learning
+                            new things and exploring new cultures.
+                        </p>
+                    </div>
                 </div>
+            </div>
+
+            {/* Dirección postal */}
+            <div className="postal-address">
+                <h2>Postal Address</h2>
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13333381.99881003!2d-17.581064739370582!3d35.3253526618782!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xc42e3783261bc8b%3A0xa6ec2c940768a3ec!2sEspanha!5e0!3m2!1spt-BR!2ses!4v1726490113789!5m2!1spt-BR!2ses"
+                    width="1250"
+                    height="300"
+                    style={{ border: 0 }}
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
             </div>
 
             {/* Sección para agregar habilidades */}

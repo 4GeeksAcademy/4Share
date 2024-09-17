@@ -1,3 +1,4 @@
+/* Estilo global */
 body {
     background: linear-gradient(to right, #241E32, #322A45, #6D5B98);
     color: black;
@@ -7,7 +8,7 @@ body {
     height: 100vh;
 }
 
-/* Estructura general */
+/* Estrutura geral do contêiner */
 .container-private-profile {
     display: flex;
     flex-direction: column;
@@ -17,7 +18,7 @@ body {
     box-sizing: border-box;
 }
 
-/* Primera fila: General Info, Postal Address, Configuration */
+/* Primeira fila: Informações Gerais, Endereço Postal, Configuração */
 .profile-main-private {
     display: flex;
     justify-content: space-between;
@@ -25,13 +26,13 @@ body {
     gap: 20px;
 }
 
-.profile-main-private > div {
+.profile-main-private>div {
     flex-grow: 1;
     flex-basis: 0;
     min-width: 0;
 }
 
-/* Segunda fila: My Description y Add Skills */
+/* Segunda fila: Descrição e Adicionar Habilidades */
 .profile-secondary {
     display: flex;
     justify-content: space-between;
@@ -41,14 +42,18 @@ body {
     box-sizing: border-box;
 }
 
-.profile-secondary > div {
+.profile-secondary>div {
     flex-grow: 1;
     flex-basis: 0;
     min-width: 0;
 }
 
-/* Estilos unificados para las secciones */
-.general-info, .postal-address, .configuration, .profile-info-box, .skills-section {
+/* Estilos unificados para as seções */
+.general-info,
+.postal-address,
+.configuration,
+.profile-info-box,
+.skills-section {
     background-color: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 10px;
@@ -56,25 +61,21 @@ body {
     box-sizing: border-box;
 }
 
-/* Caja de descripción */
-.description-box {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-/* Estilo para títulos */
-.general-info h2, .postal-address h2, .configuration h2, 
-.profile-sidebar-private h3, .skills-section h2 {
+/* Estilos para títulos */
+.general-info h2,
+.postal-address h2,
+.configuration h2,
+.profile-sidebar-private h3,
+.skills-section h2 {
     margin-bottom: 15px;
     color: #333;
     font-size: 20px;
     font-weight: bold;
 }
 
-/* Inputs y botones */
-input, .button-private {
+/* Inputs e botões */
+input,
+.button-private {
     display: block;
     width: 100%;
     padding: 10px;
@@ -98,59 +99,76 @@ input, .button-private {
     background-color: #e55b78;
 }
 
-/* Imagen de perfil - ahora dentro de una caja */
+/* Caixa de imagem de perfil, hobbies e descrição */
 .profile-info-box {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Alinha à esquerda */
-    gap: 20px;
+    flex-direction: row;
+    align-items: center;
     justify-content: flex-start;
+    padding: 20px;
+    gap: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Tamaño de la imagen de perfil aumentado */
-.profile-img {
-    width: 300px;  /* Tamaño aumentado */
-    height: 300px;
+.profile-image-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-text-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+/* Imagem de perfil */
+.profile-img-private {
+    width: 150px;
+    /* Tamanho da imagem ajustado */
+    height: 150px;
     border-radius: 50%;
     object-fit: cover;
-    transition: transform 0.3s ease;
 }
 
-.profile-img:hover {
-    transform: scale(1.05); /* Zoom al pasar el mouse */
-} /* Fechando o bloco aqui */
+.profile-img-private:hover {
+    transform: scale(1.05);
+    /* Zoom ao passar o mouse */
+}
 
-/* Botón de cambiar imagen cerca de la foto */
+/* Botão de trocar imagem */
 .change-image-label {
     background-color: #F96A86;
     color: white;
     padding: 10px;
-    border-radius: 50%; /* Botón circular */
+    border-radius: 50%;
     cursor: pointer;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 50px;
-    height: 50px;
+    margin-top: 10px;
 }
 
 .change-image-label:hover {
-    background-color: #e55b78; /* Efecto hover */
+    background-color: #e55b78;
 }
 
 .change-image-input {
-    display: none; /* Esconde el campo de input */
+    display: none;
+    /* Esconde o campo de input */
 }
 
 .change-image-label svg {
-    font-size: 24px; /* Tamaño del icono de cámara */
-    color: white;
+    font-size: 24px;
 }
 
 /* Hobbies */
 .my-hobbies {
-    margin-top: 10px;
     text-align: center;
 }
 
@@ -160,25 +178,14 @@ input, .button-private {
     color: #F96A86;
 }
 
-/* Descripción e información */
-.profile-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    width: 100%;
-}
-
-.profile-info h3 {
-    margin-bottom: 10px;
-    color: black; /* Texto en negro para que se vea mejor */
-}
-
-.profile-info p {
-    color: black; /* Texto en negro */
+/* Descrição */
+.description-box p {
+    color: black;
     line-height: 1.5;
+    text-align: center;
 }
 
-/* Sección de habilidades */
+/* Seção de habilidades */
 .skills-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -208,9 +215,12 @@ input, .button-private {
     line-height: 1.6;
 }
 
-/* Responsividad */
+/* Responsividade para telas menores */
 @media (max-width: 768px) {
-    .profile-main-private, .profile-secondary, .profile-sidebar-private {
+
+    .profile-main-private,
+    .profile-secondary,
+    .profile-sidebar-private {
         flex-direction: column;
     }
 
@@ -218,3 +228,4 @@ input, .button-private {
         align-items: center;
     }
 }
+
