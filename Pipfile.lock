@@ -1,7 +1,11 @@
 {
     "_meta": {
         "hash": {
+<<<<<<< HEAD
             "sha256": "bc78fc75cadf1b2bbfc69485500930e13765600de50c8897e82c85f9095f3bbf"
+=======
+            "sha256": "d793e084e97dc81492403789ea817f62055f3b44673e1a723b280d0d86fdad07"
+>>>>>>> c163021b69a8e8c421373dce091213f302c4218f
         },
         "pipfile-spec": 6,
         "requires": {
@@ -20,6 +24,7 @@
             "hashes": [
                 "sha256:1ff0ae32975f4fd96028c39ed9bb3c867fe3af956bd7bb37343b54c9fe7445ef",
                 "sha256:6b8733129a6224a9a711e17c99b08462dbf7cc9670ba8f2e2ae9af860ceb1953"
+<<<<<<< HEAD
             ],
             "markers": "python_version >= '3.8'",
             "version": "==1.13.2"
@@ -56,6 +61,11 @@
             ],
             "markers": "python_version >= '3.7'",
             "version": "==4.2.0"
+=======
+            ],
+            "markers": "python_version >= '3.8'",
+            "version": "==1.13.2"
+>>>>>>> c163021b69a8e8c421373dce091213f302c4218f
         },
         "blinker": {
             "hashes": [
@@ -104,6 +114,7 @@
             "index": "pypi",
             "version": "==1.6.1"
         },
+<<<<<<< HEAD
         "flask-bcrypt": {
             "hashes": [
                 "sha256:062fd991dc9118d05ac0583675507b9fe4670e44416c97e0e6819d03d01f808a",
@@ -112,6 +123,8 @@
             "index": "pypi",
             "version": "==1.0.1"
         },
+=======
+>>>>>>> c163021b69a8e8c421373dce091213f302c4218f
         "flask-cors": {
             "hashes": [
                 "sha256:5aadb4b950c4e93745034594d9f3ea6591f734bb3662e16e255ffbf5e89c88ef",
@@ -128,6 +141,7 @@
             "index": "pypi",
             "version": "==4.6.0"
         },
+<<<<<<< HEAD
         "flask-mail": {
             "hashes": [
                 "sha256:44083e7b02bbcce792209c06252f8569dd5a325a7aaa76afe7330422bd97881d",
@@ -136,6 +150,8 @@
             "index": "pypi",
             "version": "==0.10.0"
         },
+=======
+>>>>>>> c163021b69a8e8c421373dce091213f302c4218f
         "flask-migrate": {
             "hashes": [
                 "sha256:5c532be17e7b43a223b7500d620edae33795df27c75811ddf32560f7d48ec617",
