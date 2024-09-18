@@ -1,0 +1,560 @@
+
+.main-container {
+    display: flex;
+    justify-content: center; /* Centra el contenido */
+    background-color: #f3f4f6;
+    padding: 20px;
+  }
+  
+  /* Contenedor que envuelve las dos columnas */
+  .content-wrapper {
+    display: flex;
+    width: 100%;
+    max-width: 1200px; /* Ajusta el ancho máximo */
+    gap: 20px;
+  }
+  
+  /* Columna izquierda */
+  .left-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Columna derecha */
+  .right-column {
+    flex: 0.4;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Información general */
+  .general-info input {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Configuración de cuenta */
+  .config-section {
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Descripción del perfil */
+  .description-section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .profile-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  /* Hobbies del perfil */
+  .hobbies-section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  /* Sección de habilidades */
+  .skills-section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .skills-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .skill-card {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.profile-left, .profile-right {
+    width: 45%;
+}
+
+.section {
+    background-color: #f0f0f5; /* Color gris claro */
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.general-info input, 
+.postal-address input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+}
+
+.save-btn {
+    background-color: #ff0066; /* Color fucsia */
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.save-btn:hover {
+    background-color: #e6005c;
+}
+
+.configuration button {
+    background-color: #ff0066; /* Color fucsia */
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.configuration button:hover {
+    background-color: #e6005c;
+}
+
+.profile-description {
+    text-align: center;
+}
+
+.profile-description img {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+}
+
+.my-hobbies {
+    text-align: center;
+}
+
+.hobby-icons {
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.skills-section .skills-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.skill-card {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.skill-card h4 {
+    margin-top: 10px;
+}
+
+.skill-card p {
+    font-size: 14px;
+    color: #666;
+}
+
+.profile-wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.profile-left, .profile-right {
+  width: 48%; /* Ajusta según sea necesario */
+}
+
+.profile-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+.postal-address, .configuration {
+  margin-top: 20px;
+  align-self: center; 
+}
+
+/* General Page Layout */
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f4f4f9;
+}
+
+/* Second navbar at the top */
+.navbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  background-color: #6435c9;
+  padding: 10px;
+}
+
+.navbar-btn {
+  color: white;
+  font-size: 16px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* Profile Wrapper */
+.profile-wrapper {
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+/* Left section */
+.profile-left {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.general-info, .postal-address, .configuration {
+  margin-bottom: 20px;
+}
+
+/* Right section */
+.profile-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-description {
+  margin-bottom: 20px;
+}
+
+.hobby-icons {
+  display: flex;
+  gap: 10px;
+  font-size: 24px;
+}
+
+/* Section Divider Title */
+.section-title {
+  margin-top: 30px;
+  font-size: 24px;
+  text-align: center;
+}
+
+/* Skills Section */
+.skills-section {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+
+.skill-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+/* General Page Layout */
+.profile-page {
+  margin-top: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #e4e1f0; /* Similar background as the screenshot */
+  padding-bottom: 50px;
+}
+
+/* Second navbar at the top */
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  background-color: #0e0329; /* Dark purple as header background */
+  padding: 10px;
+}
+
+.navbar-btn {
+  color: white;
+  font-size: 16px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* Profile Wrapper */
+.profile-wrapper {
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #fff; /* White background for sections */
+  border-radius: 20px;
+  margin: 20px 0;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Left section */
+.profile-left {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.general-info, .postal-address, .configuration {
+  margin-bottom: 20px;
+  background-color: #d3d0ea; /* Light purple for section backgrounds */
+  padding: 20px;
+  border-radius: 15px;
+}
+
+input {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #bdbdbd;
+  font-size: 14px;
+}
+
+.save-btn, .check-btn, button {
+  background-color: #ff8fa1; /* Pinkish color for buttons */
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  margin-top: 10px;
+}
+
+.profile-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-description {
+  margin-bottom: 20px;
+  background-color: #d3d0ea;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.hobby-icons {
+  display: flex;
+  gap: 10px;
+  font-size: 24px;
+  color: #ff8fa1;
+}
+
+/* Section Divider Title */
+.section-title {
+  margin-top: 30px;
+  font-size: 24px;
+  color: #6b61e3;
+  text-align: center;
+}
+
+/* Skills Section */
+.skills-section {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.skill-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.skill-card h4 {
+  margin-top: 10px;
+  font-size: 20px;
+  color: #6b61e3;
+}
+
+.skill-card p {
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+}
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  background-color: #0e0329;
+  padding: 10px;
+  gap: 20px; /* Agrega un margen entre los botones */
+}
+
+.navbar-btn {
+  color: white;
+  font-size: 16px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* Profile Wrapper */
+.profile-wrapper {
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 20px;
+  margin: 20px 0;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Left section */
+.profile-left {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.general-info, 
+.postal-address, 
+.configuration {
+  margin-bottom: 20px;
+  background-color: #d3d0ea; /* Fondo púrpura claro para todas las secciones */
+  padding: 20px;
+  border-radius: 15px; /* Bordes redondeados iguales */
+}
+
+input {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #bdbdbd;
+  font-size: 14px;
+}
+
+.save-btn, .check-btn, button {
+  background-color: #ff8fa1;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  margin-top: 10px;
+}
+
+.profile-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-description {
+  margin-bottom: 20px;
+  background-color: #d3d0ea;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.hobby-icons {
+  display: flex;
+  gap: 10px;
+  font-size: 24px;
+  color: #ff8fa1;
+}
+
+/* Section Divider Title */
+.section-title {
+  margin-top: 30px;
+  font-size: 24px;
+  color: #6b61e3;
+  text-align: center;
+}
+
+/* Skills Section */
+.skills-section {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.skill-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.skill-card h4 {
+  margin-top: 10px;
+  font-size: 20px;
+  color: #6b61e3;
+}
+
+.skill-card p {
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+}
+

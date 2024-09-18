@@ -1,54 +1,117 @@
 const getState = ({ getStore, getActions, setStore }) => {
-	return {
-		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
-		},
-		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
+    return {
+        store: {
+            backendUrl: process.env.REACT_APP_BACKEND_URL // 
+        },
+        actions: {
+          
+            fetchHello: async () => {
+                try {
+                    const response = await fetch(`${getStore().backendUrl}/hello`);
+                    const data = await response.json();
+                    if (response.ok) {
+                        console.log('Server response:', data);
+                        return data;
+                    } else {
+                        console.error('Error fetching hello:', data.message);
+                        return null;
+                    }
+                } catch (error) {
+                    console.error('Error during fetch request:', error);
+                    return null;
+                }
+            },
 
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
-				}
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
+            
+            signupUser: async (email, password, isActive) => {
+                const requestBody = {
+                    email,
+                    password,
+                    is_active: isActive
+                };
+                try {
+                    const response = await fetch(`${getStore().backendUrl}/signup`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(requestBody)
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        console.log('User signed up successfully:', data);
+                        return data;
+                    } else {
+                        console.error('Error signing up:', data.msg);
+                        return null;
+                    }
+                } catch (error) {
+                    console.error('Error during signup request:', error);
+                    return null;
+                }
+            },
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
+          
+            loginUser: async (email, password) => {
+                const requestBody = { email, password };
+                try {
+                    const response = await fetch(`${getStore().backendUrl}/login`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(requestBody)
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        localStorage.setItem('jwt-token', data.token); // Guardar token en localStorage
+                        console.log('User logged in successfully:', data);
+                        return data;
+                    } else {
+                        console.error('Error logging in:', data.msg);
+                        return null;
+                    }
+                } catch (error) {
+                    console.error('Error during login request:', error);
+                    return null;
+                }
+            },
 
-				//reset the global store
-				setStore({ demo: demo });
-			}
-		}
-	};
+            updateProfile: async (id, name, email, gender, lastname, birthdate, phone) => {
+                const store = getStore();
+                const token = localStorage.getItem('jwt-token');
+                const requestBody = {
+                    name,
+                    email,
+                    gender,
+                    lastname,
+                    birthdate,
+                    phone
+                };
+                try {
+                    const response = await fetch(`${store.backendUrl}/update_user`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + token
+                        },
+                        body: JSON.stringify(requestBody)
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        console.log('Profile updated successfully:', data);
+                        return data;
+                    } else {
+                        console.error('Error updating profile:', data.error || data.message);
+                        return null;
+                    }
+                } catch (error) {
+                    console.error('Error during the update request:', error);
+                    return null;
+                }
+            }
+        }
+    };
 };
 
 export default getState;
