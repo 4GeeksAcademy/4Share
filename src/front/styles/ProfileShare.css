@@ -4,7 +4,7 @@ body {
   }
   
   h1 {
-    color: #ffffff;
+    color: white;
   }
   
   /* Estilizar os cards */
@@ -26,6 +26,7 @@ body {
   
   /* Estilo para o título "Start Searching" */
   .custom-title {
+    margin-top: 60px;
     background-color: #ffffff;
     box-shadow: 3px 3px #f2c3b6;
     border-radius: 30px;
@@ -58,22 +59,13 @@ body {
   .custom-search-bar:focus {
     border-color: #f2c3b6;
     box-shadow: 0 0 5px rgba(242, 195, 182, 0.5);
-    outline: none;
   }
   
   /* Estilo de hover para os botões */
   .btn:hover {
-    background-color: #f2c3b6 !important;
-    color: #ffffff !important;
+    background-color: #ff3700 !important;
+    color: #322A45;
   }
+
   
-  .custom-btn {
-    background-color: white;
-    box-shadow: 0 0 5px rgba(242, 195, 182, 0.5);
-    color: black;
-  }
-  
-  .custom-btn:hover {
-    background-color: #f2f2f2; /* Cor ao passar o mouse */
-  }
   
