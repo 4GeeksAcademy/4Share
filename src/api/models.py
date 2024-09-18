@@ -141,9 +141,12 @@ def update_best_sharers():
     db.session.commit()
 
 
+class TokenRestorePassword(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    reset_token = db.Column(db.String(255), nullable=False, unique=True)
+    expires_at = db.Column(db.DateTime, nullable=False)
+    user = db.relationship('User', backref=db.backref('tokens', lazy=True))
 
-
-# class AutoEmails(db.Model):
-#     {
-
-#     }
+    def __repr__(self):
+        return f'<TokenRestorePassword {self.reset_token}>'
