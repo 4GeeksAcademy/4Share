@@ -1,10 +1,10 @@
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
-            backendUrl: process.env.REACT_APP_BACKEND_URL // 
+            backendUrl: process.env.REACT_APP_BACKEND_URL
         },
         actions: {
-          
+            
             fetchHello: async () => {
                 try {
                     const response = await fetch(`${getStore().backendUrl}/hello`);
@@ -24,17 +24,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             
             signupUser: async (email, password, isActive) => {
-                const requestBody = {
-                    email,
-                    password,
-                    is_active: isActive
-                };
+                const requestBody = { email, password, is_active: isActive };
                 try {
                     const response = await fetch(`${getStore().backendUrl}/signup`, {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(requestBody)
                     });
                     const data = await response.json();
@@ -51,20 +45,18 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-          
+           
             loginUser: async (email, password) => {
                 const requestBody = { email, password };
                 try {
                     const response = await fetch(`${getStore().backendUrl}/login`, {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(requestBody)
                     });
                     const data = await response.json();
                     if (response.ok) {
-                        localStorage.setItem('jwt-token', data.token); // Guardar token en localStorage
+                        localStorage.setItem('jwt-token', data.token); // Guarda el token en localStorage
                         console.log('User logged in successfully:', data);
                         return data;
                     } else {
@@ -77,6 +69,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+            
             updateProfile: async (id, name, email, gender, lastname, birthdate, phone) => {
                 const store = getStore();
                 const token = localStorage.getItem('jwt-token');
@@ -93,7 +86,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': 'Bearer ' + token
+                            'Authorization': 'Bearer ' + token 
                         },
                         body: JSON.stringify(requestBody)
                     });

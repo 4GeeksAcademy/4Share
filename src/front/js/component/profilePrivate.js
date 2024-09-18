@@ -3,6 +3,17 @@ import { FaGuitar, FaUtensils, FaMusic, FaFutbol, FaMapMarkerAlt } from "react-i
 import "/workspaces/4Share/src/front/styles/ProfilePrivate.css";
 import { Context } from "../store/appContext";
 
+// Componente SkillCard
+const SkillCard = ({ icon: Icon, title, description }) => (
+    <div className="skill-card">
+        <Icon size={32} />
+        <h4>{title}</h4>
+        {description.map((line, index) => (
+            <p key={index}>{line}</p>
+        ))}
+    </div>
+);
+
 export const PrivateProfile = () => {
     const { actions } = useContext(Context);
     const [gender, setGender] = useState("");
@@ -11,51 +22,81 @@ export const PrivateProfile = () => {
     const [emailAddress, setEmailAddress] = useState("");
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
+    const [error, setError] = useState(null);
 
     const handleSave = async () => {
+        console.log('Handling save...');
+    
+        if (!name || !emailAddress || !phone) {
+            setError("Please fill in all required fields.");
+            console.log('Missing required fields');
+            return;
+        }
+    
+        console.log('Calling updateProfile action with:', { name, emailAddress, gender, lastname, phone });
+    
         const result = await actions.updateProfile(
-            null,  // Asegúrate de pasar el id del usuario si es necesario
+            null, // ID del usuario (puedes agregarlo si es necesario)
             name,
             emailAddress,
             gender,
             lastname,
-            null,  // Puedes agregar la fecha de nacimiento si está disponible
+            null, // Puedes agregar birthdate si es necesario
             phone
         );
+    
         if (result) {
-            // Manejar éxito (por ejemplo, mostrar un mensaje o redirigir al usuario)
+            console.log('Profile updated successfully');
+            setError(null);
+            alert("Profile updated successfully");
         } else {
-            // Manejar error (por ejemplo, mostrar un mensaje de error)
+            console.log('Failed to update profile');
+            setError("Failed to update profile. Please try again.");
         }
     };
+    const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+    const [isRegisterModalOpen, setRegisterModalOpen] = useState(false);
 
+    const openLoginModal = () => setLoginModalOpen(true);
+    const openRegisterModal = () => setRegisterModalOpen(true);
+    
     return (
         <div className="profile-page">
-            {/* Second navbar */}
+        {/* Botones para abrir modales */}
+        <button onClick={openLoginModal} className="navbar-btn">Login</button>
+        <button onClick={openRegisterModal} className="navbar-btn">Register</button>
+
+        {/* Modales */}
+        {isLoginModalOpen && <LoginModal closeModal={() => setLoginModalOpen(false)} />}
+        {isRegisterModalOpen && <RegisterModal closeModal={() => setRegisterModalOpen(false)} />}
+
+            {/* Segundo navbar */}
             <div className="navbar">
                 <button className="navbar-btn">My Account</button>
                 <button className="navbar-btn">Request</button>
             </div>
 
             <div className="profile-wrapper">
-                {/* Left Section */}
+                {/* Sección izquierda */}
                 <div className="profile-left">
                     <div className="general-info section">
                         <h2>General Information</h2>
+                        {error && <p className="error-message">{error}</p>}
                         <input onChange={(e) => setGender(e.target.value)} type="text" placeholder="Gender" />
-                        <input onChange={(e) => setName(e.target.value)} type="text" placeholder="Name" />
+                        <input onChange={(e) => setName(e.target.value)} type="text" placeholder="Name" required />
                         <input onChange={(e) => setLastName(e.target.value)} type="text" placeholder="Last name" />
-                        <input onChange={(e) => setEmailAddress(e.target.value)} type="email" placeholder="Email address" />
-                        <input onChange={(e) => setPhone(e.target.value)} type="text" placeholder="User phone" />
+                        <input onChange={(e) => setEmailAddress(e.target.value)} type="email" placeholder="Email address" required />
+                        <input onChange={(e) => setPhone(e.target.value)} type="text" placeholder="User phone" required />
                         <button onClick={handleSave} className="save-btn">
                             Save
                         </button>
                     </div>
 
+                    {/* Sección de la dirección postal */}
                     <div className="postal-address section">
                         <h2>Postal Address</h2>
                         <div className="address-input">
-                            <FaMapMarkerAlt className="location-icon" /> 
+                            <FaMapMarkerAlt className="location-icon" />
                             <input
                                 type="text"
                                 placeholder="Enter your address"
@@ -65,6 +106,7 @@ export const PrivateProfile = () => {
                         </div>
                     </div>
 
+                    {/* Sección de configuración */}
                     <div className="configuration section">
                         <h2>Configuration</h2>
                         <button>Change my password</button>
@@ -74,7 +116,7 @@ export const PrivateProfile = () => {
                     </div>
                 </div>
 
-                {/* Right Section */}
+                {/* Sección derecha */}
                 <div className="profile-right">
                     <div className="profile-description section">
                         <img
@@ -97,47 +139,39 @@ export const PrivateProfile = () => {
                     </div>
                 </div>
             </div>
-            
-            {/* Divider with Title "Añadir habilidades" */}
+
+            {/* Divider con el título "Añadir habilidades" */}
             <h2 className="section-title">Añadir habilidades</h2>
 
-            {/* Skills Section */}
+            {/* Sección de habilidades */}
             <div className="skills-section">
-                <div className="skill-card">
-                    <FaMusic size={32} />
-                    <h4>Music</h4>
-                    <p>Electric Guitar and Acoustic Guitar</p>
-                    <p>No formal education</p>
-                    <p>
-                        I started playing 10 years ago, self-taught, and I have a natural talent for string instruments. I can help you learn how to play acoustic guitar or teach you some cool tricks on the electric guitar.
-                    </p>
-                </div>
-
-                <div className="skill-card">
-                    <FaUtensils size={32} />
-                    <h4>Cooking</h4>
-                    <p>Specialty: Desserts</p>
-                    <p>Everything I learned was from my grandmother.</p>
-                    <p>
-                        I love making cakes, pies, brigadeiro, flan, and my chocolate cookies are the best.
-                    </p>
-                </div>
-
-                <div className="skill-card">
-                    <FaMusic size={32} />
-                    <h4>Dance</h4>
-                    <p>Styles: Salsa and Hip-Hop</p>
-                    <p>No formal training</p>
-                    <p>
-                        I've been dancing for over 8 years and picked it up through experience.
-                    </p>
-                </div>
-                
-                <div className="skill-card">
-                    <FaGuitar size={32} />
-                    <h4>Guitar</h4>
-                    <p>Learn to play beautiful music with the guitar.</p>
-                </div>
+                <SkillCard
+                    icon={FaMusic}
+                    title="Music"
+                    description={[
+                        "Electric Guitar and Acoustic Guitar",
+                        "No formal education",
+                        "I started playing 10 years ago, self-taught, and am still learning!"
+                    ]}
+                />
+                <SkillCard
+                    icon={FaUtensils}
+                    title="Cooking"
+                    description={[
+                        "Started cooking as a hobby 2 years ago",
+                        "Not a professional chef, but I make great food",
+                        "Enjoy experimenting with recipes"
+                    ]}
+                />
+                <SkillCard
+                    icon={FaFutbol}
+                    title="Football"
+                    description={[
+                        "Started playing in my teens",
+                        "I play for fun every weekend with friends",
+                        "Enjoy watching football leagues"
+                    ]}
+                />
             </div>
         </div>
     );
