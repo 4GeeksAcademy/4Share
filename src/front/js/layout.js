@@ -6,6 +6,7 @@ import { BackendURL } from "./component/backendURL";
 import  Home  from "./pages/Home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
+import ResetPassword from "./pages/ResetPassword";
 import injectContext from "./store/appContext";
 
 import { Profile } from "./component/Profile";
@@ -36,6 +37,7 @@ const Layout = () => {
                         <Route element={<PrivateProfile />} path="/profileprivate" />
                         <Route element={<LoginModal />} path="/Login" />
                         <Route element={<SignupModal />} path="/Signup" />
+                        <Route element={<ResetPassword />} path="/resetpassword" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer/>
