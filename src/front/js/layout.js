@@ -12,6 +12,8 @@ import { Profile } from "./component/Profile";
 import { PrivateProfile } from "./component/profilePrivate";
 import { Navbar } from "./component/Navbar";
 import { Footer } from "./component/footer";
+import LoginModal from "./component/LoginModal";
+import SignupModal from "./component/SignupModal";
 
 
 //create your first component
@@ -31,7 +33,9 @@ const Layout = () => {
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Profile />} path="/profile" /> 
-                        <Route element={<PrivateProfile />} path="/profileprivate" /> 
+                        <Route element={<PrivateProfile />} path="/profileprivate" />
+                        <Route element={<LoginModal />} path="/Login" />
+                        <Route element={<SignupModal />} path="/Signup" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer/>
