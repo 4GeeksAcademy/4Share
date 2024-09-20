@@ -1,0 +1,167 @@
+/* Estilos gerais */
+body {
+    background: linear-gradient(to right, #2E1A47, #392B5D, #564F88); /* Gradiente mais suave */
+    color: #F0F0F0;
+    font-family: 'Lato', sans-serif; /* Fonte mais elegante e profissional */
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+/* Contêiner principal */
+.container-profile {
+    display: flex;
+    justify-content: space-between;
+    margin: 50px auto;
+    padding: 20px;
+    max-width: 1200px; /* Limite para largura */
+}
+
+/* Perfil no lado direito */
+.profile-sidebar-public {
+    width: 30%;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    color: #333;
+}
+
+.profile-sidebar-public img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover; /* Faz com que a imagem preencha o círculo */
+    margin-bottom: 15px;
+}
+
+.profile-sidebar-public h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #2E1A47; /* Tom roxo mais elegante */
+}
+
+.profile-sidebar-public .stars {
+    color: #FFD700;
+    margin-bottom: 10px;
+}
+
+.profile-sidebar-public p {
+    font-size: 16px;
+    color: #666;
+}
+
+.activity-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.activity-icons svg {
+    font-size: 24px;
+    color: #F96A86;
+}
+
+/* Informações à esquerda */
+.profile-main-public {
+    width: 65%;
+    color: white;
+}
+
+.profile-main-public h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.profile-main-public p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Botões de filtro (tags) */
+.filter-buttons {
+    margin-bottom: 30px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap; /* Para ajustar em diferentes resoluções */
+}
+
+.filter-buttons button {
+    background-color: #F96A86; /* Fundo roxo suave */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Efeito de transição suave */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.filter-buttons button:hover {
+    background-color: #564F88; /* Tom mais escuro no hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Seção de avaliações */
+.reviews-section {
+    background-color: #f0f0f0;
+    padding: 30px;
+    border-radius: 12px;
+    margin-top: 30px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.reviews-section h4 {
+    font-size: 24px;
+    color: #392B5D; /* Cor destacada */
+    margin-bottom: 20px;
+}
+
+.review-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.review-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); /* Sombra suave para elevar os cartões */
+    transition: transform 0.3s ease;
+}
+
+.review-card:hover {
+    transform: translateY(-5px); /* Elevar cartão ao passar o mouse */
+}
+
+.review-card .quote {
+    font-style: italic;
+    color: #666;
+}
+
+.review-card .review-title {
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 18px;
+    color: #392B5D;
+}
+
+.review-card .reviewer-info {
+    font-size: 14px;
+    color: #999;
+    margin-top: 5px;
+}
+
+/* Footer */
+footer {
+    background-color: #2C184A;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    margin-top: 40px;
+}
