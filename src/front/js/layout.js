@@ -17,6 +17,7 @@ import { Footer } from "./component/footer";
 import LoginModal from "./component/LoginModal";
 import SignupModal from "./component/SignupModal";
 
+
 //create your first component
 const Layout = () => {
     // the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -41,7 +42,7 @@ const Layout = () => {
                         <Route element={<ResetPassword />} path="/resetpassword" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
-                    <Footer/>
+                    <Footer />
 
                 </ScrollToTop>
             </BrowserRouter>
