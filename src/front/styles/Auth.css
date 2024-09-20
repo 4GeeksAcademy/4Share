@@ -1,0 +1,85 @@
+/* General Modal Styles */
+.modal-content {
+    background-color: #2c2c54; /* Morado oscuro */
+    color: white;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.modal-header {
+    border-bottom: none; /* Remove default border */
+}
+
+.custom-btn {
+    background-color: #ff4081 !important; /* Fucsia */
+    border: none;
+    border-radius: 10px;
+    color: white; /* Text color inside button */
+}
+
+.custom-input {
+    background-color: white;
+    color: #333;
+    border-radius: 10px;
+    border: none;
+}
+
+.custom-input::placeholder {
+    color: #aaa;
+}
+
+.divider {
+    margin: 10px 0;
+    text-align: center;
+    color: #aaa;
+    position: relative;
+}
+
+.divider::before, .divider::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background: #aaa;
+}
+
+.divider::before {
+    left: 0;
+}
+
+.divider::after {
+    right: 0;
+}
+
+.btn-outline-light {
+    border-color: white;
+    color: white;
+}
+
+/* Modal Button Styles */
+.btn-primary {
+    background-color: #ff4081; /* Fucsia */
+    border: none;
+    border-radius: 10px;
+}
+
+.btn-outline-light {
+    border-color: white;
+    color: white;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 576px) {
+    .custom-input {
+        font-size: 0.8rem;
+    }
+
+    .custom-btn {
+        font-size: 0.8rem;
+    }
+
+    .divider {
+        font-size: 0.8rem;
+    }
+}

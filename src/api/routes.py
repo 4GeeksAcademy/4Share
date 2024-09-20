@@ -57,9 +57,13 @@ def login_user():
         access_token = create_access_token(identity= user_login.id)
         return jsonify({ "token": access_token })
     
-@api.route('/update_user/<int:user_id>', methods=['PUT'])
-def update_user(user_id):
-    user = User.query.get(user_id)
+            
+
+@api.route('/update_user', methods=['PUT'])
+@jwt_required()
+def update_user():
+    current_user = get_jwt_identity()
+    user = User.query.get(current_user)
     if not user:
         return jsonify({"error": "User not found"}), 404
     data = request.json
@@ -69,7 +73,7 @@ def update_user(user_id):
     email = data.get('email')
     if email:
         existing_email = User.query.filter_by(email=email).first()
-        if existing_email and existing_email.id != user_id:
+        if existing_email and existing_email.id != current_user:
             return jsonify({"error": "Email already exists"}), 400
         user.email = email
     last_name = data.get('last_name')

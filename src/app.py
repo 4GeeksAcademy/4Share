@@ -1,19 +1,27 @@
-"""
-This module takes care of starting the API Server, Loading the DB and Adding the endpoints
-"""
 import os
-import re  
-from flask import Flask, request, jsonify, send_from_directory
+import re
+import uuid
+from datetime import datetime, timedelta
+from flask import Flask, request, jsonify, render_template, send_from_directory
+from flask_mail import Mail, Message
 from flask_migrate import Migrate
+from flask_jwt_extended import (
+    create_access_token,
+    get_jwt_identity,
+    decode_token,
+    JWTManager,
+    jwt_required
+)
+from flask_cors import CORS
+from flask_bcrypt import Bcrypt
+from datetime import timedelta
 from api.utils import APIException, generate_sitemap
-from api.models import db, User, Categories, Match, Review, BestSharers ,SkillNameEnum ,MatchStatus , update_best_sharers
+from api.models import db, User, TokenRestorePassword, Categories, Match, Review, BestSharers ,SkillNameEnum ,MatchStatus , update_best_sharers
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
-from datetime import timedelta
-from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
-from flask_cors import CORS
-from flask_bcrypt import Bcrypt
+
+app = Flask(__name__)
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
@@ -25,12 +33,24 @@ app.config["JWT_SECRET_KEY"] = os.getenv("JWT-KEY")
 jwt = JWTManager(app)
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=2)
 
-# Configuración de CORS
-cors = CORS(app, resources={r"/*": {"origins": "https://ideal-garbanzo-qjrrvx4jq9pfxr4p-3000.app.github.dev"}})
+# Setup CORS
+cors = CORS(app, resources={r"/*": {"origins": "https://ideal-garbanzo-qjrrvx4jq9pfxr4p-3000.app.github.dev/"}})
 
 bcrypt = Bcrypt(app)
 
-# database configuration
+# Setup Flask-mail
+app.config.update(dict(
+    DEBUG = False,
+    MAIL_SERVER = 'smtp.gmail.com',
+    MAIL_PORT = 587,
+    MAIL_USE_TLS = True,
+    MAIL_USE_SSL = False,
+    MAIL_USERNAME = os.getenv("MAIL_USERNAME"),
+    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
+))
+mail = Mail(app)
+
+# Database configuration
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
     app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace("postgres://", "postgresql://")
@@ -64,9 +84,8 @@ def serve_any_other_file(path):
     response.cache_control.max_age = 0  # avoid cache memory
     return response
 
-
 #Our Endpoints
-#SINGUP LOGIN AND PRIVATE PROFILE:
+#SINGUP LOGIN , PRIVATE PROFILE AND PUBLIC PROFILES:
 
 @app.route("/signup", methods=["POST"])
 def create_user():
@@ -211,6 +230,26 @@ def get_private_info():
         'msg': 'Info correct, you logged in!',
         'user_data': user.serialize()  
     })
+
+@app.route('/profile/<int:user_id>', methods=['GET'])
+def view_user_profile(user_id):
+    user = User.query.get(user_id)
+    
+    if not user:
+        return jsonify({'msg': 'User not found'}), 404
+    
+    return jsonify({'user_data': user.serialize()}), 200
+
+@app.route('/our/profiles', methods=['GET'])
+def our_profiles():
+
+    profiles = [
+        {'name': 'John Doe', 'email': 'john@example.com', 'description': 'Profile 1'},
+        {'name': 'Jane Smith', 'email': 'jane@example.com', 'description': 'Profile 2'},
+        {'name': 'Alice Johnson', 'email': 'alice@example.com', 'description': 'Profile 3'}
+    ]
+    
+    return jsonify({'profiles': profiles}), 200
 
 
 #SEARCH & SKILLS:
@@ -628,30 +667,88 @@ def delete_match(match_id):
 
 #FLASK-MAIL
 
+@app.route('/send-email')
+def send_mail():
+  msg = Message(
+    subject="TEMA DEL CORREO",
+    recipients=['ignacio.quiros.sordo@gmail.com'], sender=os.getenv("MAIL_USERNAME")
+  )
+  msg.html = render_template('email.html')
+  mail.send(msg)
+  return 'Email sent succesfully!'
+
+@app.route('/reset-password', methods=['POST'])
+def reset_password():
+    try:
+        email = request.json.get('email')
+        new_password = request.json.get('new_password')
+        token = request.json.get('token')
+
+        # Step 1: If no token is provided, send the reset password email with token
+        if not token:
+            user = User.query.filter_by(email=email).first()
+            if not user:
+                return jsonify({'msg': 'Email not found'}), 404
+
+            reset_token = str(uuid.uuid4())
+            expiration = datetime.utcnow() + timedelta(hours=1)
+
+            token_record = TokenRestorePassword(
+                user_id=user.id,
+                reset_token=reset_token,
+                expires_at=expiration
+            )
+            db.session.add(token_record)
+            db.session.commit()
+
+            jwt_token = create_access_token(identity={'reset_token': reset_token}, expires_delta=timedelta(hours=1))
+            reset_link = f'{os.getenv("BACKEND_URL")}/reset-password?token={jwt_token}'
+            msg = Message(
+                subject="Password Reset Request",
+                recipients=[email],
+                sender=os.getenv("MAIL_USERNAME")
+            )
+            msg.html = render_template('emailpassword.html', reset_link=reset_link)
+            mail.send(msg)
+
+            return jsonify({'msg': 'Password reset email sent successfully'}), 200
+
+        # Step 2: If a token is provided, verify it and allow the user to reset the password
+        else:
+            try:
+                decoded_token = decode_token(token)
+                reset_token = decoded_token['sub']['reset_token']
+
+                token_record = TokenRestorePassword.query.filter_by(reset_token=reset_token).first()
+                if not token_record:
+                    return jsonify({'msg': 'Invalid reset token'}), 400
+                if datetime.utcnow() > token_record.expires_at:
+                    return jsonify({'msg': 'Token has expired'}), 400
+
+                user = User.query.get(token_record.user_id)
+                if not user:
+                    return jsonify({'msg': 'User not found'}), 404
+
+            except Exception as e:
+                return jsonify({'msg': 'Invalid token', 'error': str(e)}), 400
+
+            # Step 3: Check new password and update it
+            if len(new_password) < 8:
+                return jsonify({'msg': 'Password must be at least 8 characters long'}), 400
+
+            pw_hash = bcrypt.generate_password_hash(new_password).decode('utf-8')
+            user.password = pw_hash
+            db.session.delete(token_record)
+            db.session.commit()
+
+            return jsonify({'msg': 'Password has been reset successfully'}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'msg': 'An error occurred', 'error': str(e)}), 500
 
 
 
-
-
-@app.route('/profile/<int:user_id>', methods=['GET'])
-def view_user_profile(user_id):
-    user = User.query.get(user_id)
-    
-    if not user:
-        return jsonify({'msg': 'User not found'}), 404
-    
-    return jsonify({'user_data': user.serialize()}), 200
-
-@app.route('/our/profiles', methods=['GET'])
-def our_profiles():
-    # Hardcoded example, you could fetch from a database or configuration
-    profiles = [
-        {'name': 'John Doe', 'email': 'john@example.com', 'description': 'Profile 1'},
-        {'name': 'Jane Smith', 'email': 'jane@example.com', 'description': 'Profile 2'},
-        {'name': 'Alice Johnson', 'email': 'alice@example.com', 'description': 'Profile 3'}
-    ]
-    
-    return jsonify({'profiles': profiles}), 200
 
 
 # this only runs if `$ python src/main.py` is executed

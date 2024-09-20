@@ -9,10 +9,13 @@ import { Single } from "./pages/single";
 import MessageMatch from "./pages/MessageMatch";
 import injectContext from "./store/appContext";
 
-import { Footer } from "./component/footer";
+import ResetPassword from "./pages/ResetPassword";
 import { Profile } from "./component/Profile";
-import { PrivateProfile } from "./component/PrivateProfile";
+import { PrivateProfile } from "./component/profilePrivate";
 import { Navbar } from "./component/Navbar";
+import { Footer } from "./component/footer";
+import LoginModal from "./component/LoginModal";
+import SignupModal from "./component/SignupModal";
 
 //create your first component
 const Layout = () => {
@@ -30,12 +33,16 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<Profile />} path="/profile" />
-                        <Route element={<PrivateProfile />} path="/myaccount" />
                         <Route element={<MessageMatch />} path="/requests" />
+                        <Route element={<Profile />} path="/profile" /> 
+                        <Route element={<PrivateProfile />} path="/profileprivate" />
+                        <Route element={<LoginModal />} path="/Login" />
+                        <Route element={<SignupModal />} path="/Signup" />
+                        <Route element={<ResetPassword />} path="/resetpassword" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
-                    <Footer />
+                    <Footer/>
+
                 </ScrollToTop>
             </BrowserRouter>
         </div>
