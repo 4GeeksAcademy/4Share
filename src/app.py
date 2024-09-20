@@ -249,11 +249,28 @@ def view_user_profile(user_id):
 
 @app.route('/our/profiles', methods=['GET'])
 def our_profiles():
-
     profiles = [
-        {'name': 'John Doe', 'email': 'john@example.com', 'description': 'Profile 1'},
-        {'name': 'Jane Smith', 'email': 'jane@example.com', 'description': 'Profile 2'},
-        {'name': 'Alice Johnson', 'email': 'alice@example.com', 'description': 'Profile 3'}
+        {
+            'name': 'Ignacio Quirós Sordo', 
+            'description': "With a background in video game development and 3D art, I have recently transitioned into the world of full-stack web development. I'm excited to blend my creative expertise with a strong foundation in front-end and back-end technologies to craft innovative and dynamic web applications.",
+            'photo': 'https://res.cloudinary.com/dam4qhxjr/image/upload/v1726848533/Foto_Ignacio_Quir%C3%B3s_01_b0yd0y.jpg',  
+            'github': 'https://github.com/IgnacioQuiros',         
+            'linkedin': 'https://www.linkedin.com/in/ignacio-quir%C3%B3s-sordo-137781184/'    
+        },
+        {
+            'name': 'Michelle Florez Moreno', 
+            'description': 'Backend specialist and database architect.',
+            'photo': 'https://res.cloudinary.com/dmkw4vacw/image/upload/v1725908776/SunWithLogo_n5wpgr.png',
+            'github': 'https://github.com/janesmith',
+            'linkedin': ' https://www.linkedin.com/in/florezmichelle/'
+        },
+        {
+            'name': 'Vitoria Choupina', 
+            'description': 'I am currently undergoing a career transition, with my studies focused on technology and communication. My main focus is the Full-Stack Software Developer course, where I am gaining expertise in both front-end and back-end development to excel in this dynamic field.',
+            'photo': 'https://res.cloudinary.com/dmkw4vacw/image/upload/v1725908776/SunWithLogo_n5wpgr.png',
+            'github': 'https://github.com/vchoupina',
+            'linkedin': 'https://www.linkedin.com/in/vitoria-choupina/'
+        }
     ]
     
     return jsonify({'profiles': profiles}), 200

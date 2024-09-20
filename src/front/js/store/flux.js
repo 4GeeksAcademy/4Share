@@ -1,31 +1,12 @@
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
-            backendUrl: process.env.REACT_APP_BACKEND_URL, // 
-            users: [],      // Almacena los usuarios buscados
-            bestSharers: [], // Mejores usuarios valorados
-            creators: [],    // Perfiles de los creadores
+            users: [],      
+            bestSharers: [], 
+            creators: [],    
         },
         actions: {
-          
-            fetchHello: async () => {
-                try {
-                    const response = await fetch(`${getStore().backendUrl}/hello`);
-                    const data = await response.json();
-                    if (response.ok) {
-                        console.log('Server response:', data);
-                        return data;
-                    } else {
-                        console.error('Error fetching hello:', data.message);
-                        return null;
-                    }
-                } catch (error) {
-                    console.error('Error during fetch request:', error);
-                    return null;
-                }
-            },
-
-            
+            // Action: Register in our page
             signupUser: async (email, password, isActive) => {
                 const requestBody = {
                     email,
@@ -33,7 +14,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     is_active: isActive
                 };
                 try {
-                    const response = await fetch(`${getStore().backendUrl}/signup`, {
+                    const response = await fetch(`${process.env.BACKEND_URL}signup`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -54,11 +35,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-          
+            // Action: Login in our page
             loginUser: async (email, password) => {
                 const requestBody = { email, password };
                 try {
-                    const response = await fetch(`${getStore().backendUrl}/login`, {
+                    const response = await fetch(`${process.env.BACKEND_URL}login`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -80,6 +61,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+            // Action: Modify your profile info
             updateProfile: async (id, name, email, gender, lastname, birthdate, phone) => {
                 const store = getStore();
                 const token = localStorage.getItem('jwt-token');
@@ -92,7 +74,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     phone
                 };
                 try {
-                    const response = await fetch(`${store.backendUrl}/update_user`, {
+                    const response = await fetch(`${process.env.BACKEND_URL}update_user`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -113,10 +95,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return null;
                 }
             },
-             // Action: Obtener todos los usuarios
+
+             // Action: Get all Users
              getAllUsers: async () => {
                 try {
-                    const response = await fetch('/users');
+                    const response = await fetch('${process.env.BACKEND_URL}users');
                     const data = await response.json();
                     
                     if (response.ok) {
@@ -129,7 +112,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            // Action: Buscar usuarios por nombre o query general
+            // Action: Search User by name or certain query
             searchUsers: async (query) => {
                 try {
                     const response = await fetch('${process.env.BACKEND_URL}search/users?query=${query}');
@@ -145,7 +128,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            // Action: Buscar usuarios por habilidad/categoría
+            // Action: Search Users by Skills
             searchUsersBySkill: async (skill) => {
                 try {
                     const response = await fetch('${process.env.BACKEND_URL}search/users/skill?skill=${skill}');
@@ -161,7 +144,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            // Action: Obtener los mejores valorados
+            // Action: Get BestSharers
             getTopRatedUsers: async () => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}bestsharers`); 
@@ -177,21 +160,17 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            // Action: Obtener perfiles de los creadores
-            getCreators: async () => {
+            // Action: Get our profiles
+             fetchCreators: async () => {
                 try {
-                    const response = await fetch('/creators');
+                    const response = await fetch(`${process.env.BACKEND_URL}our/profiles`);
                     const data = await response.json();
                     
-                    if (response.ok) {
-                        setStore({ creators: data.creators });
-                    } else {
-                        console.error(data.msg);
-                    }
+                    setStore({ creators: data.profiles });
                 } catch (error) {
-                    console.error('Error fetching creators:', error);
+                    console.error("Error fetching creators:", error);
                 }
-            }
+            },
         }
     };
 };

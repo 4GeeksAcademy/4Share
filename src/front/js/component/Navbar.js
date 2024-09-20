@@ -41,7 +41,7 @@ export const Navbar = () => {
                         </Link>
                     </button>
                     <button className="btn">
-                        <Link to="/">
+                        <Link to="#aboutUs">
                             <i className="fas fa-users icon"></i>
                             <span className="m-0 h6">About Us</span>
                         </Link>

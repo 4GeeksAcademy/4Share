@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Importar useNavigate
 import '/workspaces/4Share/src/front/styles/auth.css';
+
 const LoginModal = ({ onClose }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
