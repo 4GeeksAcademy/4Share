@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Importar useNavigate
 import '/workspaces/4Share/src/front/styles/auth.css';
-
 const LoginModal = ({ onClose }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
     const navigate = useNavigate(); // Usar useNavigate
-
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
@@ -19,7 +17,6 @@ const LoginModal = ({ onClose }) => {
                 body: JSON.stringify({ email, password })
             });
             const data = await response.json();
-
             if (response.ok) {
                 localStorage.setItem('jwt-token', data.token);
                 onClose();
@@ -31,10 +28,8 @@ const LoginModal = ({ onClose }) => {
             setError('Error al intentar iniciar sesión');
         }
     };
-
     return (
-
-        <div className="modal fade" id="loginModal" tabIndex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div className="modal fade show d-block" id="loginModal" tabIndex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content custom-modal">
                     <div className="modal-header border-0">
@@ -79,5 +74,4 @@ const LoginModal = ({ onClose }) => {
         </div>
     );
 };
-
 export default LoginModal;

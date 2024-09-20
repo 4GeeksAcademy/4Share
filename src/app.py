@@ -34,7 +34,7 @@ jwt = JWTManager(app)
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=2)
 
 # Setup CORS
-cors = CORS(app, resources={r"/*": {"origins": "https://obscure-orbit-wp66v45p7rrcq5q-3000.app.github.dev/"}})
+CORS(app)
 
 bcrypt = Bcrypt(app)
 
@@ -205,6 +205,13 @@ def update_user():
             return jsonify({"error": "Location must be between 2 and 50 characters"}), 400
         user.location = location
         updated_fields += 1
+
+    gender = body.get('gender')
+    if gender:
+        if len(gender) < 2 or len(gender) > 50:
+            return jsonify({"error": "Gender must be between 2 and 50 characters"}), 400
+        user.gender = gender
+        updated_fields += 1    
 
     # Check if any fields were updated
     if updated_fields == 0:

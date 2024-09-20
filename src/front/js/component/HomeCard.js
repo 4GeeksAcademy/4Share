@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 
 const HomeCard = ({ isOwnProfile, user }) => {
     const {
-        rating = 0,
-        id: userId,
-        description = "User has no description.",
-        userPic: userImg = "https://res.cloudinary.com/dmkw4vacw/image/upload/v1725908776/SunWithLogo_n5wpgr.png",
-        fullName = "Nombre Apellido",
-        githubUrl = "#",
-        linkedinUrl = "#"
-    } = user || {}; // Establecer valores predeterminados
+        rating = 0,  
+        id: userId,  
+        description = "User has no description.",  
+        profile_picture: userImg = "https://res.cloudinary.com/dmkw4vacw/image/upload/v1725908776/SunWithLogo_n5wpgr.png", 
+        full_name: fullName = "Nombre Apellido",  
+        github_url: githubUrl = "#",  
+        linkedin_url: linkedinUrl = "#",  
+    } = user || {};  //If user doesnt exist, just put the initial info
 
     return (
         <div className="card cardsBorder">

@@ -132,7 +132,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Action: Buscar usuarios por nombre o query general
             searchUsers: async (query) => {
                 try {
-                    const response = await fetch(`/search/users?query=${query}`);
+                    const response = await fetch('${process.env.BACKEND_URL}search/users?query=${query}');
                     const data = await response.json();
                     
                     if (response.ok) {
@@ -148,7 +148,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Action: Buscar usuarios por habilidad/categoría
             searchUsersBySkill: async (skill) => {
                 try {
-                    const response = await fetch(`/search/users/skill?skill=${skill}`);
+                    const response = await fetch('${process.env.BACKEND_URL}search/users/skill?skill=${skill}');
                     const data = await response.json();
                     
                     if (response.ok) {
@@ -164,11 +164,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Action: Obtener los mejores valorados
             getTopRatedUsers: async () => {
                 try {
-                    const response = await fetch('/users/top-rated');
+                    const response = await fetch(`${process.env.BACKEND_URL}bestsharers`); 
                     const data = await response.json();
                     
                     if (response.ok) {
-                        setStore({ bestSharers: data.users });
+                        setStore({ bestSharers: data.best_sharers }); 
                     } else {
                         console.error(data.msg);
                     }

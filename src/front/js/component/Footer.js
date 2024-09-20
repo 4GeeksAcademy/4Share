@@ -36,9 +36,8 @@ const Footer = () => (
 			<div className="footer-column">
 				<h4 className="custom-title-footer">Credits</h4>
 				<p>Developers from 4Share</p>
-				<img src="4share-logo.png" alt="4Share Logo" className="logo" />
+				<img src="https://res.cloudinary.com/dmkw4vacw/image/upload/v1725897267/Logo_in_White_text_ddxzuv.png" alt="4Share Logo" className="logo" />
 				<p>Our mentors from 4Geeks Academy</p>
-				<img src="4geeks-logo.png" alt="4Geeks Logo" className="logo" />
 			</div>
 		</div>
 	</footer>

@@ -5,26 +5,26 @@ import { Link, useNavigate } from "react-router-dom";
 import HomeCard from "../component/HomeCard";
 
 export const Home = () => {
-	const { store, actions } = useContext(Context);
-	const [searchQuery, setSearchQuery] = useState(""); // Estado para la búsqueda
-	const navigate = useNavigate(); // Hook para redireccionar
+    const { store, actions } = useContext(Context);
+    const [searchQuery, setSearchQuery] = useState("");  // Estado para la búsqueda
+    const navigate = useNavigate();  // Hook para redireccionar
 
-	// Al montar el componente, obtenemos los perfiles mejor valorados
-	useEffect(() => {
-		actions.getTopRatedUsers();
-	}, []);
+    // Al montar el componente, obtenemos los perfiles mejor valorados
+    useEffect(() => {
+        actions.getTopRatedUsers();  // Llama a la acción para obtener los usuarios mejor valorados
+    }, []);
 
-	// Maneja el cambio en el input de búsqueda
-	const handleSearchChange = (event) => {
-		setSearchQuery(event.target.value);
-	};
+    // Maneja el cambio en el input de búsqueda
+    const handleSearchChange = (event) => {
+        setSearchQuery(event.target.value);
+    };
 
-	// Redirige a la página de resultados de búsqueda
-	const handleSearchSubmit = () => {
-		if (searchQuery.trim()) {
-			navigate(`/profileSearch/${searchQuery}`);
-		}
-	};
+    // Redirige a la página de resultados de búsqueda
+    const handleSearchSubmit = () => {
+        if (searchQuery.trim()) {
+            navigate(`/profileSearch/${searchQuery}`);
+        }
+    };
 
 	useEffect(() => {
 		// Efecto parallax
@@ -55,8 +55,9 @@ export const Home = () => {
 
 	return (
 		<div className="container-fluid">
+			{/* Parallax */}
 			<div className="parallax">
-				<img id="sky" src="https://res.cloudinary.com/dmkw4vacw/image/upload/v1725904230/Sky_s3gbrd.png" alt="" />
+				<img id="sky" src="https://res.cloudinary.com/dmkw4vacw/image/upload/v1725908773/Sky_pyb4cm.png" alt="" />
 				<img id="sunLogo" src="https://res.cloudinary.com/dmkw4vacw/image/upload/v1725908776/SunWithLogo_n5wpgr.png" alt="" />
 				<img id="water" src="https://res.cloudinary.com/dmkw4vacw/image/upload/v1725908910/Water_yamzvh.png" alt="" />
 				<img id="rightP" src="https://res.cloudinary.com/dmkw4vacw/image/upload/v1725908072/Right_Palms_COPY_sennpc.png" alt="" />
@@ -75,15 +76,15 @@ export const Home = () => {
 					<div className="titlesBorder">
 						<h1 className="titles">Start Searching!</h1>
 					</div>
-					
+
 					{/* SearchBar */}
 					<div className="searchBar input-group px-1 px-sm-5 mb-2">
-						<input 
-							type="text" 
-							className="form-control search" 
-							placeholder="Search here any skills!" 
-							value={searchQuery} 
-							onChange={handleSearchChange} 
+						<input
+							type="text"
+							className="form-control search"
+							placeholder="Search here any skills!"
+							value={searchQuery}
+							onChange={handleSearchChange}
 						/>
 						<button className="btn me-0" onClick={handleSearchSubmit}>
 							<i className="fas fa-search"></i>
@@ -111,27 +112,27 @@ export const Home = () => {
 					<br /><br /><br /><br />
 				</div>
 
-				{/* Sección de perfiles mejor valorados */}
-				<div className="topProfiles d-flex flex-column justify-content-center align-items-center backgroundMain">
-					<div className="titlesBorder">
-						<h1 className="titles">Top rated profiles</h1>
-					</div>
-					<div className="container">
-						<div className="row d-flex justify-content-center">
-							{store.bestSharers.length > 0 ? (
-								store.bestSharers.map(user => (
-									<div className="col-10 col-md-4" key={user.id}>
-										<HomeCard isOwnProfile={false} user={user} />
-									</div>
-								))
-							) : (
-								<p>No top rated profiles found.</p>
-							)}
-						</div>
-					</div>
-				</div>
+				{/* BestSharers */}
+                <div className="topProfiles d-flex flex-column justify-content-center align-items-center backgroundMain">
+                    <div className="titlesBorder">
+                        <h1 className="titles">Top rated profiles</h1>
+                    </div>
+                    <div className="container">
+                        <div className="row d-flex justify-content-center">
+                            {store.bestSharers.length > 0 ? (
+                                store.bestSharers.map(user => (
+                                    <div className="col-10 col-md-4" key={user.id}>
+                                        <HomeCard isOwnProfile={false} user={user} />
+                                    </div>
+                                ))
+                            ) : (
+                                <p>No top-rated profiles found.</p>
+                            )}
+                        </div>
+                    </div>
+                </div>
 
-				{/* Sección de "Who are we?" */}
+				{/* Who are we? */}
 				<div className="aboutUs d-flex flex-column justify-content-center align-items-center backgroundMain ">
 					<div className="titlesBorder">
 						<h1 className="titles">Who are we?</h1>
@@ -154,5 +155,6 @@ export const Home = () => {
 		</div>
 	);
 };
+
 
 export default Home;

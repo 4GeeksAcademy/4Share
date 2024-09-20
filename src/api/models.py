@@ -15,6 +15,7 @@ class User(db.Model):
     last_name = db.Column(db.String(30), nullable=True)
     location = db.Column(db.String(50), nullable=True)
     language = db.Column(db.String(70), nullable=True)
+    gender = db.Column(db.String(50), nullable=True)
     profile_pic = db.Column(db.String(255), nullable=True)
     description = db.Column(db.String(250), nullable=True)
     phone = db.Column(db.String(20), nullable=True)
