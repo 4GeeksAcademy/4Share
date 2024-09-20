@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import "/workspaces/4Share/src/front/styles/profilePrivate.css";
+import "../../styles/profilePrivate.css";
 import { Context } from "../store/appContext";
 
 // Componente SkillCard

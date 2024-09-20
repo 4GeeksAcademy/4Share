@@ -1,5 +1,5 @@
 import React from "react";
-import "/workspaces/4Share/src/front/styles/profile.css"; 
+import "../../styles/profile.css";
 
 export const Profile = () => {
     return (

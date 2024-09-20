@@ -1,6 +1,6 @@
 import React from 'react';
 // import { FaMusic, FaUtensils, FaStar } from "react-icons/fa";
-import "/workspaces/4Share/src/front/styles/messageMatch.css";
+import "../../styles/messageMatch.css";
 
 const RequestsPage = () => {
     return (

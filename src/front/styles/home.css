@@ -81,6 +81,7 @@ body {
 
 /* Parallax Home */
 .parallax {
+    margin-top: 4vh;
     position: relative;
     background-color: #1B1328;
 
