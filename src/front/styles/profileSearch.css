@@ -1,0 +1,64 @@
+body {
+    background: linear-gradient(to right, #241E32, #322A45, #6D5B98);
+    color: white;
+  }
+
+  .profileSearch{
+    padding-top: 8vw !important;
+    padding-bottom: 8vw !important;
+  }
+
+  h1 {
+    color: white;
+  }
+  /* Estilizar os cards */
+  .card {
+    background-color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 20px;
+    border-radius: 15px;
+    /* Um único border-radius nos cards */
+    overflow: hidden;
+    box-shadow: 5px 5px #F2C3B6;
+  }
+  /* Estilizar os botões */
+  .btn,
+  .btn-primary {
+    border-radius: 25px;
+  }
+  /* Estilo para o título "Start Searching" */
+  .custom-title {
+    margin-top: 60px;
+    background-color: #FFFFFF;
+    box-shadow: 3px 3px #F2C3B6;
+    border-radius: 30px;
+    padding: 10px 30px;
+    font-size: 24px;
+    color: #6F7CB2;
+    display: inline-block;
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  /* Estilizar o botão de busca (com a lupa) */
+  .custom-search-button {
+    background-color: #F2C3B6;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  .custom-search-button:hover {
+    background-color: #E0B2A3;
+  }
+  /* Estilizar a barra de busca */
+  .custom-search-bar {
+    border-radius: 30px;
+    border-color: #F2C3B6;
+    transition: border-color 0.5s ease;
+  }
+  .custom-search-bar:focus {
+    border-color: #F2C3B6;
+    box-shadow: 0 0 5px rgba(242, 195, 182, 0.5);
+  }
+  /* Estilo de hover para os botões */
+  .btn:hover {
+    background-color: #FF3700 !important;
+    color: #322A45;
+  }

@@ -1,6 +1,6 @@
 import React from 'react';
-import { FaMusic, FaUtensils, FaStar } from "react-icons/fa";
-import "/workspaces/4Share/src/front/styles/MessageMatch.css";
+// import { FaMusic, FaUtensils, FaStar } from "react-icons/fa";
+import "/workspaces/4Share/src/front/styles/messageMatch.css";
 
 const RequestsPage = () => {
     return (
@@ -19,11 +19,11 @@ const RequestsPage = () => {
                         <div className="request-info">
                             <h3>Teresa Lisbon</h3>
                             <div className="rating">
-                                <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar />
+                                {/* <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar /> */}
                             </div>
                             <div className="skills">
-                                <span>Wants to learn: <FaMusic /></span>
-                                <span>Can teach: <FaUtensils /></span>
+                                {/* <span>Wants to learn: <FaMusic /></span> */}
+                                {/* <span>Can teach: <FaUtensils /></span> */}
                             </div>
                         </div>
                         <div className="request-actions">
@@ -42,11 +42,11 @@ const RequestsPage = () => {
                         <div className="request-info">
                             <h3>Patrick Jane</h3>
                             <div className="rating">
-                                <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar />
+                                {/* <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar /> */}
                             </div>
                             <div className="skills">
-                                <span>Wants to learn: <FaMusic /></span>
-                                <span>Can teach: <FaUtensils /></span>
+                                {/* <span>Wants to learn: <FaMusic /></span> */}
+                                {/* <span>Can teach: <FaUtensils /></span> */}
                             </div>
                         </div>
                         <div className="request-actions">
@@ -69,11 +69,11 @@ const RequestsPage = () => {
                         <div className="contact-info">
                             <h3>Gregory House</h3>
                             <div className="rating">
-                                <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar />
+                                {/* <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar /> */}
                             </div>
                             <div className="skills">
-                                <span>Wants to learn: <FaMusic /></span>
-                                <span>Can teach: <FaUtensils /></span>
+                                {/* <span>Wants to learn: <FaMusic /></span>
+                                <span>Can teach: <FaUtensils /></span> */}
                             </div>
                             <p>Phone: (123) 456-7890</p>
                             <p>Email: greg.house@example.com</p>
@@ -90,11 +90,11 @@ const RequestsPage = () => {
                         <div className="contact-info">
                             <h3>Temperance Brennan</h3>
                             <div className="rating">
-                                <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar />
+                                {/* <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar /> */}
                             </div>
                             <div className="skills">
-                                <span>Wants to learn: <FaMusic /></span>
-                                <span>Can teach: <FaUtensils /></span>
+                                {/* <span>Wants to learn: <FaMusic /></span>
+                                <span>Can teach: <FaUtensils /></span> */}
                             </div>
                             <p>Phone: (987) 654-3210</p>
                             <p>Email: brennan.bones@example.com</p>

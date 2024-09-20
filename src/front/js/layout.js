@@ -12,8 +12,9 @@ import injectContext from "./store/appContext";
 import ResetPassword from "./pages/ResetPassword";
 import { Profile } from "./component/Profile";
 import { PrivateProfile } from "./component/profilePrivate";
+import ProfileSearch from "./pages/ProfileSearch";
 import { Navbar } from "./component/Navbar";
-import { Footer } from "./component/footer";
+import  Footer  from "./component/Footer";
 import LoginModal from "./component/LoginModal";
 import SignupModal from "./component/SignupModal";
 
@@ -32,13 +33,12 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
-                        <Route element={<Single />} path="/single/:theid" />
                         <Route element={<MessageMatch />} path="/requests" />
                         {/* <Route element={<Profile />} path="/profile" /> 
                         <Route element={<PrivateProfile />} path="/profileprivate" /> */}
-                        <Route element={<LoginModal />} path="/Login" />
-                        <Route element={<SignupModal />} path="/Signup" />
+                        {/* <Route element={<LoginModal />} path="/Login" />
+                        <Route element={<SignupModal />} path="/Signup" /> */}
+                        <Route element={<ProfileSearch />} path="/profilesearch" />
                         <Route element={<ResetPassword />} path="/resetpassword" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>

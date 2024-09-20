@@ -1,6 +1,6 @@
 import React from "react";
 import { FaGuitar, FaUtensils, FaMusic, FaFutbol, FaCamera } from "react-icons/fa";
-import "/workspaces/4Share/src/front/styles/ProfilePrivate.css"; // Asegúrate de adaptar el camino según tu proyecto
+import "/workspaces/4Share/src/front/styles/profilePrivate.css"; // Asegúrate de adaptar el camino según tu proyecto
 
 export const PrivateProfile = () => {
     return (
