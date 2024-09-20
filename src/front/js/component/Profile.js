@@ -6,7 +6,7 @@ export const Profile = () => {
     return (
         <div className="container container-profile">
             {/* Parte izquierda con información general */}
-            <div className="profile-main">
+            <div className="profile-main-public">
                 {/* Botones de filtro con íconos */}
                 <div className="filter-buttons">
                     <button>
@@ -75,9 +75,9 @@ export const Profile = () => {
             </div>
 
             {/* Parte derecha con la información del perfil */}
-            <div className="profile-sidebar">
+            <div className="profile-sidebar-public">
                 {/* Aquí es donde agregas la imagen de Cloudinary */}
-                <img className="profile-img" src="https://images.ctfassets.net/pdf29us7flmy/7F5XUfHuv7dAW6joysWHxE/c5623a1d81518a813ad53b5020282bdb/GettyImages-583665183_optimized__1_.jpg?w=720&q=100&fm=jpg" alt="Profile" />
+                <img className="profile-img-public" src="https://images.ctfassets.net/pdf29us7flmy/7F5XUfHuv7dAW6joysWHxE/c5623a1d81518a813ad53b5020282bdb/GettyImages-583665183_optimized__1_.jpg?w=720&q=100&fm=jpg" alt="Profile" />
                 <h3>Samantha</h3>
                 <div className="stars">
                     <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar />

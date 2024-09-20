@@ -6,16 +6,16 @@ import { BackendURL } from "./component/backendURL";
 import  Home  from "./pages/Home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
-import ResetPassword from "./pages/ResetPassword";
+import MessageMatch from "./pages/MessageMatch";
 import injectContext from "./store/appContext";
 
+import ResetPassword from "./pages/ResetPassword";
 import { Profile } from "./component/Profile";
 import { PrivateProfile } from "./component/profilePrivate";
 import { Navbar } from "./component/Navbar";
 import { Footer } from "./component/footer";
 import LoginModal from "./component/LoginModal";
 import SignupModal from "./component/SignupModal";
-
 
 //create your first component
 const Layout = () => {
@@ -33,6 +33,7 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<MessageMatch />} path="/requests" />
                         <Route element={<Profile />} path="/profile" /> 
                         <Route element={<PrivateProfile />} path="/profileprivate" />
                         <Route element={<LoginModal />} path="/Login" />
@@ -41,10 +42,13 @@ const Layout = () => {
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer/>
+
                 </ScrollToTop>
             </BrowserRouter>
         </div>
     );
 };
+
+
 
 export default injectContext(Layout);

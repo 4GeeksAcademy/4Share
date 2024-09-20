@@ -1,167 +1,167 @@
-/* Estilos generales */
+/* Estilos gerais */
 body {
-    background-color: #3A215E; /* Fondo morado */
-    color: white; /* Texto blanco */
-    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #2E1A47, #392B5D, #564F88); /* Gradiente mais suave */
+    color: #F0F0F0;
+    font-family: 'Lato', sans-serif; /* Fonte mais elegante e profissional */
+    margin: 0;
+    padding: 0;
+    height: 100vh;
 }
 
-/* Contenedor principal */
+/* Contêiner principal */
 .container-profile {
     display: flex;
     justify-content: space-between;
-    margin-top: 50px;
+    margin: 50px auto;
     padding: 20px;
+    max-width: 1200px; /* Limite para largura */
 }
 
-/* Perfil en el lado derecho */
-.profile-sidebar {
+/* Perfil no lado direito */
+.profile-sidebar-public {
     width: 30%;
-    background-color: #f8f9fa; /* Fondo blanco */
-    padding: 20px;
-    border-radius: 8px;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
     text-align: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); /* Sombra suave */
     color: #333;
 }
 
-.profile-sidebar img {
-    width: 100px;
-    height: 100px;
+.profile-sidebar-public img {
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
+    object-fit: cover; /* Faz com que a imagem preencha o círculo */
     margin-bottom: 15px;
 }
 
-.profile-sidebar h3 {
-    margin-bottom: 5px;
+.profile-sidebar-public h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #2E1A47; /* Tom roxo mais elegante */
 }
 
-.profile-sidebar .stars {
-    color: #FFD700; /* Estrellas doradas */
+.profile-sidebar-public .stars {
+    color: #FFD700;
     margin-bottom: 10px;
 }
 
-/* Información de la izquierda */
-.profile-main {
+.profile-sidebar-public p {
+    font-size: 16px;
+    color: #666;
+}
+
+.activity-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.activity-icons svg {
+    font-size: 24px;
+    color: #F96A86;
+}
+
+/* Informações à esquerda */
+.profile-main-public {
     width: 65%;
     color: white;
 }
 
-.profile-main h2 {
+.profile-main-public h2 {
     font-size: 28px;
     font-weight: bold;
+    margin-bottom: 10px;
 }
 
-.profile-main p {
+.profile-main-public p {
     font-size: 18px;
-    line-height: 1.5;
-}
-
-/* Filtros de intereses (tags) */
-.filter-buttons {
+    line-height: 1.6;
     margin-bottom: 20px;
 }
 
+/* Botões de filtro (tags) */
+.filter-buttons {
+    margin-bottom: 30px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap; /* Para ajustar em diferentes resoluções */
+}
+
 .filter-buttons button {
-    background-color: white;
-    color: #3A215E;
+    background-color: #F96A86; /* Fundo roxo suave */
+    color: white;
     border: none;
     padding: 10px 20px;
-    margin-right: 10px;
     border-radius: 30px;
     font-weight: bold;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Efeito de transição suave */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .filter-buttons button:hover {
-    background-color: #f0f0f0;
+    background-color: #564F88; /* Tom mais escuro no hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Reviews */
+/* Seção de avaliações */
 .reviews-section {
-    background-color: #D7A6CF; /* Fondo rosado claro */
-    padding: 20px;
-    border-radius: 10px;
-    margin-top: 20px;
+    background-color: #f0f0f0;
+    padding: 30px;
+    border-radius: 12px;
+    margin-top: 30px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
-.reviews-section .review {
-    background-color: white;
-    color: #333;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 8px;
+.reviews-section h4 {
+    font-size: 24px;
+    color: #392B5D; /* Cor destacada */
+    margin-bottom: 20px;
 }
 
-.reviews-section .review h5 {
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.reviews-section .review p {
-    font-size: 16px;
-}
-
-.reviews-section .review .stars {
-    color: #FFD700;
-}
-
-/* Tarjetas de reseñas */
 .review-cards {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
 }
 
 .review-card {
-    background-color: #EFC4E7; /* Color rosado para las tarjetas */
+    background-color: #ffffff;
     border-radius: 10px;
-    padding: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); /* Sombra suave para elevar os cartões */
+    transition: transform 0.3s ease;
+}
+
+.review-card:hover {
+    transform: translateY(-5px); /* Elevar cartão ao passar o mouse */
 }
 
 .review-card .quote {
     font-style: italic;
+    color: #666;
 }
 
 .review-card .review-title {
     font-weight: bold;
     margin-top: 10px;
+    font-size: 18px;
+    color: #392B5D;
 }
 
 .review-card .reviewer-info {
     font-size: 14px;
-    color: #666;
+    color: #999;
+    margin-top: 5px;
 }
 
 /* Footer */
 footer {
-    background-color: #2C184A; /* Color morado oscuro */
+    background-color: #2C184A;
     color: white;
     padding: 20px;
     text-align: center;
     margin-top: 40px;
-}
-
-/* Tarjetas de reseñas */
-.review-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.review-card {
-    background-color: #EFC4E7; /* Color rosado para las tarjetas */
-    border-radius: 10px;
-    padding: 15px;
-}
-
-.review-card .quote {
-    font-style: italic;
-}
-
-.review-card .review-title {
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-.review-card .reviewer-info {
-    font-size: 14px;
-    color: #666;
 }
