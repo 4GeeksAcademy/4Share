@@ -1,7 +1,10 @@
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
-            backendUrl: process.env.REACT_APP_BACKEND_URL // 
+            backendUrl: process.env.REACT_APP_BACKEND_URL, // 
+            users: [],      // Almacena los usuarios buscados
+            bestSharers: [], // Mejores usuarios valorados
+            creators: [],    // Perfiles de los creadores
         },
         actions: {
           
@@ -108,6 +111,85 @@ const getState = ({ getStore, getActions, setStore }) => {
                 } catch (error) {
                     console.error('Error during the update request:', error);
                     return null;
+                }
+            },
+             // Action: Obtener todos los usuarios
+             getAllUsers: async () => {
+                try {
+                    const response = await fetch('/users');
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        setStore({ users: data.users });
+                    } else {
+                        console.error(data.msg);
+                    }
+                } catch (error) {
+                    console.error('Error fetching all users:', error);
+                }
+            },
+
+            // Action: Buscar usuarios por nombre o query general
+            searchUsers: async (query) => {
+                try {
+                    const response = await fetch(`/search/users?query=${query}`);
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        setStore({ users: data.users });
+                    } else {
+                        console.error(data.msg);
+                    }
+                } catch (error) {
+                    console.error('Error searching users:', error);
+                }
+            },
+
+            // Action: Buscar usuarios por habilidad/categoría
+            searchUsersBySkill: async (skill) => {
+                try {
+                    const response = await fetch(`/search/users/skill?skill=${skill}`);
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        setStore({ users: data.users });
+                    } else {
+                        console.error(data.msg);
+                    }
+                } catch (error) {
+                    console.error('Error searching users by skill:', error);
+                }
+            },
+
+            // Action: Obtener los mejores valorados
+            getTopRatedUsers: async () => {
+                try {
+                    const response = await fetch('/users/top-rated');
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        setStore({ bestSharers: data.users });
+                    } else {
+                        console.error(data.msg);
+                    }
+                } catch (error) {
+                    console.error('Error fetching top-rated users:', error);
+                }
+            },
+
+            // Action: Obtener perfiles de los creadores
+            getCreators: async () => {
+                try {
+                    const response = await fetch('/creators');
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        setStore({ creators: data.creators });
+                    } else {
+                        console.error(data.msg);
+                    }
+                } catch (error) {
+                    console.error('Error fetching creators:', error);
                 }
             }
         }

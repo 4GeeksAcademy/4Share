@@ -1,5 +1,4 @@
 import React from "react";
-import { FaGuitar, FaUtensils, FaMusic, FaFutbol, FaStar } from "react-icons/fa"; // Íconos adicionales
 import "/workspaces/4Share/src/front/styles/Profile.css"; 
 
 export const Profile = () => {
@@ -80,13 +79,13 @@ export const Profile = () => {
                 <img className="profile-img-public" src="https://images.ctfassets.net/pdf29us7flmy/7F5XUfHuv7dAW6joysWHxE/c5623a1d81518a813ad53b5020282bdb/GettyImages-583665183_optimized__1_.jpg?w=720&q=100&fm=jpg" alt="Profile" />
                 <h3>Samantha</h3>
                 <div className="stars">
-                    <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar />
+                    {/* <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar /> */}
                 </div>
                 <p>5 opinions</p>
 
                 {/* Añadimos íconos debajo de la imagen de perfil */}
                 <div className="activity-icons">
-                    <FaGuitar /> <FaUtensils /> <FaMusic /> <FaFutbol />
+                    {/* <FaGuitar /> <FaUtensils /> <FaMusic /> <FaFutbol /> */}
                 </div>
             </div>
         </div>

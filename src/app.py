@@ -34,7 +34,7 @@ jwt = JWTManager(app)
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=2)
 
 # Setup CORS
-cors = CORS(app, resources={r"/*": {"origins": "https://ideal-garbanzo-qjrrvx4jq9pfxr4p-3000.app.github.dev/"}})
+cors = CORS(app, resources={r"/*": {"origins": "https://obscure-orbit-wp66v45p7rrcq5q-3000.app.github.dev/"}})
 
 bcrypt = Bcrypt(app)
 

@@ -34,8 +34,8 @@ const Layout = () => {
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<MessageMatch />} path="/requests" />
-                        <Route element={<Profile />} path="/profile" /> 
-                        <Route element={<PrivateProfile />} path="/profileprivate" />
+                        {/* <Route element={<Profile />} path="/profile" /> 
+                        <Route element={<PrivateProfile />} path="/profileprivate" /> */}
                         <Route element={<LoginModal />} path="/Login" />
                         <Route element={<SignupModal />} path="/Signup" />
                         <Route element={<ResetPassword />} path="/resetpassword" />

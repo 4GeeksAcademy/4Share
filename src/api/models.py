@@ -149,4 +149,4 @@ class TokenRestorePassword(db.Model):
     user = db.relationship('User', backref=db.backref('tokens', lazy=True))
 
     def __repr__(self):
-        return f'<TokenRestorePassword {self.reset_token}>'
+        return f'<TokenRestorePassword {self.reset_token}>' 

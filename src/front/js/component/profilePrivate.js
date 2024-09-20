@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { FaGuitar, FaUtensils, FaMusic, FaFutbol, FaMapMarkerAlt } from "react-icons/fa";
 import "/workspaces/4Share/src/front/styles/ProfilePrivate.css";
 import { Context } from "../store/appContext";
 
@@ -55,7 +54,7 @@ export const PrivateProfile = () => {
                     <div className="postal-address section">
                         <h2>Postal Address</h2>
                         <div className="address-input">
-                            <FaMapMarkerAlt className="location-icon" /> 
+                            {/* <FaMapMarkerAlt className="location-icon" />  */}
                             <input
                                 type="text"
                                 placeholder="Enter your address"
@@ -92,7 +91,7 @@ export const PrivateProfile = () => {
                     <div className="my-hobbies section">
                         <h3>My Hobbies</h3>
                         <div className="hobby-icons">
-                            <FaGuitar /> <FaUtensils /> <FaMusic /> <FaFutbol />
+                            {/* <FaGuitar /> <FaUtensils /> <FaMusic /> <FaFutbol /> */}
                         </div>
                     </div>
                 </div>
@@ -104,7 +103,7 @@ export const PrivateProfile = () => {
             {/* Skills Section */}
             <div className="skills-section">
                 <div className="skill-card">
-                    <FaMusic size={32} />
+                    {/* <FaMusic size={32} /> */}
                     <h4>Music</h4>
                     <p>Electric Guitar and Acoustic Guitar</p>
                     <p>No formal education</p>
@@ -114,7 +113,7 @@ export const PrivateProfile = () => {
                 </div>
 
                 <div className="skill-card">
-                    <FaUtensils size={32} />
+                    {/* <FaUtensils size={32} /> */}
                     <h4>Cooking</h4>
                     <p>Specialty: Desserts</p>
                     <p>Everything I learned was from my grandmother.</p>
@@ -124,7 +123,7 @@ export const PrivateProfile = () => {
                 </div>
 
                 <div className="skill-card">
-                    <FaMusic size={32} />
+                    {/* <FaMusic size={32} /> */}
                     <h4>Dance</h4>
                     <p>Styles: Salsa and Hip-Hop</p>
                     <p>No formal training</p>
@@ -134,7 +133,7 @@ export const PrivateProfile = () => {
                 </div>
                 
                 <div className="skill-card">
-                    <FaGuitar size={32} />
+                    {/* <FaGuitar size={32} /> */}
                     <h4>Guitar</h4>
                     <p>Learn to play beautiful music with the guitar.</p>
                 </div>

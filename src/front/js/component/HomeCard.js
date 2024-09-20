@@ -2,11 +2,16 @@ import React from 'react';
 import "../../styles/home.css";
 import { Link } from "react-router-dom";
 
-const HomeCard = ({ isOwnProfile }) => {
-    let rating = 3; // change this for store.score or rating later 
-    let userId = 4; // change this for  store.user_id or something similar later 
-    let description = "Some quick example text to build on the card title and make up the bulk of the card's content..." //change this for store.description
-    let userImg = "https://res.cloudinary.com/dmkw4vacw/image/upload/v1725908776/SunWithLogo_n5wpgr.png" //Change here for store.userPic or something like that 
+const HomeCard = ({ isOwnProfile, user }) => {
+    const {
+        rating = 0,
+        id: userId,
+        description = "User has no description.",
+        userPic: userImg = "https://res.cloudinary.com/dmkw4vacw/image/upload/v1725908776/SunWithLogo_n5wpgr.png",
+        fullName = "Nombre Apellido",
+        githubUrl = "#",
+        linkedinUrl = "#"
+    } = user || {}; // Establecer valores predeterminados
 
     return (
         <div className="card cardsBorder">
@@ -22,25 +27,27 @@ const HomeCard = ({ isOwnProfile }) => {
                             <i className={`fas fa-star ${rating >= 5 ? 'filled' : ''}`}></i>
                         </div>
                         <div className="card-body">
-                            <h6 className="card-title">Nombre Apellido Apellido</h6>
+                            <h6 className="card-title">{fullName}</h6>
                             <p className="card-text" style={{ color: "black", fontSize: "0.9rem" }}>{description}</p>
-                            <Link to={`/profile/${userId}`} className="btn ">Enter Profile</Link>
+                            <Link to={`/profile/${userId}`} className="btn">Enter Profile</Link>
                         </div>
                     </div>
                 ) : (
                     <div>
                         <img src={userImg} className="card-img-top" alt="User Profile" />
                         <div className="card-body">
-                            <h6 className="card-title">Nombre Apellido Apellido</h6>
+                            <h6 className="card-title">{fullName}</h6>
                             <p className="card-text" style={{ color: "black", fontSize: "0.9rem" }}>{description}</p>
-                            <a to={`/profile/${userId}`} className="btn justify-content-center">Github</a>
-                            <a to={`/profile/${userId}`} className="btn justify-content-center">Linkedin</a>
+                            <div className="d-flex justify-content-around">
+                                <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="btn">Github</a>
+                                <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" className="btn">LinkedIn</a>
+                            </div>
                         </div>
                     </div>
                 )}
             </div>
         </div>
     );
-}
+};
 
 export default HomeCard;
