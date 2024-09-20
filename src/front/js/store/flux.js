@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
-            backendUrl: process.env.REACT_APP_BACKEND_URL
+            backendUrl: process.env.BACKEND_URL
         },
         actions: {
             
@@ -70,19 +70,18 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
             
-            updateProfile: async (id, name, email, gender, lastname, birthdate, phone) => {
+            updateProfile: async (location,name, email, last_name, phone) => {
                 const store = getStore();
                 const token = localStorage.getItem('jwt-token');
                 const requestBody = {
-                    name,
-                    email,
-                    gender,
-                    lastname,
-                    birthdate,
-                    phone
+                    location:location,
+                    name:name,
+                    email: email,
+                    last_name: last_name,
+                    phone:phone
                 };
                 try {
-                    const response = await fetch(`${store.backendUrl}/update_user`, {
+                    const response = await fetch(`${store.backendUrl}/api/update_user`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',

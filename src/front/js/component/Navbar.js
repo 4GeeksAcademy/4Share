@@ -1,17 +1,15 @@
-
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'; // Ya no necesitamos useNavigate
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 import '../../styles/navbar.css';
-
 export const Navbar = () => {
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [showSignupModal, setShowSignupModal] = useState(false);
-
+    const handleLoginOpen = () => setShowLoginModal(true);
     const handleLoginClose = () => setShowLoginModal(false);
+    const handleSignupOpen = () => setShowSignupModal(true);
     const handleSignupClose = () => setShowSignupModal(false);
-
     return (
         <nav className="navbar mainDiv">
             <img
@@ -48,25 +46,23 @@ export const Navbar = () => {
                             <span className="m-0 h6">About Us</span>
                         </Link>
                     </button>
-                    <button className="btn" data-bs-toggle="modal" data-bs-target="#loginModal">
-                      <i className="fas fa-sign-in-alt icon"></i>
-                       <span className="m-0 h6">Login</span>
+                    {/* Cambiamos el comportamiento del botón de login */}
+                    <button className="btn" onClick={handleLoginOpen}>
+                        <i className="fas fa-sign-in-alt icon"></i>
+                        <span className="m-0 h6">Log in</span>
                     </button>
-
-                    <button className="btn" onClick={() => setShowSignupModal(true)}>
-                        <i className="fas fa-clipboard-list icon"></i>
+                    {/* Cambiamos el comportamiento del botón de signup */}
+                    <button className="btn" onClick={handleSignupOpen}>
+                        <i className="fas fa-user-plus icon"></i>
                         <span className="m-0 h6">Register</span>
                     </button>
                 </div>
             </div>
-
-           
+            {/* Modal de Login */}
             {showLoginModal && <LoginModal onClose={handleLoginClose} />}
-
-        
+            {/* Modal de Signup */}
             {showSignupModal && <SignupModal onClose={handleSignupClose} />}
         </nav>
     );
 };
-
 export default Navbar;

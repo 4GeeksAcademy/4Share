@@ -16,7 +16,7 @@ const SkillCard = ({ icon: Icon, title, description }) => (
 
 export const PrivateProfile = () => {
     const { actions } = useContext(Context);
-    const [gender, setGender] = useState("");
+    const [location,setLocation] = useState("");
     const [name, setName] = useState("");
     const [lastname, setLastName] = useState("");
     const [emailAddress, setEmailAddress] = useState("");
@@ -33,15 +33,13 @@ export const PrivateProfile = () => {
             return;
         }
     
-        console.log('Calling updateProfile action with:', { name, emailAddress, gender, lastname, phone });
+        console.log('Calling updateProfile action with:', { name, emailAddress, location, lastname, phone });
     
         const result = await actions.updateProfile(
-            null, // ID del usuario (puedes agregarlo si es necesario)
+            location,
             name,
             emailAddress,
-            gender,
             lastname,
-            null, // Puedes agregar birthdate si es necesario
             phone
         );
     
@@ -54,22 +52,10 @@ export const PrivateProfile = () => {
             setError("Failed to update profile. Please try again.");
         }
     };
-    const [isLoginModalOpen, setLoginModalOpen] = useState(false);
-    const [isRegisterModalOpen, setRegisterModalOpen] = useState(false);
-
-    const openLoginModal = () => setLoginModalOpen(true);
-    const openRegisterModal = () => setRegisterModalOpen(true);
-    
+  
     return (
         <div className="profile-page">
-        {/* Botones para abrir modales */}
-        <button onClick={openLoginModal} className="navbar-btn">Login</button>
-        <button onClick={openRegisterModal} className="navbar-btn">Register</button>
-
-        {/* Modales */}
-        {isLoginModalOpen && <LoginModal closeModal={() => setLoginModalOpen(false)} />}
-        {isRegisterModalOpen && <RegisterModal closeModal={() => setRegisterModalOpen(false)} />}
-
+        
             {/* Segundo navbar */}
             <div className="navbar">
                 <button className="navbar-btn">My Account</button>
@@ -82,12 +68,12 @@ export const PrivateProfile = () => {
                     <div className="general-info section">
                         <h2>General Information</h2>
                         {error && <p className="error-message">{error}</p>}
-                        <input onChange={(e) => setGender(e.target.value)} type="text" placeholder="Gender" />
+                        <input onChange={(e) => setLocation(e.target.value)} type="text" placeholder="Location" />
                         <input onChange={(e) => setName(e.target.value)} type="text" placeholder="Name" required />
                         <input onChange={(e) => setLastName(e.target.value)} type="text" placeholder="Last name" />
                         <input onChange={(e) => setEmailAddress(e.target.value)} type="email" placeholder="Email address" required />
                         <input onChange={(e) => setPhone(e.target.value)} type="text" placeholder="User phone" required />
-                        <button onClick={handleSave} className="save-btn">
+                        <button onClick={()=>handleSave()} className="save-btn">
                             Save
                         </button>
                     </div>
@@ -134,7 +120,7 @@ export const PrivateProfile = () => {
                     <div className="my-hobbies section">
                         <h3>My Hobbies</h3>
                         <div className="hobby-icons">
-                            <FaGuitar /> <FaUtensils /> <FaMusic /> <FaFutbol />
+                            <FaGuitar /> <i className="fas fa-utensils"> </i><FaMusic /> <FaFutbol />
                         </div>
                     </div>
                 </div>
