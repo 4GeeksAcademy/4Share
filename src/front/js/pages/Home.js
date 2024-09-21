@@ -20,7 +20,14 @@ export const Home = () => {
 
     const handleSearchSubmit = () => {
         if (searchQuery.trim()) {
-            navigate(`/profilesearch/${searchQuery}`);
+            navigate(`/profilesearch/search?query=${searchQuery}`);
+        }
+    };
+
+    // Permitir que el input funcione con Enter
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            handleSearchSubmit();
         }
     };
 
@@ -29,6 +36,7 @@ export const Home = () => {
         navigate(`/profilesearch/${category}`);
     };
 
+    // Animaciones de scroll (sin cambios)
     useEffect(() => {
         let ground = document.getElementById('ground');
         let leftP = document.getElementById('leftP');
@@ -82,9 +90,10 @@ export const Home = () => {
                         <input
                             type="text"
                             className="form-control search"
-                            placeholder="Search here any skills!"
+                            placeholder="Find by person's name, description, etc..."
                             value={searchQuery}
                             onChange={handleSearchChange}
+                            onKeyPress={handleKeyPress} // Añadir evento de teclado
                         />
                         <button className="btn me-0" onClick={handleSearchSubmit}>
                             <i className="fas fa-search"></i>

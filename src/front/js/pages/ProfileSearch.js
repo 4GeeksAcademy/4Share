@@ -66,7 +66,7 @@ const ProfileSearch = () => {
                             <input
                                 type="search"
                                 className="form-control custom-search-bar me-2"
-                                placeholder="Find by person's name, description, etc."
+                                placeholder="Find by person's name, description, etc..."
                                 aria-label="Search"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
