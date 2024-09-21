@@ -46,6 +46,7 @@ a {
 }
 
 .btn {
+    margin-top: 0;
     background: linear-gradient(to right, #FFF8F9, #F0C6BD);
     border: 0.12rem solid black;
     margin-left: 0.6rem;

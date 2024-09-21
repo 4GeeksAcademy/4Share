@@ -19,6 +19,7 @@ class User(db.Model):
     profile_pic = db.Column(db.String(255), nullable=True)
     description = db.Column(db.String(250), nullable=True)
     phone = db.Column(db.String(20), nullable=True)
+    average_score = db.Column(db.Float, nullable=True)
 
     # Relationships to Review model
     reviews_written = db.relationship('Review', foreign_keys='Review.reviewer_id', back_populates='reviewer', lazy='dynamic')
@@ -34,11 +35,19 @@ class User(db.Model):
 
     def calculate_average_score(self):
         reviews = Review.query.filter_by(reviewee_id=self.id).all()
+        print(f"Calculando average_score para user_id {self.id}, reseñas: {len(reviews)}")
+        
         if not reviews:
-            return 3  # Media if 0 reviews
-
-        total_score = sum([review.score for review in reviews])
-        return total_score / len(reviews)
+            self.average_score = 3  # Media if 0 reviews
+            db.session.commit() 
+            return 3
+        
+        total_score = sum(review.score for review in reviews)
+        average = total_score / len(reviews)
+        self.average_score = average  
+        db.session.commit() 
+        print(f"Nuevo average_score para user_id {self.id}: {self.average_score}")
+        return average
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -54,7 +63,8 @@ class User(db.Model):
             "profile_pic": self.profile_pic or "",
             "description": self.description or "",
             "phone": self.phone or "",
-            "is_active": self.is_active
+            "is_active": self.is_active,
+             "average_score": self.average_score
         }
 
 class Favorite(db.Model):

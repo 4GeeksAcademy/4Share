@@ -111,13 +111,14 @@ def create_user():
 
     try:
         pw_hash = bcrypt.generate_password_hash(body['password']).decode('utf-8')
-        new_user = User(email=body['email'], password=pw_hash, is_active=is_active)
+        new_user = User(email=body['email'], password=pw_hash, is_active=is_active, average_score=3)  
         db.session.add(new_user)
         db.session.commit()
         return jsonify({'msg': 'New User Created', 'user_id': new_user.id}), 201
     except Exception as e:
         db.session.rollback()
         return jsonify({'msg': str(e)}), 500
+
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -206,12 +207,25 @@ def update_user():
         user.location = location
         updated_fields += 1
 
+    profile_pic = body.get('profile_pic')
+    if profile_pic:
+        user.profile_pic = profile_pic
+        updated_fields += 1
+
     gender = body.get('gender')
     if gender:
         if len(gender) < 2 or len(gender) > 50:
             return jsonify({"error": "Gender must be between 2 and 50 characters"}), 400
         user.gender = gender
         updated_fields += 1    
+
+    description = body.get('description')
+    if description:
+        if len(description) < 2 or len(description) > 250:
+            return jsonify({"error": "Description must be between 2 and 50 characters"}), 400
+        user.description = description
+        updated_fields += 1  
+    
 
     # Check if any fields were updated
     if updated_fields == 0:
@@ -244,7 +258,6 @@ def view_user_profile(user_id):
     
     if not user:
         return jsonify({'msg': 'User not found'}), 404
-    
     return jsonify({'user_data': user.serialize()}), 200
 
 @app.route('/our/profiles', methods=['GET'])
@@ -259,15 +272,15 @@ def our_profiles():
         },
         {
             'name': 'Michelle Florez Moreno', 
-            'description': 'Backend specialist and database architect.',
-            'photo': 'https://res.cloudinary.com/dmkw4vacw/image/upload/v1725908776/SunWithLogo_n5wpgr.png',
-            'github': 'https://github.com/janesmith',
+            'description': 'Creative soul with a background in marketing and sales, now diving into development. Obsessed with front-end but picking up back-end skills to make it all work. Currently turning ideas into reality through coding and app development.',
+            'photo': 'https://res.cloudinary.com/dam4qhxjr/image/upload/v1726861992/WhatsApp_Image_2024-09-20_at_21.48.16_ritfy6.jpg',
+            'github': 'https://github.com/Michflorez',
             'linkedin': ' https://www.linkedin.com/in/florezmichelle/'
         },
         {
             'name': 'Vitoria Choupina', 
             'description': 'I am currently undergoing a career transition, with my studies focused on technology and communication. My main focus is the Full-Stack Software Developer course, where I am gaining expertise in both front-end and back-end development to excel in this dynamic field.',
-            'photo': 'https://res.cloudinary.com/dmkw4vacw/image/upload/v1725908776/SunWithLogo_n5wpgr.png',
+            'photo': 'https://res.cloudinary.com/dam4qhxjr/image/upload/v1726861992/WhatsApp_Image_2024-09-20_at_21.39.41_wwqqir.jpg',
             'github': 'https://github.com/vchoupina',
             'linkedin': 'https://www.linkedin.com/in/vitoria-choupina/'
         }
@@ -280,8 +293,11 @@ def our_profiles():
 
 @app.route('/users', methods=['GET'])
 def list_users():
-    users = User.query.all()
-    return jsonify({'users': [user.serialize() for user in users]}), 200
+    try:
+        users = User.query.all()
+        return jsonify({'users': [user.serialize() for user in users]}), 200
+    except Exception as e:
+        return jsonify({'msg': 'An error occurred', 'error': str(e)}), 500
 
 @app.route('/search/users', methods=['GET'])
 def search_users():
@@ -290,16 +306,12 @@ def search_users():
     if not query:
         return jsonify({'msg': 'Query parameter is required'}), 400
     
-    # Search user with that info in all fields
     users = User.query.filter(
         (User.name.ilike(f'%{query}%')) |
-        (User.email.ilike(f'%{query}%')) |
         (User.last_name.ilike(f'%{query}%')) |
         (User.location.ilike(f'%{query}%')) |
         (User.language.ilike(f'%{query}%')) |
-        (User.profile_pic.ilike(f'%{query}%')) |
-        (User.description.ilike(f'%{query}%')) |
-        (User.phone.ilike(f'%{query}%'))
+        (User.description.ilike(f'%{query}%')) 
     ).all()
     
     if not users:
@@ -307,26 +319,28 @@ def search_users():
     
     return jsonify({'users': [user.serialize() for user in users]}), 200
 
-@app.route('/search/users/skill', methods=['GET'])
+@app.route('/search/usersbyskill', methods=['GET'])
 def search_users_by_skill():
-    skill = request.args.get('skill', '')
-    
+    skill = request.args.get('skill', '').lower()
+
     if not skill:
         return jsonify({'msg': 'Skill parameter is required'}), 400
-    
+
     try:
-        # Usa CAST para convertir el tipo enum a texto
         users = db.session.query(User).join(Categories).filter(
             Categories.skill_name.cast(db.String).ilike(f'%{skill}%')
         ).all()
-        
+
         if not users:
             return jsonify({'msg': 'No users found with the specified skill'}), 404
-        
+
         return jsonify({'users': [user.serialize() for user in users]}), 200
-    
+
     except Exception as e:
         return jsonify({'msg': 'An error occurred', 'error': str(e)}), 500
+
+
+
 
 @app.route('/add/skill', methods=['POST'])
 @jwt_required()
@@ -447,7 +461,7 @@ def add_review():
         if not reviewee_id or not score:
             return jsonify({'msg': 'Reviewee ID and score are required'}), 400
         if reviewer_id == reviewee_id:
-            return jsonify({'msg': 'You can not review yourself!'}), 400
+            return jsonify({'msg': 'You cannot review yourself!'}), 400
 
         reviewer = User.query.get(reviewer_id)
         reviewee = User.query.get(reviewee_id)
@@ -463,14 +477,15 @@ def add_review():
         db.session.add(new_review)
         db.session.commit()
 
-        update_best_sharers()
+        reviewee.calculate_average_score()
+        db.session.commit()
 
-        return jsonify({
-            'review_id': new_review.id,  'msg': 'Review added successfully'}), 201
+        return jsonify({'review_id': new_review.id, 'msg': 'Review added successfully'}), 201
 
     except Exception as e:
         db.session.rollback()
         return jsonify({'msg': 'An error occurred', 'error': str(e)}), 500
+
 
 @app.route('/update/review/<int:review_id>', methods=['PUT'])
 @jwt_required()
@@ -490,15 +505,19 @@ def update_review(review_id):
 
         if score is not None:
             review.score = score
+
         if comment:
             review.comment = comment
 
         db.session.commit()
-        update_best_sharers()
+
+        reviewee = User.query.get(review.reviewee_id)
+        reviewee.calculate_average_score()
+        db.session.commit()
 
         return jsonify({
             'msg': 'Review updated successfully',
-            'review_id': review.id,  
+            'review_id': review.id,
             'review': {
                 'reviewer_id': review.reviewer_id,
                 'reviewee_id': review.reviewee_id,
@@ -510,6 +529,7 @@ def update_review(review_id):
     except Exception as e:
         db.session.rollback()
         return jsonify({'msg': 'An error occurred', 'error': str(e)}), 500
+
 
 @app.route('/reviews/<int:review_id>', methods=['DELETE'])
 @jwt_required()
@@ -524,16 +544,17 @@ def delete_review(review_id):
         db.session.delete(review)
         db.session.commit()
 
-        update_best_sharers()
+        # Recalcular el puntaje promedio
+        reviewee = User.query.get(review.reviewee_id)
+        reviewee.calculate_average_score()
+        db.session.commit()
 
-        return jsonify({
-            'msg': 'Review deleted successfully',
-            'review_id': review.id 
-        }), 200
+        return jsonify({'msg': 'Review deleted successfully', 'review_id': review.id}), 200
 
     except Exception as e:
         db.session.rollback()
         return jsonify({'msg': 'An error occurred', 'error': str(e)}), 500
+
 
 @app.route('/bestsharers', methods=['GET'])
 def best_sharers():
@@ -541,13 +562,13 @@ def best_sharers():
         users = User.query.all()
 
         users_with_scores = [
-            (user, user.calculate_average_score() if user.reviews_received.count() > 0 else 0)
+            (user, user.calculate_average_score())  # Calcula el promedio directamente
             for user in users
         ]
 
         sorted_users = sorted(users_with_scores, key=lambda x: x[1], reverse=True)
 
-        top_users = sorted_users[:6]
+        top_users = sorted_users[:6]  # Obtén los mejores 6 usuarios
 
         if not top_users:
             return jsonify({'msg': 'No users found'}), 404
@@ -555,15 +576,16 @@ def best_sharers():
         return jsonify({
             'best_sharers': [
                 {
-                    'user': user.serialize(),
-                    'average_score': average_score
+                    'user': {
+                        'average_score': average_score,
+                        **user.serialize()  # Serializa el usuario y añade el average_score
+                    }
                 } for user, average_score in top_users
             ]
         }), 200
     except Exception as e:
         return jsonify({'msg': 'An error occurred', 'error': str(e)}), 500
-    except Exception as e:
-        return jsonify({'msg': 'An error occurred', 'error': str(e)}), 500
+
 
 @app.route('/user/<int:user_id>/reviews', methods=['GET']) #To know all reviews of an user, just if we need it
 def get_user_reviews(user_id):
@@ -770,9 +792,6 @@ def reset_password():
     except Exception as e:
         db.session.rollback()
         return jsonify({'msg': 'An error occurred', 'error': str(e)}), 500
-
-
-
 
 
 # this only runs if `$ python src/main.py` is executed

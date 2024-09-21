@@ -11,21 +11,21 @@ body {
   h1 {
     color: white;
   }
-  /* Estilizar os cards */
+
   .card {
     background-color: rgba(255, 255, 255, 0.9);
     margin-bottom: 20px;
     border-radius: 15px;
-    /* Um único border-radius nos cards */
+
     overflow: hidden;
     box-shadow: 5px 5px #F2C3B6;
   }
-  /* Estilizar os botões */
+ 
   .btn,
   .btn-primary {
     border-radius: 25px;
   }
-  /* Estilo para o título "Start Searching" */
+
   .custom-title {
     margin-top: 60px;
     background-color: #FFFFFF;
@@ -38,7 +38,7 @@ body {
     text-align: center;
     font-family: Arial, sans-serif;
   }
-  /* Estilizar o botão de busca (com a lupa) */
+
   .custom-search-button {
     background-color: #F2C3B6;
     border: none;
@@ -47,7 +47,7 @@ body {
   .custom-search-button:hover {
     background-color: #E0B2A3;
   }
-  /* Estilizar a barra de busca */
+
   .custom-search-bar {
     border-radius: 30px;
     border-color: #F2C3B6;
@@ -57,8 +57,17 @@ body {
     border-color: #F2C3B6;
     box-shadow: 0 0 5px rgba(242, 195, 182, 0.5);
   }
-  /* Estilo de hover para os botões */
+
   .btn:hover {
     background-color: #FF3700 !important;
     color: #322A45;
   }
+
+  .categoriesHome {
+    flex-wrap: wrap; 
+}
+
+.categoriesHome{.btn {
+    flex: 1; 
+    min-width: 100px; 
+}}

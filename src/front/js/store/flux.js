@@ -1,9 +1,9 @@
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
-            users: [],      
-            bestSharers: [], 
-            creators: [],    
+            users: [],
+            bestSharers: [],
+            creators: [],
         },
         actions: {
             // Action: Register in our page
@@ -96,62 +96,75 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-             // Action: Get all Users
-             getAllUsers: async () => {
+            // Action: Get all Users
+            getAllUsers: async () => {
                 try {
-                    const response = await fetch('${process.env.BACKEND_URL}users');
+                    const response = await fetch(`${process.env.BACKEND_URL}users`);
                     const data = await response.json();
-                    
+
                     if (response.ok) {
-                        setStore({ users: data.users });
+                        const currentUsers = getStore().users;
+                        if (JSON.stringify(currentUsers) !== JSON.stringify(data.users)) {
+                            setStore({ users: data.users });
+                        }
                     } else {
-                        console.error(data.msg);
+                        console.error("Error fetching all users:", data.msg);
                     }
                 } catch (error) {
-                    console.error('Error fetching all users:', error);
+                    console.error("Error fetching all users:", error);
                 }
             },
 
-            // Action: Search User by name or certain query
+            // Action: Search users by "query" (It means anything you search)
             searchUsers: async (query) => {
+                if (!query) return;
                 try {
-                    const response = await fetch('${process.env.BACKEND_URL}search/users?query=${query}');
+                    const response = await fetch(`${process.env.BACKEND_URL}search/users?query=${query}`);
                     const data = await response.json();
-                    
+            
                     if (response.ok) {
-                        setStore({ users: data.users });
+                        const currentUsers = getStore().users;
+                        if (JSON.stringify(currentUsers) !== JSON.stringify(data.users)) {
+                            setStore({ users: data.users });
+                        }
                     } else {
-                        console.error(data.msg);
+                        console.error("Error searching users:", data.msg);
                     }
                 } catch (error) {
-                    console.error('Error searching users:', error);
+                    console.error("Error searching users:", error);
                 }
             },
 
-            // Action: Search Users by Skills
+            // Action: Search users by skill
             searchUsersBySkill: async (skill) => {
+                if (!skill) return;
                 try {
-                    const response = await fetch('${process.env.BACKEND_URL}search/users/skill?skill=${skill}');
+                    const response = await fetch(`${process.env.BACKEND_URL}search/usersbyskill?skill=${skill}`);
                     const data = await response.json();
-                    
-                    if (response.ok) {
-                        setStore({ users: data.users });
+            
+                    if (response.ok && data.users) {
+                        const currentUsers = getStore().users;
+                        if (JSON.stringify(currentUsers) !== JSON.stringify(data.users)) {
+                            setStore({ users: data.users });
+                        }
                     } else {
-                        console.error(data.msg);
+                        console.warn("No users found for the specified skill:", data.msg);
+                        setStore({ users: [] });  // Vacía la lista si no hay usuarios encontrados
                     }
                 } catch (error) {
-                    console.error('Error searching users by skill:', error);
+                    console.error(`Error fetching users by skill (${skill}):`, error);
+                    setStore({ users: [] });  // Asegúrate de no obtener todos los usuarios aquí
                 }
             },
 
             // Action: Get BestSharers
             getTopRatedUsers: async () => {
                 try {
-                    const response = await fetch(`${process.env.BACKEND_URL}bestsharers`); 
+                    const response = await fetch(`${process.env.BACKEND_URL}bestsharers`);
                     const data = await response.json();
-                    
+            
                     if (response.ok) {
-                        setStore({ bestSharers: data.best_sharers }); 
+                        setStore({ bestSharers: data.best_sharers });
                     } else {
                         console.error(data.msg);
                     }
@@ -161,11 +174,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
             // Action: Get our profiles
-             fetchCreators: async () => {
+            fetchCreators: async () => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}our/profiles`);
                     const data = await response.json();
-                    
+
                     setStore({ creators: data.profiles });
                 } catch (error) {
                     console.error("Error fetching creators:", error);

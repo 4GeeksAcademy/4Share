@@ -146,6 +146,14 @@ body {
     align-items: center;
 
 }
+.searchBar{
+    .btn{
+        margin-top: auto !important;
+        margin-bottom: auto !important;
+        padding-top: 17px;
+        padding-bottom: 17px;
+    }
+}
 
 .search:hover {
     transform: scaleY(1.1);
@@ -230,8 +238,8 @@ body {
     justify-content: center;
     align-items: center;
     margin: auto;
-    width: 15vw;
-    height: 15vw;
+    width: 10vw;
+    height: 10vw;
     overflow: hidden;
     border-radius: 50%;
     border: 2px solid #ccc;
@@ -242,4 +250,16 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.categoriesHome {
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: space-between;
+}
+
+.categoriesHome .btn {
+    flex: 1; 
+    min-width: 100px; 
+    margin: 5px; 
 }

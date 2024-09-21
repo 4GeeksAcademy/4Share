@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import HomeCard from "../component/HomeCard";
 
 export const Home = () => {
@@ -10,6 +10,7 @@ export const Home = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        actions.getTopRatedUsers();
         actions.fetchCreators();
     }, []);
 
@@ -19,8 +20,13 @@ export const Home = () => {
 
     const handleSearchSubmit = () => {
         if (searchQuery.trim()) {
-            navigate(`/profileSearch/${searchQuery}`);
+            navigate(`/profilesearch/${searchQuery}`);
         }
+    };
+
+    const handleCategorySelect = async (category) => {
+        await actions.searchUsersBySkill(category);
+        navigate(`/profilesearch/${category}`);
     };
 
     useEffect(() => {
@@ -50,7 +56,7 @@ export const Home = () => {
     }, []);
 
     return (
-        <div className="container-fluid">
+        <div className="container-fluid" id="home">
             <div className="parallax">
                 <img id="sky" src="https://res.cloudinary.com/dmkw4vacw/image/upload/v1725908773/Sky_pyb4cm.png" alt="" />
                 <img id="sunLogo" src="https://res.cloudinary.com/dmkw4vacw/image/upload/v1725908776/SunWithLogo_n5wpgr.png" alt="" />
@@ -66,7 +72,7 @@ export const Home = () => {
                     <img className="jumboOne" src="https://res.cloudinary.com/dmkw4vacw/image/upload/v1726054101/2429e1b1914a898551911a26c60f563a_fv26mn.png" alt="Image 2" />
                 </div>
 
-                <div className="d-flex flex-column justify-content-center align-items-center backgroundMain ">
+                <div className="d-flex flex-column justify-content-center align-items-center backgroundMain">
                     <br /><br /><br /><br />
                     <div className="titlesBorder">
                         <h1 className="titles">Start Searching!</h1>
@@ -86,35 +92,31 @@ export const Home = () => {
                     </div>
 
                     <div className="d-flex justify-content-between row w-100 px-5 categoriesHome">
-                        <Link className="col-1 col-sm-2 btn d-flex justify-content-center" to="/profileSearch/cooking">
-                            <p>Cooking</p><i className="fas fa-utensils"></i>
-                        </Link>
-                        <Link className="col-1 col-sm-2 btn d-flex justify-content-center" to="/profileSearch/languages">
-                            <p>Languages</p><i className="fas fa-language"></i>
-                        </Link>
-                        <Link className="col-1 col-sm-2 btn d-flex justify-content-center" to="/profileSearch/music">
-                            <p>Music</p><i className="fas fa-music"></i>
-                        </Link>
-                        <Link className="col-1 col-sm-2 btn d-flex justify-content-center" to="/profileSearch/sports">
-                            <p>Sports</p><i className="fas fa-futbol"></i>
-                        </Link>
-                        <Link className="col-1 col-sm-2 btn d-flex justify-content-center" to="/profileSearch/others">
-                            <p>Others</p><i className="fas fa-ellipsis-h"></i>
-                        </Link>
+                        {["all", "cooking", "languages", "music", "sports", "others"].map((category) => (
+                            <button
+                                key={category}
+                                className="col-1 col-sm-2 btn d-flex justify-content-center"
+                                onClick={() => handleCategorySelect(category)}
+                            >
+                                <p>{category.charAt(0).toUpperCase() + category.slice(1)}</p>
+                                <i className={`fas fa-${category === "all" ? "asterisk" : category === "cooking" ? "utensils" : category === "languages" ? "language" : category === "music" ? "music" : category === "sports" ? "futbol" : "ellipsis-h"}`}></i>
+                            </button>
+                        ))}
                     </div>
+
                     <br /><br /><br /><br />
                 </div>
 
-                {/* <div className="topProfiles d-flex flex-column justify-content-center align-items-center backgroundMain">
+                <div className="topProfiles d-flex flex-column justify-content-center align-items-center backgroundMain">
                     <div className="titlesBorder">
                         <h1 className="titles">Top rated profiles</h1>
                     </div>
                     <div className="container">
                         <div className="row d-flex justify-content-center">
                             {store.bestSharers.length > 0 ? (
-                                store.bestSharers.map(user => (
-                                    <div className="col-10 col-md-4" key={user.id}>
-                                        <HomeCard isOwnProfile={false} user={user} />
+                                store.bestSharers.map((sharer) => (
+                                    <div className="col-10 col-md-4" key={sharer.user.id}>
+                                        <HomeCard isOwnProfile={false} user={sharer} />
                                     </div>
                                 ))
                             ) : (
@@ -122,14 +124,14 @@ export const Home = () => {
                             )}
                         </div>
                     </div>
-                </div> */}
+                </div>
 
                 <div className="aboutUs d-flex flex-column justify-content-center align-items-center backgroundMain" id="aboutUs">
                     <div className="titlesBorder">
                         <h1 className="titles">Who are we?</h1>
                     </div>
                     <div className="container">
-                        <div className="row d-flex justify-content-center">
+                        <div className="row d-flex">
                             {store.creators.length > 0 ? (
                                 store.creators.map((creator, index) => (
                                     <div className="col-10 col-md-4" key={index}>

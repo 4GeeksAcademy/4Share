@@ -4,7 +4,7 @@ import string
 
 BASE_URL = 'https://obscure-orbit-wp66v45p7rrcq5q-3001.app.github.dev'
 NUMBER_OF_USERS = 10  
-PASSWORD = 'Password123!'  
+PASSWORD = 'Password1234'  
 
 def generate_random_email():
     username = ''.join(random.choices(string.ascii_lowercase, k=8))
@@ -55,7 +55,8 @@ def update_user_profile(token):
         "last_name": generate_random_name(),
         "phone": f'+{random.randint(100000000, 999999999)}',
         "location": random.choice(['Madrid', 'Barcelona', 'Sevilla', 'Valencia', 'Bilbao']),
-        "gender": random.choice(['Male', 'Female', 'Other'])
+        "gender": random.choice(['Male', 'Female', 'Other']),
+        "description": "Este es un ejemplo de descripción."
     }
     response = requests.put(update_url, json=update_payload, headers=headers)
     
