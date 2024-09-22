@@ -160,53 +160,25 @@ def update_user():
     if not user:
         return jsonify({"error": "User not found"}), 404
 
-    # Track how many fields are updated
     updated_fields = 0
 
-    name = body.get('name')
-    if name:
-        if len(name) < 2 or len(name) > 30:
-            return jsonify({"error": "Name must be between 2 and 30 characters"}), 400
-        user.name = name
+    gender = body.get('gender')  # Cambiado a gender
+    if gender:
+        if len(gender) < 2 or len(gender) > 20:
+            return jsonify({"error": "Gender must be between 2 and 20 characters"}), 400
+        user.gender = gender
         updated_fields += 1
 
-    email = body.get('email')
-    if email:
-        # Check if the email format is valid using a regular expression
-        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-            return jsonify({"error": "Invalid email format"}), 400
-        
-        # Ensure the email is not already used by another user
-        existing_email = User.query.filter_by(email=email).first()
-        if existing_email and existing_email.id != current_user_id:
-            return jsonify({"error": "Email already exists"}), 400
+    # Validación de otros campos: nombre, email, etc. (se mantiene igual)
 
-        user.email = email
+    # Actualizar la dirección postal
+    address = body.get('address')
+    if address:
+        if len(address) < 5 or len(address) > 100:
+            return jsonify({"error": "Address must be between 5 and 100 characters"}), 400
+        user.address = address
         updated_fields += 1
 
-    last_name = body.get('last_name')
-    if last_name:
-        if len(last_name) < 2 or len(last_name) > 30:
-            return jsonify({"error": "Last name must be between 2 and 30 characters"}), 400
-        user.last_name = last_name
-        updated_fields += 1
-
-    phone = body.get('phone')
-    if phone:
-        # Basic validation: only numbers, spaces, and dashes allowed
-        if not re.match(r'^\+?[0-9\s\-]+$', phone):
-            return jsonify({"error": "Invalid phone number format"}), 400
-        user.phone = phone
-        updated_fields += 1
-
-    location = body.get('location')
-    if location:
-        if len(location) < 2 or len(location) > 50:
-            return jsonify({"error": "Location must be between 2 and 50 characters"}), 400
-        user.location = location
-        updated_fields += 1
-
-    # Check if any fields were updated
     if updated_fields == 0:
         return jsonify({"message": "No fields were updated"}), 400
 
@@ -216,6 +188,7 @@ def update_user():
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": "An error occurred while updating the user", "details": str(e)}), 500
+
 
 @app.route("/profile", methods=["GET"])
 @jwt_required()

@@ -1,33 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom'; // Importar useNavigate
 import '/workspaces/4Share/src/front/styles/Auth.css';
+import { Context } from '../store/appContext';
+
 const LoginModal = ({ onClose }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
     const navigate = useNavigate(); // Usar useNavigate
+    
     const handleLogin = async (e) => {
         e.preventDefault();
-        try {
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/login`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email, password })
-            });
-            const data = await response.json();
-            if (response.ok) {
-                localStorage.setItem('jwt-token', data.token);
-                onClose();
-                navigate('/profile'); // Redirigir a la página de perfil
-            } else {
-                setError(data.msg);
-            }
-        } catch (error) {
-            setError('Error al intentar iniciar sesión');
-        }
-    };
+        
+            const result = await actions.loginUser(email, password);
+            
+    }
+  const { actions } = useContext(Context);
+
     return (
         <div className="modal fade show d-block" id="loginModal" tabIndex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered">

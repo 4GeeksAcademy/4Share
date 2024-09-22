@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { FaGuitar, FaUtensils, FaMusic, FaFutbol, FaMapMarkerAlt } from "react-icons/fa";
+import { FaGuitar, FaMusic, FaFutbol, FaMapMarkerAlt } from "react-icons/fa";
 import "/workspaces/4Share/src/front/styles/ProfilePrivate.css";
 import { Context } from "../store/appContext";
 
@@ -16,7 +16,7 @@ const SkillCard = ({ icon: Icon, title, description }) => (
 
 export const PrivateProfile = () => {
     const { actions } = useContext(Context);
-    const [location,setLocation] = useState("");
+    const [gender, setGender] = useState("");
     const [name, setName] = useState("");
     const [lastname, setLastName] = useState("");
     const [emailAddress, setEmailAddress] = useState("");
@@ -25,60 +25,72 @@ export const PrivateProfile = () => {
     const [error, setError] = useState(null);
 
     const handleSave = async () => {
-        console.log('Handling save...');
-    
         if (!name || !emailAddress || !phone) {
             setError("Please fill in all required fields.");
-            console.log('Missing required fields');
             return;
         }
-    
-        console.log('Calling updateProfile action with:', { name, emailAddress, location, lastname, phone });
-    
+
         const result = await actions.updateProfile(
-            location,
+            gender,
             name,
             emailAddress,
             lastname,
             phone
         );
-    
+
         if (result) {
-            console.log('Profile updated successfully');
             setError(null);
             alert("Profile updated successfully");
         } else {
-            console.log('Failed to update profile');
             setError("Failed to update profile. Please try again.");
         }
     };
-  
+
     return (
         <div className="profile-page">
-        
-            {/* Segundo navbar */}
             <div className="navbar">
                 <button className="navbar-btn">My Account</button>
                 <button className="navbar-btn">Request</button>
             </div>
 
             <div className="profile-wrapper">
-                {/* Sección izquierda */}
                 <div className="profile-left">
                     <div className="general-info section">
                         <h2>General Information</h2>
                         {error && <p className="error-message">{error}</p>}
-                        <input onChange={(e) => setLocation(e.target.value)} type="text" placeholder="Location" />
-                        <input onChange={(e) => setName(e.target.value)} type="text" placeholder="Name" required />
-                        <input onChange={(e) => setLastName(e.target.value)} type="text" placeholder="Last name" />
-                        <input onChange={(e) => setEmailAddress(e.target.value)} type="email" placeholder="Email address" required />
-                        <input onChange={(e) => setPhone(e.target.value)} type="text" placeholder="User phone" required />
-                        <button onClick={()=>handleSave()} className="save-btn">
+                        <input
+                            onChange={(e) => setGender(e.target.value)}
+                            type="text"
+                            placeholder="Gender"
+                        />
+                        <input
+                            onChange={(e) => setName(e.target.value)}
+                            type="text"
+                            placeholder="Name"
+                            required
+                        />
+                        <input
+                            onChange={(e) => setLastName(e.target.value)}
+                            type="text"
+                            placeholder="Last name"
+                        />
+                        <input
+                            onChange={(e) => setEmailAddress(e.target.value)}
+                            type="email"
+                            placeholder="Email address"
+                            required
+                        />
+                        <input
+                            onChange={(e) => setPhone(e.target.value)}
+                            type="text"
+                            placeholder="User phone"
+                            required
+                        />
+                        <button onClick={handleSave} className="save-btn">
                             Save
                         </button>
                     </div>
 
-                    {/* Sección de la dirección postal */}
                     <div className="postal-address section">
                         <h2>Postal Address</h2>
                         <div className="address-input">
@@ -90,9 +102,11 @@ export const PrivateProfile = () => {
                                 onChange={(e) => setAddress(e.target.value)}
                             />
                         </div>
+                        <button onClick={() => actions.updateAddress(address)} className="save-btn">
+                            Save Address
+                        </button>
                     </div>
 
-                    {/* Sección de configuración */}
                     <div className="configuration section">
                         <h2>Configuration</h2>
                         <button>Change my password</button>
@@ -102,7 +116,6 @@ export const PrivateProfile = () => {
                     </div>
                 </div>
 
-                {/* Sección derecha */}
                 <div className="profile-right">
                     <div className="profile-description section">
                         <img
@@ -111,51 +124,45 @@ export const PrivateProfile = () => {
                             alt="Profile"
                         />
                         <h3>My description</h3>
-                        <p>
-                            Passionate about music, cooking, and sports. I enjoy learning
-                            new things and exploring new cultures.
-                        </p>
+                        <p>Passionate about music, cooking, and sports.</p>
                     </div>
 
                     <div className="my-hobbies section">
                         <h3>My Hobbies</h3>
                         <div className="hobby-icons">
-                            <FaGuitar /> <i className="fas fa-utensils"> </i><FaMusic /> <FaFutbol />
+                            <i className="fas fa-utensils"></i>
+                            <FaMusic />
+                            <FaFutbol />
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* Divider con el título "Añadir habilidades" */}
-            <h2 className="section-title">Añadir habilidades</h2>
+            <h2 className="section-title">Add Skills</h2>
 
-            {/* Sección de habilidades */}
             <div className="skills-section">
                 <SkillCard
                     icon={FaMusic}
                     title="Music"
                     description={[
-                        "Electric Guitar and Acoustic Guitar",
-                        "No formal education",
-                        "I started playing 10 years ago, self-taught, and am still learning!"
+                        "Electric and Acoustic Guitar",
+                        "Self-taught for 10 years",
                     ]}
                 />
                 <SkillCard
-                    icon={FaUtensils}
+                    icon={() => <i className="fas fa-utensils"></i>}
                     title="Cooking"
                     description={[
-                        "Started cooking as a hobby 2 years ago",
-                        "Not a professional chef, but I make great food",
-                        "Enjoy experimenting with recipes"
+                        "Started 2 years ago",
+                        "Enjoy experimenting with recipes",
                     ]}
                 />
                 <SkillCard
                     icon={FaFutbol}
                     title="Football"
                     description={[
-                        "Started playing in my teens",
-                        "I play for fun every weekend with friends",
-                        "Enjoy watching football leagues"
+                        "Playing since teens",
+                        "Watch football leagues regularly",
                     ]}
                 />
             </div>
