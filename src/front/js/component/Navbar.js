@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 import '../../styles/navbar.css';
@@ -8,40 +8,19 @@ export const Navbar = () => {
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [showSignupModal, setShowSignupModal] = useState(false);
     const location = useLocation(); 
+    const navigate = useNavigate(); 
 
     const handleLoginOpen = () => setShowLoginModal(true);
     const handleLoginClose = () => setShowLoginModal(false);
     const handleSignupOpen = () => setShowSignupModal(true);
     const handleSignupClose = () => setShowSignupModal(false);
 
-    const scrollToSection = (sectionId) => {
-        const section = document.getElementById(sectionId);
-        if (section) {
-            const offset = window.innerWidth > 768 ? +200 : -30;
-            const topPosition = section.getBoundingClientRect().top + window.scrollY + offset;
-
-            window.scrollTo({
-                top: topPosition,
-                behavior: 'smooth'
-            });
-        }
+    const handleLogout = () => {
+        localStorage.removeItem('jwt-token');
+        navigate('/');
     };
 
-    const handleHomeClick = () => {
-        if (location.pathname === '/') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-            window.location.href = '/';
-        }
-    };
-
-    const handleAboutUsClick = () => {
-        if (location.pathname === '/') {
-            scrollToSection('aboutUs');
-        } else {
-            window.location.href = '/#aboutUs';
-        }
-    };
+    const isLoggedIn = !!localStorage.getItem('jwt-token');
 
     return (
         <nav className="navbar mainDiv">
@@ -67,26 +46,41 @@ export const Navbar = () => {
                     alt="Logo"
                 />
                 <div className="d-flex justify-content-end buttonsList" id="navbarSupportedContent">
-                    <button className="btn" onClick={handleHomeClick}>
+                    <button className="btn" onClick={() => window.location.href = '/'}>
                         <i className="fas fa-home icon"></i>
                         <span className="m-0 h6">Home</span>
                     </button>
-                    <button className="btn" onClick={handleAboutUsClick}>
+                    <button className="btn" onClick={() => window.location.href = '/#aboutUs'}>
                         <i className="fas fa-users icon"></i>
                         <span className="m-0 h6">About Us</span>
                     </button>
-                    <button className="btn" onClick={handleLoginOpen}>
-                        <i className="fas fa-sign-in-alt icon"></i>
-                        <span className="m-0 h6">Log in</span>
-                    </button>
-                    <button className="btn" onClick={handleSignupOpen}>
-                        <i className="fas fa-user-plus icon"></i>
-                        <span className="m-0 h6">Register</span>
-                    </button>
+                    {isLoggedIn ? (
+                        <>
+                            <button className="btn" onClick={() => navigate('/profile')}>
+                                <i className="fas fa-user icon"></i>
+                                <span className="m-0 h6">Profile</span>
+                            </button>
+                            <button className="btn" onClick={handleLogout}>
+                                <i className="fas fa-sign-out-alt icon"></i>
+                                <span className="m-0 h6">Logout</span>
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <button className="btn" onClick={handleLoginOpen}>
+                                <i className="fas fa-sign-in-alt icon"></i>
+                                <span className="m-0 h6">Log in</span>
+                            </button>
+                            <button className="btn" onClick={handleSignupOpen}>
+                                <i className="fas fa-user-plus icon"></i>
+                                <span className="m-0 h6">Register</span>
+                            </button>
+                        </>
+                    )}
                 </div>
             </div>
-            {showLoginModal && <LoginModal onClose={handleLoginClose} />}
-            {showSignupModal && <SignupModal onClose={handleSignupClose} />}
+            {showLoginModal && <LoginModal onClose={handleLoginClose} openSignup={handleSignupOpen} />}
+            {showSignupModal && <SignupModal onClose={handleSignupClose} openLogin={handleLoginOpen} />}
         </nav>
     );
 };

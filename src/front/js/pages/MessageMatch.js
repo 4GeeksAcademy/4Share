@@ -1,106 +1,155 @@
-import React from 'react';
-// import { FaMusic, FaUtensils, FaStar } from "react-icons/fa";
+import React, { useContext, useEffect, useState } from 'react';
+import { Context } from '../store/appContext';
 import "../../styles/messageMatch.css";
 
 const RequestsPage = () => {
+    const { store, actions } = useContext(Context);
+    const [userProfiles, setUserProfiles] = useState({});
+
+    useEffect(() => {
+        const fetchRequests = async () => {
+            await actions.getRequests('incoming');
+            await actions.getRequests('outgoing');
+            await actions.getRequests('accepted');
+        };
+
+        fetchRequests();
+    }, []);
+
+    const fetchUserProfile = async (userId) => {
+        if (!userProfiles[userId]) { // Verificar si ya tenemos el perfil
+            const userProfile = await actions.getUserProfile(userId);
+            if (userProfile) {
+                setUserProfiles(prev => ({ ...prev, [userId]: userProfile }));
+            }
+        }
+    };
+
+    useEffect(() => {
+        if (store.incomingRequests) {
+            store.incomingRequests.forEach(request => {
+                fetchUserProfile(request.match_from_id);
+            });
+        }
+    }, [store.incomingRequests]);
+
+    useEffect(() => {
+        if (store.outgoingRequests) {
+            store.outgoingRequests.forEach(request => {
+                fetchUserProfile(request.match_to_id);
+            });
+        }
+    }, [store.outgoingRequests]);
+
+    // Carga de perfiles para accepted requests
+    useEffect(() => {
+        if (store.acceptedContacts) {
+            store.acceptedContacts.forEach(contact => {
+                fetchUserProfile(contact.match_from_id || contact.match_to_id); // Ajusta según tu estructura
+            });
+        }
+    }, [store.acceptedContacts]);
+
     return (
-        <div>
-            <div className="container requests-container">
-                {/* Título com a classe customizada */}
-                <h2 className="custom-title">My Requests</h2>
-                <div className="request-list">
-                    {/* Request 1 */}
-                    <div className="request-item">
-                        <img
-                            className="request-img"
-                            src="https://64.media.tumblr.com/b8faf7f71c5a2fc1a293313d9d8b95fc/tumblr_inline_oabqy457YV1undx97_500.jpg"
-                            alt="Profile"
-                        />
-                        <div className="request-info">
-                            <h3>Teresa Lisbon</h3>
-                            <div className="rating">
-                                {/* <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar /> */}
+        <div className="container requests-container ">
+            <h2 className="custom-title">Requesting You</h2>
+            <div className="request-list">
+                {store.incomingRequests && store.incomingRequests.length > 0 ? (
+                    store.incomingRequests.map((request) => {
+                        const userFrom = userProfiles[request.match_from_id] || {};
+                        
+                        return (
+                            <div className="request-item" key={`incoming-${request.match_id}`}>
+                                <img
+                                    className="request-img"
+                                    src={userFrom.profile_pic || "https://via.placeholder.com/150"}
+                                    alt={userFrom.name || "Unknown User"}
+                                />
+                                <div className="request-info">
+                                    <h3>{userFrom.name || "Unknown User"}</h3>
+                                    <p>{userFrom.description || "No description"}</p>
+                                    <div className="skills">
+                                        <span>Wants to learn: {Array.isArray(userFrom.skillsToLearn) ? userFrom.skillsToLearn.join(', ') : "N/A"}</span>
+                                        <span>Can teach: {Array.isArray(userFrom.skillsToTeach) ? userFrom.skillsToTeach.join(', ') : "N/A"}</span>
+                                    </div>
+                                </div>
+                                <div className="request-actions">
+                                    <button className="accept-btn" onClick={() => actions.acceptRequest(request.match_id)}>
+                                        Accept
+                                    </button>
+                                    <button className="decline-btn" onClick={() => actions.declineRequest(request.match_id)}>
+                                        Decline
+                                    </button>
+                                </div>
                             </div>
-                            <div className="skills">
-                                {/* <span>Wants to learn: <FaMusic /></span> */}
-                                {/* <span>Can teach: <FaUtensils /></span> */}
-                            </div>
-                        </div>
-                        <div className="request-actions">
-                            <button className="accept-btn">Accept</button>
-                            <button className="decline-btn">Decline</button>
-                        </div>
-                    </div>
+                        );
+                    })
+                ) : (
+                    <p>No incoming requests.</p>
+                )}
+            </div>
 
-                    {/* Request 2 */}
-                    <div className="request-item">
-                        <img
-                            className="request-img"
-                            src="https://media.themoviedb.org/t/p/w500/oay0Lo2zl0lJdguptxgx1BK9Xq7.jpg"
-                            alt="Profile"
-                        />
-                        <div className="request-info">
-                            <h3>Patrick Jane</h3>
-                            <div className="rating">
-                                {/* <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar /> */}
-                            </div>
-                            <div className="skills">
-                                {/* <span>Wants to learn: <FaMusic /></span> */}
-                                {/* <span>Can teach: <FaUtensils /></span> */}
-                            </div>
-                        </div>
-                        <div className="request-actions">
-                            <button className="accept-btn">Accept</button>
-                            <button className="decline-btn">Decline</button>
-                        </div>
-                    </div>
-                </div>
+            <h2 className="custom-title">Your Requests</h2>
+            <div className="request-list">
+                {store.outgoingRequests && store.outgoingRequests.length > 0 ? (
+                    store.outgoingRequests.map((request) => {
+                        const userTo = userProfiles[request.match_to_id] || {};
 
-                {/* Título com a classe customizada */}
-                <h2 className="custom-title">Contacts Added</h2>
-                <div className="contacts-list">
-                    {/* Contact 1 */}
-                    <div className="contact-item">
-                        <img
-                            className="request-img"
-                            src="https://www.clarin.com/2024/02/27/6vvUfw5w__2000x1500__1.jpg"
-                            alt="Profile"
-                        />
-                        <div className="contact-info">
-                            <h3>Gregory House</h3>
-                            <div className="rating">
-                                {/* <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar /> */}
+                        return (
+                            <div className="request-item" key={`outgoing-${request.match_id}`}>
+                                <img
+                                    className="request-img"
+                                    src={userTo.profile_pic || "https://via.placeholder.com/150"}
+                                    alt={userTo.name || "Unknown User"}
+                                />
+                                <div className="request-info">
+                                    <h3>{userTo.name || "Unknown User"}</h3>
+                                    <p>{userTo.description || "No description"}</p>
+                                    <div className="skills">
+                                        <span>Wants to learn: {Array.isArray(userTo.skillsToLearn) ? userTo.skillsToLearn.join(', ') : "N/A"}</span>
+                                        <span>Can teach: {Array.isArray(userTo.skillsToTeach) ? userTo.skillsToTeach.join(', ') : "N/A"}</span>
+                                    </div>
+                                </div>
+                                <div className="request-actions">
+                                    <button className="cancel-btn" onClick={() => actions.cancelRequest(request.match_id)}>
+                                        Cancel Request
+                                    </button>
+                                </div>
                             </div>
-                            <div className="skills">
-                                {/* <span>Wants to learn: <FaMusic /></span>
-                                <span>Can teach: <FaUtensils /></span> */}
-                            </div>
-                            <p>Phone: (123) 456-7890</p>
-                            <p>Email: greg.house@example.com</p>
-                        </div>
-                    </div>
+                        );
+                    })
+                ) : (
+                    <p>No outgoing requests.</p>
+                )}
+            </div>
 
-                    {/* Contact 2 */}
-                    <div className="contact-item">
-                        <img
-                            className="request-img"
-                            src="https://pbs.twimg.com/profile_images/1793368388/emilydeschanel_profile_400x400.jpg"
-                            alt="Profile"
-                        />
-                        <div className="contact-info">
-                            <h3>Temperance Brennan</h3>
-                            <div className="rating">
-                                {/* <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar /> */}
+            <h2 className="custom-title">Added Contacts</h2>
+            <div className="contacts-list">
+                {store.acceptedContacts && store.acceptedContacts.length > 0 ? (
+                    store.acceptedContacts.map((contact) => {
+                        const userContact = userProfiles[contact.match_from_id || contact.match_to_id] || {}; // Ajustar según la estructura
+
+                        return (
+                            <div className="contact-item" key={`contact-${contact.id}`}>
+                                <img
+                                    className="request-img"
+                                    src={userContact.profile_pic || "https://via.placeholder.com/150"}
+                                    alt={userContact.name || "Unknown Contact"}
+                                />
+                                <div className="contact-info">
+                                    <h3>{userContact.name || "Unknown Contact"}</h3>
+                                    <p>{userContact.description || "No description"}</p>
+                                    <div className="skills">
+                                        <span>Wants to learn: {Array.isArray(userContact.skillsToLearn) ? userContact.skillsToLearn.join(', ') : "N/A"}</span>
+                                        <span>Can teach: {Array.isArray(userContact.skillsToTeach) ? userContact.skillsToTeach.join(', ') : "N/A"}</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="skills">
-                                {/* <span>Wants to learn: <FaMusic /></span>
-                                <span>Can teach: <FaUtensils /></span> */}
-                            </div>
-                            <p>Phone: (987) 654-3210</p>
-                            <p>Email: brennan.bones@example.com</p>
-                        </div>
-                    </div>
-                </div>
+                        );
+                    })
+                ) : (
+                    <p>No added contacts.</p>
+                )}
             </div>
         </div>
     );

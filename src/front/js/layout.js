@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation, Navigate } from "react-router-dom";
 import { BackendURL } from "./component/backendURL";
 import injectContext from "./store/appContext";
 
@@ -13,8 +13,8 @@ import Navbar from "./component/Navbar";
 import Footer from "./component/Footer";
 import LoginModal from "./component/LoginModal";
 import SignupModal from "./component/SignupModal";
+import ProtectedRoute from './component/ProtectedRoute';
 
-//Modyfied scroll to top for starting always at the top of the page
 const ScrollToTop = () => {
     const { pathname } = useLocation();
 
@@ -27,8 +27,11 @@ const ScrollToTop = () => {
 
 const Layout = () => {
     const basename = process.env.BASENAME || "";
+    console.log("Rendering Layout component");
 
-    if (!process.env.BACKEND_URL || process.env.BACKEND_URL === "") return <BackendURL />;
+    if (!process.env.BACKEND_URL || process.env.BACKEND_URL === "") {
+        return <BackendURL />;
+    }
 
     return (
         <BrowserRouter basename={basename}>
@@ -36,14 +39,14 @@ const Layout = () => {
             <Navbar />
             <Routes>
                 <Route element={<Home />} path="/" />
-                <Route element={<MessageMatch />} path="/requests" />
-                <Route element={<ProfileSearch />} path="/profilesearch/:type" />
-                <Route element={<Profile />} path="/profile" />
-                <Route element={<ProfilePrivate />} path="/profileprivate" />
+                <Route path="/requests" element={<ProtectedRoute element={<MessageMatch />} />} />
+                <Route path="/profilesearch/:type" element={<ProtectedRoute element={<ProfileSearch />} />} />
+                <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
+                <Route path="/profileprivate" element={<ProtectedRoute element={<ProfilePrivate />} />} />
                 <Route element={<LoginModal />} path="/login" />
                 <Route element={<SignupModal />} path="/signup" />
-                <Route element={<ResetPassword />} path="/resetpassword" />
-                <Route element={<h1>Not found!</h1>} />
+                <Route path="/resetpassword" element={<ResetPassword />} />
+                <Route path="*" element={<Navigate to="/" />} />
             </Routes>
             <Footer />
         </BrowserRouter>

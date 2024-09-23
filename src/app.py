@@ -607,28 +607,38 @@ def get_user_reviews(user_id):
 
 #MATCHS (Adding people):
 
-@app.route('/match/<int:match_id>', methods=['GET'])
+# Obtener solicitudes de match según el tipo (entrantes, salientes, aceptadas)
+@app.route('/match', methods=['GET'])
 @jwt_required()
-def get_match(match_id):
+def get_matches():
     try:
         user_id = get_jwt_identity()
-        match = Match.query.filter_by(match_id=match_id).first()
+        match_type = request.args.get('type')
 
-        if not match:
-            return jsonify({'msg': 'Match not found'}), 404
+        if match_type == 'incoming':
+            matches = Match.query.filter_by(match_to_id=user_id, match_status=MatchStatus.PENDING.value).all()
+        elif match_type == 'outgoing':
+            matches = Match.query.filter_by(match_from_id=user_id, match_status=MatchStatus.PENDING.value).all()
+        elif match_type == 'accepted':
+            matches = Match.query.filter(
+                ((Match.match_from_id == user_id) | (Match.match_to_id == user_id)),
+                Match.match_status == MatchStatus.ACCEPTED.value
+            ).all()
+        else:
+            return jsonify({'msg': 'Invalid match type'}), 400
 
-        if match.match_to_id != user_id and match.match_from_id != user_id:
-            return jsonify({'msg': 'You are not authorized to view this match'}), 403
-
-        return jsonify({
+        matches_data = [{
             'match_id': match.match_id,
             'match_from_id': match.match_from_id,
             'match_to_id': match.match_to_id,
             'match_status': match.match_status
-        }), 200
+        } for match in matches]
+
+        return jsonify(matches_data), 200
 
     except Exception as e:
         return jsonify({'msg': 'An error occurred', 'error': str(e)}), 500
+
 
 @app.route('/match', methods=['POST'])
 @jwt_required()
@@ -654,7 +664,7 @@ def create_match():
         new_match = Match(
             match_from_id=match_from_id,
             match_to_id=match_to_id,
-            match_status=MatchStatus.PENDING.value  
+            match_status=MatchStatus.PENDING.value
         )
         db.session.add(new_match)
         db.session.commit()
@@ -665,12 +675,17 @@ def create_match():
         db.session.rollback()
         return jsonify({'msg': 'An error occurred', 'error': str(e)}), 500
 
+
 @app.route('/match/<int:match_id>', methods=['PUT'])
 @jwt_required()
 def update_match(match_id):
+    print("Entrando en la función update_match")
     try:
         user_id = get_jwt_identity()
+        print(f"User ID: {user_id}, Match ID: {match_id}")
+        
         match = Match.query.get(match_id)
+        print(f"Match found: {match}")
 
         if not match:
             return jsonify({'msg': 'Match not found'}), 404
@@ -679,6 +694,8 @@ def update_match(match_id):
             return jsonify({'msg': 'You can only update your own matches'}), 403
 
         match_status = request.json.get('match_status')
+        print(f"Received match_status: {match_status}")
+        
         if match_status not in [status.value for status in MatchStatus]:
             return jsonify({'msg': 'Invalid match status'}), 400
 
@@ -689,14 +706,20 @@ def update_match(match_id):
 
     except Exception as e:
         db.session.rollback()
+        print(f"Error: {str(e)}")
         return jsonify({'msg': 'An error occurred', 'error': str(e)}), 500
+
+
 
 @app.route('/match/<int:match_id>', methods=['DELETE'])
 @jwt_required()
 def delete_match(match_id):
     try:
         user_id = get_jwt_identity()
-        match = Match.query.filter_by(match_id=match_id, match_from_id=user_id).first()
+        match = Match.query.filter(
+            Match.match_id == match_id,
+            (Match.match_from_id == user_id) | (Match.match_to_id == user_id)
+        ).first()
 
         if not match:
             return jsonify({'msg': 'Match not found or not authorized'}), 404
@@ -711,17 +734,34 @@ def delete_match(match_id):
         return jsonify({'msg': 'An error occurred', 'error': str(e)}), 500
 
 
+
+
 #FLASK-MAIL
 
-@app.route('/send-email')
+@app.route('/send-email', methods=['POST'])
 def send_mail():
-  msg = Message(
-    subject="TEMA DEL CORREO",
-    recipients=['ignacio.quiros.sordo@gmail.com'], sender=os.getenv("MAIL_USERNAME")
-  )
-  msg.html = render_template('email.html')
-  mail.send(msg)
-  return 'Email sent succesfully!'
+    data = request.json
+    print(f"Received email request: {data}")  # Log para depuración
+    recipient_email = data.get('email')
+
+    if not recipient_email:
+        return jsonify({'msg': 'Email is required'}), 400
+
+    msg = Message(
+        subject="TEMA DEL CORREO",
+        recipients=[recipient_email],
+        sender=os.getenv("MAIL_USERNAME")
+    )
+    msg.html = render_template('email.html')
+
+    try:
+        mail.send(msg)
+        print(f"Email sent to: {recipient_email}")  # Log para confirmar envío
+        return jsonify({'msg': 'Email sent successfully!'}), 200
+    except Exception as e:
+        print(f"Error sending email: {e}")  # Log para errores
+        return jsonify({'msg': 'Failed to send email', 'error': str(e)}), 500
+
 
 @app.route('/reset-password', methods=['POST'])
 def reset_password():

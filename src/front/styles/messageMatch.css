@@ -1,11 +1,14 @@
 /* Estilos básicos para a página de Requests */
 .requests-container {
-    padding: 20px;
+    padding: 20px !important;
     padding-top: 10vw !important;
     padding-bottom: 8vw !important;
     max-width: 1200px;
-    margin: 0 auto;
     color: white;
+
+    p{
+        color: black;
+    }
 }
 
 .custom-title {
@@ -31,10 +34,11 @@
     display: flex;
     align-items: center;
     background-color: rgba(250, 250, 250, 0.9);
+    box-shadow: 4px 4px #f2c3b6;
     padding: 15px;
     border-radius: 10px;
     margin-bottom: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
 }
 
 .request-img, .contact-img {

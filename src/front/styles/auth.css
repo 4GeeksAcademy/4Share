@@ -57,6 +57,10 @@
     color: white;
 }
 
+strong{
+    text-decoration: underline;
+}
+
 /* Modal Button Styles */
 .btn-primary {
     background-color: #ff4081; /* Fucsia */
@@ -66,7 +70,11 @@
 
 .btn-outline-light {
     border-color: white;
-    color: white;
+   
+}
+
+.btn{
+    color: black  !important;
 }
 
 /* Responsive Adjustments */

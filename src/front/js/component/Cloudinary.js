@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const ImageUpload = () => {
+const Cloudinary = () => {
     const [image, setImage] = useState("");
     const [imagePreview, setImagePreview] = useState("");
     const [uploading, setUploading] = useState(false);
@@ -9,18 +9,18 @@ const ImageUpload = () => {
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         setImage(file);
-        setImagePreview(URL.createObjectURL(file)); // image preview
+        setImagePreview(URL.createObjectURL(file)); 
     };
 
     const handleImageUpload = async () => {
         const formData = new FormData();
         formData.append("file", image);
-        formData.append("upload_preset", "4share");  // 4share name created in upload preset on cloudinary
+        formData.append("upload_preset", "4share"); //ESTO ES EL PRESET NAME TIENE QUE ESTAR EN EL .ENV
         setUploading(true);
 
         try {
             // Upload the image to Cloudinary
-            const res = await axios.post("https://api.cloudinary.com/v1_1/dam4qhxjr/image/upload", formData);
+            const res = await axios.post("https://api.cloudinary.com/v1_1/dam4qhxjr/image/upload", formData); //CAMBIAR EL DAM4Q A .ENV
             const imageUrl = res.data.url;  // Uploaded image URL
             console.log(imageUrl);
 
@@ -41,7 +41,7 @@ const ImageUpload = () => {
         try {
             // PUT request to update 
             const res = await axios.put(
-                "http://localhost:5000/api/profile/pic", // Altere conforme o seu backend
+                `${process.env.BACKEND_URL}update_user`, // Altere conforme o seu backend
                 { imageUrl },  // Envia a URL da imagem
                 {
                     headers: {
@@ -70,4 +70,4 @@ const ImageUpload = () => {
     );
 };
 
-export default ImageUpload;
+export default Cloudinary;
