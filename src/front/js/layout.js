@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes, useLocation, Navigate } from "react-router-dom";
-import { BackendURL } from "./component/backendURL";
 import injectContext from "./store/appContext";
 
 import Home from "./pages/Home";
 import MessageMatch from "./pages/MessageMatch";
 import ResetPassword from "./pages/ResetPassword";
-import Profile from "./component/Profile";
-import ProfilePrivate from "./component/ProfilePrivate";
+// import Profile from "./component/Profile";
+// import ProfilePrivate from "./component/ProfilePrivate";
 import ProfileSearch from "./pages/ProfileSearch";
 import Navbar from "./component/Navbar";
 import Footer from "./component/Footer";
@@ -41,8 +40,8 @@ const Layout = () => {
                 <Route element={<Home />} path="/" />
                 <Route path="/requests" element={<ProtectedRoute element={<MessageMatch />} />} />
                 <Route path="/profilesearch/:type" element={<ProtectedRoute element={<ProfileSearch />} />} />
-                <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
-                <Route path="/profileprivate" element={<ProtectedRoute element={<ProfilePrivate />} />} />
+                {/* <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
+                <Route path="/profileprivate" element={<ProtectedRoute element={<ProfilePrivate />} />} /> */}
                 <Route element={<LoginModal />} path="/login" />
                 <Route element={<SignupModal />} path="/signup" />
                 <Route path="/resetpassword" element={<ResetPassword />} />

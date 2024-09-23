@@ -40,7 +40,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            // Acción para enviar el correo
+            // Acción send singup email
             sendConfirmationEmail: async (email) => {
                 try {
                     const emailResponse = await fetch(`${process.env.BACKEND_URL}send-email`, {
@@ -200,7 +200,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            // Acción para obtener el perfil de un usuario
+            // Get one specific user profile
             getUserProfile: async (userId) => {
                 const token = localStorage.getItem('jwt-token');
                 try {
@@ -227,7 +227,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            // Obtener solicitudes según el tipo (entrantes, salientes, aceptadas)
+            // Get the 3 types of requests
             getRequests: async (type) => {
                 const token = localStorage.getItem('jwt-token');
                 try {

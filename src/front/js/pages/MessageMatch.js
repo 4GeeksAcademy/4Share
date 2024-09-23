@@ -17,7 +17,7 @@ const RequestsPage = () => {
     }, []);
 
     const fetchUserProfile = async (userId) => {
-        if (!userProfiles[userId]) { // Verificar si ya tenemos el perfil
+        if (!userProfiles[userId]) { // Verify if we already have user
             const userProfile = await actions.getUserProfile(userId);
             if (userProfile) {
                 setUserProfiles(prev => ({ ...prev, [userId]: userProfile }));
@@ -45,7 +45,7 @@ const RequestsPage = () => {
     useEffect(() => {
         if (store.acceptedContacts) {
             store.acceptedContacts.forEach(contact => {
-                fetchUserProfile(contact.match_from_id || contact.match_to_id); // Ajusta según tu estructura
+                fetchUserProfile(contact.match_from_id || contact.match_to_id); 
             });
         }
     }, [store.acceptedContacts]);
@@ -66,11 +66,11 @@ const RequestsPage = () => {
                                     alt={userFrom.name || "Unknown User"}
                                 />
                                 <div className="request-info">
-                                    <h3>{userFrom.name || "Unknown User"}</h3>
+                                    <h3>{userFrom.name || "Unknown User"} {userFrom.last_name || ""}  </h3>
                                     <p>{userFrom.description || "No description"}</p>
                                     <div className="skills">
-                                        <span>Wants to learn: {Array.isArray(userFrom.skillsToLearn) ? userFrom.skillsToLearn.join(', ') : "N/A"}</span>
-                                        <span>Can teach: {Array.isArray(userFrom.skillsToTeach) ? userFrom.skillsToTeach.join(', ') : "N/A"}</span>
+                                        <span>Wants to learn: {Array.isArray(userFrom.skillsToLearn) ? userFrom.skillsToLearn.join(', ') : "Not specified"}</span>
+                                        <span>Can teach: {Array.isArray(userFrom.skillsToTeach) ? userFrom.skillsToTeach.join(', ') : "Not specified"}</span>
                                     </div>
                                 </div>
                                 <div className="request-actions">
@@ -103,15 +103,15 @@ const RequestsPage = () => {
                                     alt={userTo.name || "Unknown User"}
                                 />
                                 <div className="request-info">
-                                    <h3>{userTo.name || "Unknown User"}</h3>
+                                    <h3>{userTo.name || "Unknown User"} {userTo.last_name || ""}</h3>
                                     <p>{userTo.description || "No description"}</p>
                                     <div className="skills">
-                                        <span>Wants to learn: {Array.isArray(userTo.skillsToLearn) ? userTo.skillsToLearn.join(', ') : "N/A"}</span>
-                                        <span>Can teach: {Array.isArray(userTo.skillsToTeach) ? userTo.skillsToTeach.join(', ') : "N/A"}</span>
+                                        <span>Wants to learn: {Array.isArray(userTo.skillsToLearn) ? userTo.skillsToLearn.join(', ') : "Not specified"}</span>
+                                        <span>Can teach: {Array.isArray(userTo.skillsToTeach) ? userTo.skillsToTeach.join(', ') : "Not specified"}</span>
                                     </div>
                                 </div>
                                 <div className="request-actions">
-                                    <button className="cancel-btn" onClick={() => actions.cancelRequest(request.match_id)}>
+                                    <button className="decline-btn" onClick={() => actions.cancelRequest(request.match_id)}>
                                         Cancel Request
                                     </button>
                                 </div>
@@ -137,11 +137,11 @@ const RequestsPage = () => {
                                     alt={userContact.name || "Unknown Contact"}
                                 />
                                 <div className="contact-info">
-                                    <h3>{userContact.name || "Unknown Contact"}</h3>
+                                    <h3>{userContact.name || "Unknown Contact"} {userContact.last_name || ""}</h3>
                                     <p>{userContact.description || "No description"}</p>
                                     <div className="skills">
-                                        <span>Wants to learn: {Array.isArray(userContact.skillsToLearn) ? userContact.skillsToLearn.join(', ') : "N/A"}</span>
-                                        <span>Can teach: {Array.isArray(userContact.skillsToTeach) ? userContact.skillsToTeach.join(', ') : "N/A"}</span>
+                                        <span>Wants to learn: {Array.isArray(userContact.skillsToLearn) ? userContact.skillsToLearn.join(', ') : "Not specified"}</span>
+                                        <span>Can teach: {Array.isArray(userContact.skillsToTeach) ? userContact.skillsToTeach.join(', ') : "Not specified"}</span>
                                     </div>
                                 </div>
                             </div>
