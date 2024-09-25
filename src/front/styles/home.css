@@ -34,7 +34,6 @@ body {
     background-color: #1B1328;
     z-index: 3;
     position: relative;
-    padding-top: 400px;
 }
 
 @media (max-width: 768px) {
@@ -141,13 +140,13 @@ body {
 .search {
     height: 100%;
     background: linear-gradient(to right, #FFF8F9, #F0C6BD);
-    border: 0.12rem solid black;
+    border: 0.12rem solid black !important;
     display: flex;
-    align-items: center;
-
+    border-radius: 25px;
 }
-.searchBar{
-    .btn{
+
+.searchBar {
+    .btn {
         margin-top: auto !important;
         margin-bottom: auto !important;
         padding-top: 17px;
@@ -156,20 +155,23 @@ body {
 }
 
 .search:hover {
-    transform: scaleY(1.1);
+    transform: scaleY(1.05);
 }
 
 .searchBar input {
     width: 80%;
     padding: 0.75vw 0.3vw;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.2rem;
 
 }
 
 /* Background for main sections */
 .backgroundMain {
     background-color: #1B1328;
-    padding-top: 25vw;
-    padding-bottom: 25vw;
+    padding-top: 12vw;
+    /*padding-bottom: 25vw; */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -253,13 +255,13 @@ body {
 }
 
 .categoriesHome {
-    display: flex; 
-    flex-wrap: wrap; 
+    display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
 }
 
 .categoriesHome .btn {
-    flex: 1; 
-    min-width: 100px; 
-    margin: 5px; 
+    flex: 1;
+    min-width: 100px;
+    margin: 5px;
 }
