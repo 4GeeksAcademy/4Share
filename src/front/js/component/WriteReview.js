@@ -26,7 +26,7 @@ const WriteReview = ({ onSave, initialComment, initialScore }) => {
         e.preventDefault();
         if (onSave) {
             onSave(score, comment);
-            setComment('');  // Limpiar formulario después de enviar
+            setComment('');  
             setScore(0);
         }
     };

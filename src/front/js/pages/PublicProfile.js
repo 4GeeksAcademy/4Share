@@ -16,13 +16,13 @@ export const PublicProfile = () => {
     const [currentUserProfile, setCurrentUserProfile] = useState(null);
     const [editingReview, setEditingReview] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [isMounted, setIsMounted] = useState(true); // Cambia el estado para controlar si está montado
+    const [isMounted, setIsMounted] = useState(true);
 
     useEffect(() => {
-        setIsMounted(true); // Asegúrate de que el componente está montado
-        loadData(); // Llama a la función para cargar datos
-        return () => setIsMounted(false); // Limpieza del efecto
-    }, [user_id]); // Solo vuelve a ejecutar si el user_id cambia
+        setIsMounted(true);
+        loadData();
+        return () => setIsMounted(false);
+    }, [user_id]);
 
     const loadData = async () => {
         setLoading(true);
@@ -30,8 +30,8 @@ export const PublicProfile = () => {
             const userProfileData = await actions.getUserProfile(user_id);
             if (isMounted && userProfileData) {
                 setUserProfile(userProfileData);
-                await loadUserReviews(user_id); // Cargar reseñas aquí después de obtener el perfil
-                await checkMatchStatus(); // Verificar el estado de coincidencia
+                await loadUserReviews(user_id);
+                await checkMatchStatus();
             } else {
                 setError("Failed to load user profile.");
             }
@@ -49,16 +49,14 @@ export const PublicProfile = () => {
             const userReviews = await actions.getUserReviews(userId);
             setReviews(userReviews);
 
-            // Obtener el perfil del usuario autenticado
-            const currentUserProfile = await actions.getYourUserProfile(); // Llamada a la acción correcta
+            const currentUserProfile = await actions.getYourUserProfile();
 
             if (!currentUserProfile) {
                 throw new Error("Could not fetch current user profile");
             }
 
-            const currentUserId = currentUserProfile.id;  // Extraer el ID del usuario autenticado
+            const currentUserId = currentUserProfile.id;
 
-            // Buscar si el usuario autenticado ya hizo una review
             const currentUserReview = userReviews.find(review => {
                 return Number(review.reviewer_id) === Number(currentUserId);
             });
@@ -99,27 +97,25 @@ export const PublicProfile = () => {
 
             let savedReview;
             if (editingReview) {
-                // Editar reseña existente (PUT)
                 savedReview = await actions.updateReview(editingReview.id, reviewData);
             } else {
-                // Crear nueva reseña (POST)
                 savedReview = await actions.saveReview(user_id, reviewData);
             }
 
             if (savedReview) {
                 setReviews(prevReviews => {
                     if (editingReview) {
-                        // Reemplazar la reseña editada
                         return prevReviews.map(r => (r.id === editingReview.id ? savedReview : r));
                     } else {
-                        // Añadir la nueva reseña
                         return [...prevReviews, savedReview];
                     }
                 });
                 setUserReview(savedReview);
                 setEditingReview(null);
-                // Espera un par de segundos antes de volver a cargar
-                setTimeout(() => loadUserReviews(user_id), 2000);
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
             }
         } catch (error) {
             console.error("Error saving review:", error);
@@ -131,16 +127,14 @@ export const PublicProfile = () => {
             await actions.deleteReview(reviewId);
             setReviews(prevReviews => prevReviews.filter(review => review.id !== reviewId));
 
-            // Si la review eliminada era la del usuario actual, limpiar userReview
             if (userReview && userReview.id === reviewId) {
                 setUserReview(null);
                 setEditingReview(null);
             }
 
-            // Recargar la página completamente después de eliminar la reseña
-            // setTimeout(() => {
-            //     window.location.reload(); // Recargar la página entera
-            // }, 1000); // Espera un segundo para asegurarse que se elimine antes de recargar
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
         } catch (error) {
             console.error("Error deleting review:", error);
         }
@@ -169,9 +163,7 @@ export const PublicProfile = () => {
         }
 
         if (matchStatus.status === 'accepted') {
-            // Si ya existe una review del usuario autenticado, no mostrar el contenedor entero
             if (!userReview) {
-                // Mostrar el contenedor y el WriteReview si no existe una reseña del usuario autenticado
                 return (
                     <div className="profile-wrapper p-5 mt-4">
                         <div className="profile-right">
@@ -184,13 +176,11 @@ export const PublicProfile = () => {
             }
         }
 
-        return null; // No mostrar nada si ya existe una reseña
+        return null;
     };
-
 
     if (loading) return null;
 
-    // Dentro del componente PublicProfile
     return (
         <div className="profile-page">
             {error && <p className="error">{error}</p>}
@@ -224,10 +214,8 @@ export const PublicProfile = () => {
                 </div>
             </div>
 
-            {/* Mostrar primero el Match Button y el WriteReview */}
             {renderMatchButton()}
 
-            {/* Mostrar las reseñas después del botón y el formulario */}
             <div className="profile-wrapper p-5 mt-4">
                 <div className="profile-left">
                     <div className="general-info section">
@@ -262,8 +250,6 @@ export const PublicProfile = () => {
             )}
         </div>
     );
-
-
 };
 
 export default PublicProfile;
