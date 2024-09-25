@@ -1,9 +1,6 @@
-body {
+  .profileSearch {
     background: linear-gradient(to right, #241E32, #322A45, #6D5B98);
     color: white;
-  }
-
-  .profileSearch{
     padding-top: 8vw !important;
     padding-bottom: 8vw !important;
   }
@@ -20,7 +17,7 @@ body {
     overflow: hidden;
     box-shadow: 5px 5px #F2C3B6;
   }
- 
+
   .btn,
   .btn-primary {
     border-radius: 25px;
@@ -44,6 +41,7 @@ body {
     border: none;
     transition: background-color 0.3s ease;
   }
+
   .custom-search-button:hover {
     background-color: #E0B2A3;
   }
@@ -53,6 +51,7 @@ body {
     border-color: #F2C3B6;
     transition: border-color 0.5s ease;
   }
+
   .custom-search-bar:focus {
     border-color: #F2C3B6;
     box-shadow: 0 0 5px rgba(242, 195, 182, 0.5);
@@ -64,10 +63,12 @@ body {
   }
 
   .categoriesHome {
-    flex-wrap: wrap; 
-}
+    flex-wrap: wrap;
+  }
 
-.categoriesHome{.btn {
-    flex: 1; 
-    min-width: 100px; 
-}}
+  .categoriesHome {
+    .btn {
+      flex: 1;
+      min-width: 100px;
+    }
+  }

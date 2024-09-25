@@ -57,7 +57,7 @@ const HomeCard = ({ isOwnProfile, user }) => {
                                  {renderStars(rating)}  
                             </div>
                             <div className="d-flex justify-content-center">
-                                <a href={`/profile/${user.user.id}`} className="btn mt-2">View Profile</a>
+                                <a href={`/publicprofile/${user.user.id}`} className="btn mt-2">View Profile</a>
                             </div>
                         </>
                     )}

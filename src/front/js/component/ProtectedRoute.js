@@ -1,7 +1,7 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 
-const ProtectedRoute = ({ element }) => {
+const ProtectedRoute = () => {
   const token = localStorage.getItem('jwt-token');
   const isLoggedIn = !!token;
 
@@ -18,8 +18,7 @@ const ProtectedRoute = ({ element }) => {
     localStorage.removeItem('jwt-token');
     return <Navigate to="/" />;
   }
-
-  return element;
+  return <Outlet/>;
 };
 
 export default ProtectedRoute;

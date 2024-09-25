@@ -1,71 +1,60 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
-const Cloudinary = () => {
-    const [image, setImage] = useState("");
-    const [imagePreview, setImagePreview] = useState("");
-    const [uploading, setUploading] = useState(false);
+const Cloudinary = ({ onImageUploaded, uploadPreset, cloudName }) => {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        setImage(file);
-        setImagePreview(URL.createObjectURL(file)); 
-    };
+    const uploadImage = async (e) => {
+        const files = e.target.files;
+        console.log("Files selected for upload:", files);
 
-    const handleImageUpload = async () => {
-        const formData = new FormData();
-        formData.append("file", image);
-        formData.append("upload_preset", "4share"); //ESTO ES EL PRESET NAME TIENE QUE ESTAR EN EL .ENV
-        setUploading(true);
-
-        try {
-            // Upload the image to Cloudinary
-            const res = await axios.post("https://api.cloudinary.com/v1_1/dam4qhxjr/image/upload", formData); //CAMBIAR EL DAM4Q A .ENV
-            const imageUrl = res.data.url;  // Uploaded image URL
-            console.log(imageUrl);
-
-            // Here we call the second fetch to save this URL to the user profile
-            await saveImageToUserProfile(imageUrl);
-
-            setUploading(false);
-        } catch (err) {
-            console.error(err);
-            setUploading(false);
+        if (files.length === 0) {
+            console.error('No file selected');
+            return;
         }
-    };
+        
+        const data = new FormData();
+        data.append('file', files[0]);
+        data.append('upload_preset', uploadPreset); // Usa la prop de uploadPreset
 
-    // Function that sends the image URL to the backend
-    const saveImageToUserProfile = async (imageUrl) => {
-        const token = localStorage.getItem('token');  // Get user token (needs adjustment)
-
+        setLoading(true);
+        
         try {
-            // PUT request to update 
-            const res = await axios.put(
-                `${process.env.BACKEND_URL}update_user`, // Altere conforme o seu backend
-                { imageUrl },  // Envia a URL da imagem
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,  // Passa o token no cabeçalho
-                        'Content-Type': 'application/json'
-                    }
-                }
-            );
-            console.log("Imagem salva no perfil:", res.data);
-        } catch (err) {
-            console.error("Erro ao salvar imagem no perfil:", err);
+            const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, { // Usa la prop de cloudName
+                method: 'POST',
+                body: data,
+            });
+
+            const file = await response.json();
+            console.log("Cloudinary response:", file);
+            
+            if (response.ok) {
+                onImageUploaded(file.secure_url); // Llama a la función para actualizar la imagen en el perfil
+            } else {
+                throw new Error(file.message || "Error uploading image");
+            }
+        } catch (error) {
+            console.error('Error uploading image:', error);
+            setError("Error uploading image: " + (error.message || "Unknown error"));
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <div>
-            <h1>Upload de Imagem</h1>
-            <input type="file" onChange={handleImageChange} />
-            {imagePreview && <img src={imagePreview} alt="Pré-visualização" width="200" />}
-            <button onClick={handleImageUpload} disabled={uploading}>
-                {uploading ? "Enviando..." : "Enviar Imagem"}
-            </button>
-
-
+            <h1>Upload Image</h1>
+            <input
+                type="file"
+                name="file"
+                placeholder='Upload an image'
+                onChange={uploadImage}
+            />
+            {loading ? (
+                <h3>Loading...</h3>
+            ) : (
+                error && <p className="error-message">{error}</p>
+            )}
         </div>
     );
 };

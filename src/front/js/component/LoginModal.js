@@ -8,13 +8,12 @@ function LoginModal({ onClose, openSignup }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
+    const [resetMessage, setResetMessage] = useState(null); // New state to show reset message
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
         const requestBody = { email, password };
-
-        console.log('Request Body:', requestBody);
 
         try {
             const response = await fetch(`${process.env.BACKEND_URL}login`, {
@@ -25,10 +24,9 @@ function LoginModal({ onClose, openSignup }) {
             const data = await response.json();
             if (response.ok) {
                 localStorage.setItem('jwt-token', data.access_token);
-                console.log('User logged in successfully:', data);
                 actions.loginUser(email, password);
                 onClose();
-                navigate('/requests'); // Go to Requests until privateprofile is donw
+                navigate('/privateprofile'); 
             } else {
                 console.error('Error logging in:', data?.msg || "Unknown error");
                 setError(data?.msg || "Unknown error");
@@ -36,6 +34,16 @@ function LoginModal({ onClose, openSignup }) {
         } catch (error) {
             console.error('Error during login request:', error);
             setError("Unknown error");
+        }
+    };
+
+    // Function to handle sending the password reset email
+    const handlePasswordReset = async () => {
+        const response = await actions.requestPasswordReset(email);
+        if (response) {
+            setResetMessage("Password reset email sent successfully!");
+        } else {
+            setError("Failed to send reset email.");
         }
     };
 
@@ -49,6 +57,7 @@ function LoginModal({ onClose, openSignup }) {
                     <div className="modal-body text-center">
                         <h2 className="mb-4">Log in</h2>
                         {error && <p className="error">{error}</p>}
+                        {resetMessage && <p className="success">{resetMessage}</p>} {/* Show reset success message */}
                         <form onSubmit={handleLogin}>
                             <input
                                 type="email"
@@ -75,8 +84,12 @@ function LoginModal({ onClose, openSignup }) {
                             <p className="mt-4">Don't have an account? 
                             <strong><a href="#" onClick={() => { onClose(); openSignup(); }}>Sign up</a> </strong>
                             </p>
+
+                            <p className="mt-4">
+                            <strong><a href="#" onClick={handlePasswordReset}>Send Reset Password Email</a> </strong>
+                            </p>
                         </form>
-                        <button type="button" className="btn btn-secondary mt-3" onClick={onClose}>
+                        <button type="button" className="btn btn-secondary mt-5" style={{marginLeft:"auto",marginRight:"auto"}} onClick={onClose}>
                             Close
                         </button>
                     </div>

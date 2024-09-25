@@ -20,6 +20,7 @@ from api.models import db, User, TokenRestorePassword, Categories, Match, Review
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
+from flask_cors import CORS
 
 app = Flask(__name__)
 
@@ -34,7 +35,7 @@ jwt = JWTManager(app)
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=2)
 
 # Setup CORS
-CORS(app)
+CORS(app) 
 
 bcrypt = Bcrypt(app)
 
@@ -147,6 +148,8 @@ def login():
     except Exception as e:
         return jsonify({'msg': 'An error occurred', 'error': str(e)}), 500
 
+
+
 @app.route('/update_user', methods=['PUT'])
 @jwt_required()
 def update_user():
@@ -164,6 +167,7 @@ def update_user():
     # Track how many fields are updated
     updated_fields = 0
 
+    # Validate and update fields
     name = body.get('name')
     if name:
         if len(name) < 2 or len(name) > 30:
@@ -173,11 +177,9 @@ def update_user():
 
     email = body.get('email')
     if email:
-        # Check if the email format is valid using a regular expression
         if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
             return jsonify({"error": "Invalid email format"}), 400
         
-        # Ensure the email is not already used by another user
         existing_email = User.query.filter_by(email=email).first()
         if existing_email and existing_email.id != current_user_id:
             return jsonify({"error": "Email already exists"}), 400
@@ -194,7 +196,6 @@ def update_user():
 
     phone = body.get('phone')
     if phone:
-        # Basic validation: only numbers, spaces, and dashes allowed
         if not re.match(r'^\+?[0-9\s\-]+$', phone):
             return jsonify({"error": "Invalid phone number format"}), 400
         user.phone = phone
@@ -222,12 +223,10 @@ def update_user():
     description = body.get('description')
     if description:
         if len(description) < 2 or len(description) > 250:
-            return jsonify({"error": "Description must be between 2 and 50 characters"}), 400
+            return jsonify({"error": "Description must be between 2 and 250 characters"}), 400
         user.description = description
-        updated_fields += 1  
-    
+        updated_fields += 1
 
-    # Check if any fields were updated
     if updated_fields == 0:
         return jsonify({"message": "No fields were updated"}), 400
 
@@ -237,6 +236,8 @@ def update_user():
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": "An error occurred while updating the user", "details": str(e)}), 500
+
+    
 
 @app.route("/profile", methods=["GET"])
 @jwt_required()
@@ -258,6 +259,7 @@ def view_user_profile(user_id):
     
     if not user:
         return jsonify({'msg': 'User not found'}), 404
+    
     return jsonify({'user_data': user.serialize()}), 200
 
 @app.route('/our/profiles', methods=['GET'])
@@ -587,19 +589,26 @@ def best_sharers():
         return jsonify({'msg': 'An error occurred', 'error': str(e)}), 500
 
 
-@app.route('/user/<int:user_id>/reviews', methods=['GET']) #To know all reviews of an user, just if we need it
+@app.route('/user/<int:user_id>/reviews', methods=['GET'])
 def get_user_reviews(user_id):
+    # Obtener todas las reseñas del usuario específico
     reviews = Review.query.filter_by(reviewee_id=user_id).all()
-    if not reviews:
-        return jsonify({'msg': 'No reviews found for this user'}), 404
+    
+    # Obtener información de los revisores
+    reviewer_ids = {review.reviewer_id for review in reviews}
+    reviewers_info = User.query.filter(User.id.in_(reviewer_ids)).all()
 
+    reviewers_dict = {user.id: {'name': user.name, 'last_name': user.last_name, 'profile_pic': user.profile_pic} for user in reviewers_info}
+
+    # Devolver las reseñas junto con la información del revisor
     return jsonify({
         'reviews': [
             {
                 'id': review.id,
                 'reviewer_id': review.reviewer_id,
                 'score': review.score,
-                'comment': review.comment
+                'comment': review.comment,
+                'reviewer_info': reviewers_dict.get(review.reviewer_id, {})
             } for review in reviews
         ]
     }), 200
@@ -788,7 +797,9 @@ def reset_password():
             db.session.commit()
 
             jwt_token = create_access_token(identity={'reset_token': reset_token}, expires_delta=timedelta(hours=1))
-            reset_link = f'{os.getenv("BACKEND_URL")}/reset-password?token={jwt_token}'
+            reset_link = f'{os.getenv("FRONTEND_URL")}resetpassword?token={jwt_token}'
+            print(f"Reset link: {reset_link}")  # Añade este print para ver si se genera bien el enlace
+
             msg = Message(
                 subject="Password Reset Request",
                 recipients=[email],
@@ -826,7 +837,7 @@ def reset_password():
             user.password = pw_hash
             db.session.delete(token_record)
             db.session.commit()
-
+            
             return jsonify({'msg': 'Password has been reset successfully'}), 200
 
     except Exception as e:

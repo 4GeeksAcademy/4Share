@@ -1,14 +1,23 @@
 /* Estilos básicos para a página de Requests */
 .requests-container {
-    padding: 20px !important;
-    padding-top: 10vw !important;
+    display: flex;
+    flex-direction: column; 
     padding-bottom: 8vw !important;
     max-width: 1200px;
     color: white;
+    padding-top: 0 !important;
+    margin-top: 5rem !important;
 
     p{
-        color: black;
+        color: rgb(255, 255, 255);
     }
+    
+    
+}
+
+.requestsMainContent{
+    padding-left: 30px !important;
+    padding-right: 30px !important;
 }
 
 .custom-title {
@@ -38,7 +47,6 @@
     padding: 15px;
     border-radius: 10px;
     margin-bottom: 20px;
-
 }
 
 .request-img, .contact-img {
@@ -50,6 +58,9 @@
 }
 
 .request-info, .contact-info {
+    p{
+        color: black !important;
+    }
     flex: 1;
 }
 
@@ -98,9 +109,12 @@
     opacity: 0.9;
 }
 
-/* Estilos para contatos adicionados */
 .contact-info p {
     margin: 5px 0;
+    color: black;
+}
+
+.contact-details{
     color: black;
 }
 

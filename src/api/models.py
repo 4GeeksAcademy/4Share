@@ -59,6 +59,7 @@ class User(db.Model):
             "name": self.name or "",
             "last_name": self.last_name or "",
             "location": self.location or "",
+            "gender": self.gender or "",
             "language": self.language or "",
             "profile_pic": self.profile_pic or "",
             "description": self.description or "",

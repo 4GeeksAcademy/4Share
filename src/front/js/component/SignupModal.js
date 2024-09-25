@@ -70,7 +70,7 @@ function SignupModal({ onClose, openLogin }) {
                                 <strong><a href="#" onClick={() => { onClose(); openLogin(); }}>Log in</a></strong>
                             </p>
                         </form>
-                        <button type="button" className="btn btn-secondary mt-3" onClick={onClose}>
+                        <button type="button" className="btn btn-secondary mt-5" style={{marginLeft:"auto",marginRight:"auto"}} onClick={onClose}>
                             Close
                         </button>
                     </div>

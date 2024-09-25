@@ -3,10 +3,10 @@ import { BrowserRouter, Route, Routes, useLocation, Navigate } from "react-route
 import injectContext from "./store/appContext";
 
 import Home from "./pages/Home";
-import MessageMatch from "./pages/MessageMatch";
+import Requests from "./pages/Requests";
 import ResetPassword from "./pages/ResetPassword";
-// import Profile from "./component/Profile";
-// import ProfilePrivate from "./component/ProfilePrivate";
+ import PublicProfile from "./pages/PublicProfile";
+import PrivateProfile from "./pages/PrivateProfile";
 import ProfileSearch from "./pages/ProfileSearch";
 import Navbar from "./component/Navbar";
 import Footer from "./component/Footer";
@@ -26,7 +26,6 @@ const ScrollToTop = () => {
 
 const Layout = () => {
     const basename = process.env.BASENAME || "";
-    console.log("Rendering Layout component");
 
     if (!process.env.BACKEND_URL || process.env.BACKEND_URL === "") {
         return <BackendURL />;
@@ -38,14 +37,16 @@ const Layout = () => {
             <Navbar />
             <Routes>
                 <Route element={<Home />} path="/" />
-                <Route path="/requests" element={<ProtectedRoute element={<MessageMatch />} />} />
-                <Route path="/profilesearch/:type" element={<ProtectedRoute element={<ProfileSearch />} />} />
-                {/* <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
-                <Route path="/profileprivate" element={<ProtectedRoute element={<ProfilePrivate />} />} /> */}
+                <Route element={<ProtectedRoute />}>
+                    <Route path="/requests" element={<Requests />} />
+                    <Route path="/profilesearch/:type" element={<ProfileSearch />} />
+                    <Route path="/publicprofile/:user_id" element={<PublicProfile />} />
+                    <Route path="/privateprofile"  element={<PrivateProfile />} /> 
+                </Route>
                 <Route element={<LoginModal />} path="/login" />
                 <Route element={<SignupModal />} path="/signup" />
                 <Route path="/resetpassword" element={<ResetPassword />} />
-                <Route path="*" element={<Navigate to="/" />} />
+                {/* <Route path="*" element={<Navigate to="/" />} /> */}
             </Routes>
             <Footer />
         </BrowserRouter>

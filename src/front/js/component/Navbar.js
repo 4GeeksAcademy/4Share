@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
@@ -7,8 +7,14 @@ import '../../styles/navbar.css';
 export const Navbar = () => {
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [showSignupModal, setShowSignupModal] = useState(false);
-    const location = useLocation(); 
-    const navigate = useNavigate(); 
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (location.state && location.state.openLoginModal) {
+            setShowLoginModal(true);
+        }
+    }, [location]);
 
     const handleLoginOpen = () => setShowLoginModal(true);
     const handleLoginClose = () => setShowLoginModal(false);
@@ -56,7 +62,7 @@ export const Navbar = () => {
                     </button>
                     {isLoggedIn ? (
                         <>
-                            <button className="btn" onClick={() => navigate('/profile')}>
+                            <button className="btn" onClick={() => navigate('/privateprofile')}>
                                 <i className="fas fa-user icon"></i>
                                 <span className="m-0 h6">Profile</span>
                             </button>

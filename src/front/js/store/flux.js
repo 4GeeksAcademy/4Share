@@ -9,13 +9,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             acceptedContacts: [],
         },
         actions: {
-            
+
             // Action: Register in our page
             signupUser: async (email, password, isActive) => {
                 try {
                     const requestBody = { email, password, is_active: isActive };
-
-                    console.log('Enviando solicitud de registro:', requestBody);
 
                     const response = await fetch(`${process.env.BACKEND_URL}signup`, {
                         method: 'POST',
@@ -24,8 +22,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
 
                     const data = await response.json();
-
-                    console.log('Respuesta del registro:', response.ok, data);
 
                     if (response.ok) {
                         console.log('Usuario registrado exitosamente:', data);
@@ -75,7 +71,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const data = await response.json();
                     if (response.ok) {
                         localStorage.setItem('jwt-token', data.access_token);
-                        console.log('User logged in successfully:', data);
                         return data;
                     } else {
                         console.error('Error logging in:', data?.msg || "Unknown error");
@@ -88,10 +83,22 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
             // Action: Modify your profile info
-            updateProfile: async (id, name, email, gender, lastname, birthdate, phone) => {
+            updateProfile: async (name, email, last_name, phone, location, profile_pic, gender, description) => {
                 try {
                     const token = localStorage.getItem('jwt-token');
-                    const requestBody = { name, email, gender, lastname, birthdate, phone };
+                    const requestBody = {
+                        name,
+                        email,
+                        last_name,
+                        phone,
+                        location,
+                        profile_pic,
+                        gender,
+                        description
+                    };
+
+                    console.log("Sending request body:", requestBody);
+
                     const response = await fetch(`${process.env.BACKEND_URL}update_user`, {
                         method: 'PUT',
                         headers: {
@@ -100,7 +107,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                         },
                         body: JSON.stringify(requestBody)
                     });
+
                     const data = await response.json();
+
                     if (response.ok) {
                         console.log('Profile updated successfully:', data);
                         return data;
@@ -114,6 +123,117 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+            // Get one specific user profile
+            getUserProfile: async (userId) => {
+                const token = localStorage.getItem('jwt-token');
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}profile/${userId}`, {
+                        method: 'GET',
+                        headers: {
+                            Authorization: 'Bearer ' + token,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    const data = await response.json();
+
+
+                    if (response.ok) {
+                        return data.user_data;
+                    } else {
+                        console.error(`Error fetching user profile:`, data?.msg || "Unknown error");
+                        return null;
+                    }
+                } catch (error) {
+                    console.error(`Error fetching user profile:`, error);
+                    return null;
+                }
+            },
+
+            // Get one specific user profile
+            getYourUserProfile: async () => {
+                const token = localStorage.getItem('jwt-token');
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}profile`, {
+                        method: 'GET',
+                        headers: {
+                            Authorization: 'Bearer ' + token,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    const text = await response.text();
+
+                    if (response.ok) {
+                        const data = JSON.parse(text);
+                        return data.user_data;
+                    } else {
+                        console.error(`Error fetching user profile:`, text);
+                        return null;
+                    }
+                } catch (error) {
+                    console.error(`Error fetching user profile:`, error);
+                    return null;
+                }
+            },
+
+            // Action: Get user reviews
+            getUserReviews: async (userId) => {
+                const token = localStorage.getItem('jwt-token');
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}user/${userId}/reviews`, {
+                        method: 'GET',
+                        headers: {
+                            Authorization: 'Bearer ' + token,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        setStore({ userReviews: data.reviews || [] });
+                        return data.reviews || [];
+                    } else {
+                        console.error(`Error fetching user reviews:`, data.msg || "Unknown error");
+                        return [];
+                    }
+                } catch (error) {
+                    console.error(`Error fetching user reviews:`, error);
+                    return [];
+                }
+            },
+
+            saveReview: async (revieweeId, reviewData) => {
+                const token = localStorage.getItem("jwt-token");
+                try {
+                    const response = await fetch(`https://obscure-orbit-wp66v45p7rrcq5q-3001.app.github.dev/add/review`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`,
+                        },
+                        body: JSON.stringify({
+                            reviewee_id: revieweeId,
+                            score: reviewData.score,
+                            comment: reviewData.comment,
+                        }),
+                    });
+
+                    const result = await response.json();
+                    console.log("Response from server:", result);
+
+                    if (response.ok) {
+                        return result;
+                    } else {
+                        console.error("Error saving review:", result);
+                        return null;
+                    }
+                } catch (error) {
+                    console.error("Error saving review:", error);
+                    return null;
+                }
+            },
 
             // Action: Get all Users
             getAllUsers: async () => {
@@ -200,34 +320,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            // Get one specific user profile
-            getUserProfile: async (userId) => {
-                const token = localStorage.getItem('jwt-token');
-                try {
-                    const response = await fetch(`${process.env.BACKEND_URL}profile/${userId}`, {
-                        method: 'GET',
-                        headers: {
-                            Authorization: 'Bearer ' + token,
-                            'Content-Type': 'application/json'
-                        }
-                    });
-
-                    const data = await response.json();
-
-
-                    if (response.ok) {
-                        return data.user_data; // Devuelve los datos del usuario
-                    } else {
-                        console.error(`Error fetching user profile:`, data?.msg || "Unknown error");
-                        return null;
-                    }
-                } catch (error) {
-                    console.error(`Error fetching user profile:`, error);
-                    return null;
-                }
-            },
-
-            // Get the 3 types of requests
+            //Action: Get the 3 types of requests
             getRequests: async (type) => {
                 const token = localStorage.getItem('jwt-token');
                 try {
@@ -255,7 +348,50 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            // Crear una solicitud de match
+            // Action: Get specific match between you and the public profile
+            getMatchStatus: async (publicUserId) => {
+                const token = localStorage.getItem('jwt-token');
+                try {
+                    const [outgoingResponse, acceptedResponse] = await Promise.all([
+                        fetch(`${process.env.BACKEND_URL}match?type=outgoing`, {
+                            method: 'GET',
+                            headers: {
+                                Authorization: 'Bearer ' + token,
+                                'Content-Type': 'application/json',
+                            },
+                        }),
+                        fetch(`${process.env.BACKEND_URL}/match?type=accepted`, {
+                            method: 'GET',
+                            headers: {
+                                Authorization: 'Bearer ' + token,
+                                'Content-Type': 'application/json',
+                            },
+                        })
+                    ]);
+
+                    const outgoingMatches = await outgoingResponse.json();
+                    const acceptedMatches = await acceptedResponse.json();
+                    const outgoingMatch = outgoingMatches.find(match => match.match_to_id == publicUserId);
+                    const acceptedMatch = acceptedMatches.find(match => (match.match_from_id == publicUserId || match.match_to_id == publicUserId));
+
+                    if (outgoingMatch) {
+                        return { status: 'pending', match_id: outgoingMatch.match_id };
+                    }
+
+                    if (acceptedMatch) {
+                        return { status: 'accepted', match_id: acceptedMatch.match_id };
+                    }
+
+                    return { status: 'none' };
+
+                } catch (error) {
+                    console.error(`Error fetching match status:`, error);
+                    return null;
+                }
+            },
+
+
+            // Action: Create friend request
             createMatch: async (matchToId) => {
                 const token = localStorage.getItem('jwt-token');
                 try {
@@ -279,7 +415,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            // Aceptar una solicitud de match
+            // Action: Accept a match request
             acceptRequest: async (matchId) => {
                 const token = localStorage.getItem('jwt-token');
                 try {
@@ -294,8 +430,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const data = await response.json();
                     if (response.ok) {
                         console.log("Request accepted:", data);
-                        getActions().getRequests('incoming'); // Actualizar la lista de solicitudes entrantes
-                        getActions().getRequests('accepted'); // Actualizar la lista de contactos aceptados
+                        getActions().getRequests('incoming');
+                        getActions().getRequests('accepted');
                     } else {
                         console.error("Error accepting request:", data?.msg || "Unknown error");
                     }
@@ -304,7 +440,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            // Rechazar una solicitud de match
+            // Action: Decline a match request
             declineRequest: async (matchId) => {
                 const token = localStorage.getItem('jwt-token');
                 try {
@@ -318,7 +454,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const data = await response.json();
                     if (response.ok) {
                         console.log("Request declined:", data);
-                        getActions().getRequests('incoming'); // Actualizar la lista de solicitudes
+                        getActions().getRequests('incoming');
                     } else {
                         console.error("Error declining request:", data?.msg || "Unknown error");
                     }
@@ -327,7 +463,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            // Cancelar una solicitud de match
+            // Action: cancel a friend request that you sent
             cancelRequest: async (matchId) => {
                 const token = localStorage.getItem('jwt-token');
                 try {
@@ -341,12 +477,35 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const data = await response.json();
                     if (response.ok) {
                         console.log("Request cancelled:", data);
-                        getActions().getRequests('outgoing'); // Actualizar la lista de solicitudes
+                        getActions().getRequests('outgoing');
                     } else {
                         console.error("Error cancelling request:", data?.msg || "Unknown error");
                     }
                 } catch (error) {
                     console.error("Error cancelling request:", error);
+                }
+            },
+            // Action: to request a password reset
+            requestPasswordReset: async (email) => {
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}reset-password`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email })
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log('Password reset email sent:', data);
+                        return data;
+                    } else {
+                        const data = await response.json();
+                        console.error('Error sending password reset email:', data?.msg || "Unknown error");
+                        return null;
+                    }
+                } catch (error) {
+                    console.error('Error requesting password reset:', error);
+                    return null;
                 }
             },
         }

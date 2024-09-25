@@ -1,20 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import '../../styles/resetPassword.css';
 
 const ResetPassword = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [token, setToken] = useState("");
 
-  const handlePasswordReset = (e) => {
+  useEffect(() => {
+    const query = new URLSearchParams(location.search);
+    setToken(query.get('token'));
+  }, [location]);
+  
+  const handlePasswordReset = async (e) => {
     e.preventDefault();
+
     if (newPassword !== confirmPassword) {
       setErrorMessage("Passwords do not match!");
-    } else {
-      // Aqui você chamaria sua API para fazer o reset da senha
-      setSuccessMessage("Password reset successfully!");
-      setErrorMessage(""); // Limpar mensagem de erro
+      return;
+    }
+
+    try {
+      const response = await fetch(`${process.env.BACKEND_URL}reset-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ new_password: newPassword, token })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSuccessMessage(data.msg || "Password reset successfully!");
+        setErrorMessage(""); // Limpiar mensaje de error
+
+        // Navegar a la página de inicio y abrir el modal de login
+        navigate('/', { state: { openLoginModal: true } });
+      } else {
+        setErrorMessage(data.msg || "Error resetting password");
+      }
+    } catch (error) {
+      setErrorMessage("An error occurred. Please try again.");
     }
   };
 
@@ -26,6 +55,7 @@ const ResetPassword = () => {
           <p className="instruction-text">Please enter your new password below to reset your account.</p>
 
           <form onSubmit={handlePasswordReset}>
+            <input type="hidden" name="token" value={token} /> {/* Token oculto */}
             <div className="form-group mt-3">
               <input
                 type="password"
@@ -53,10 +83,6 @@ const ResetPassword = () => {
 
             <button type="submit" className="btn btn-primary custom-button mt-4">Reset Password</button>
           </form>
-
-          <p className="mt-3">
-            <a href="/login" className="back-to-login">Back to Login</a>
-          </p>
         </div>
       </div>
     </div>

@@ -1,0 +1,26 @@
+.request-item {
+    display: flex; /* Alinear los elementos en una fila */
+    align-items: center; /* Centrar verticalmente */
+    border: 1px solid #ddd; /* Borde alrededor de la tarjeta */
+    border-radius: 8px; /* Esquinas redondeadas */
+    padding: 15px; /* Espaciado interno */
+    margin-bottom: 15px; /* Espaciado entre tarjetas */
+    background-color: #f9f9f9; /* Color de fondo */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.request-img {
+    width: 60px; /* Ajusta el tamaño según tus necesidades */
+    height: 60px; /* Ajusta el tamaño según tus necesidades */
+    border-radius: 50%; /* Para que sea un círculo */
+    margin-right: 15px; /* Espaciado entre la imagen y el texto */
+}
+
+.request-info {
+    flex-grow: 1; /* Permitir que la información crezca y ocupe espacio */
+}
+
+.rating {
+    color: #FFD700; /* Color de las estrellas */
+    margin: 5px 0; /* Espaciado entre la calificación y el comentario */
+}
