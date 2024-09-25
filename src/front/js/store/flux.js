@@ -123,7 +123,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            // Get one specific user profile
+            // Get one specific user profile, can be anyone
             getUserProfile: async (userId) => {
                 const token = localStorage.getItem('jwt-token');
                 try {
@@ -150,7 +150,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            // Get one specific user profile
+            // Get your user with the jwt-token
             getYourUserProfile: async () => {
                 const token = localStorage.getItem('jwt-token');
                 try {
@@ -207,7 +207,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             saveReview: async (revieweeId, reviewData) => {
                 const token = localStorage.getItem("jwt-token");
                 try {
-                    const response = await fetch(`https://obscure-orbit-wp66v45p7rrcq5q-3001.app.github.dev/add/review`, {
+                    const response = await fetch(`${process.env.BACKEND_URL}/add/review`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -219,10 +219,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                             comment: reviewData.comment,
                         }),
                     });
-
+            
                     const result = await response.json();
                     console.log("Response from server:", result);
-
+            
                     if (response.ok) {
                         return result;
                     } else {
@@ -231,6 +231,61 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
                 } catch (error) {
                     console.error("Error saving review:", error);
+                    return null;
+                }
+            },
+            
+            updateReview: async (reviewId, reviewData) => {
+                const token = localStorage.getItem("jwt-token");
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}/update/review/${reviewId}`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`,
+                        },
+                        body: JSON.stringify({
+                            score: reviewData.score,
+                            comment: reviewData.comment,
+                        }),
+                    });
+            
+                    const result = await response.json();
+                    console.log("Response from server:", result);
+            
+                    if (response.ok) {
+                        return result;
+                    } else {
+                        console.error("Error updating review:", result);
+                        return null;
+                    }
+                } catch (error) {
+                    console.error("Error updating review:", error);
+                    return null;
+                }
+            },
+            
+            deleteReview: async (reviewId) => {
+                const token = localStorage.getItem("jwt-token");
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}/reviews/${reviewId}`, {
+                        method: "DELETE",
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+            
+                    const result = await response.json();
+                    console.log("Response from server:", result);
+            
+                    if (response.ok) {
+                        return result;
+                    } else {
+                        console.error("Error deleting review:", result);
+                        return null;
+                    }
+                } catch (error) {
+                    console.error("Error deleting review:", error);
                     return null;
                 }
             },
@@ -369,6 +424,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         })
                     ]);
 
+
                     const outgoingMatches = await outgoingResponse.json();
                     const acceptedMatches = await acceptedResponse.json();
                     const outgoingMatch = outgoingMatches.find(match => match.match_to_id == publicUserId);
@@ -496,7 +552,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     if (response.ok) {
                         const data = await response.json();
-                        console.log('Password reset email sent:', data);
                         return data;
                     } else {
                         const data = await response.json();

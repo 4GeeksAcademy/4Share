@@ -26,14 +26,14 @@ const WriteReview = ({ onSave, initialComment, initialScore }) => {
         e.preventDefault();
         if (onSave) {
             onSave(score, comment);
-            setComment('');
+            setComment('');  // Limpiar formulario después de enviar
             setScore(0);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h3 style={{color:"white"}}>Write a Review</h3>
+        <form onSubmit={handleSubmit} className="write-review-form">
+            <h3 style={{color:"white"}}>{initialComment ? "Edit Your Review" : "Write a Review"}</h3>
             <div className="review-form">
                 <div className="star-rating">{renderStars(score)}</div>
                 <textarea
@@ -43,7 +43,7 @@ const WriteReview = ({ onSave, initialComment, initialScore }) => {
                     placeholder="Write your comment here..."
                     required
                 />
-                <button type="submit">Submit Review</button>
+                <button type="submit">{initialComment ? "Update Review" : "Submit Review"}</button>
             </div>
         </form>
     );

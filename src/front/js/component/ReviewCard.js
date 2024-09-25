@@ -1,7 +1,7 @@
 import React from 'react';
 import "../../styles/reviewCard.css";
 
-const ReviewCard = ({ review }) => {
+const ReviewCard = ({ review, onEdit, onDelete }) => {
     if (!review || !review.reviewer_info) {
         return <div>Loading...</div>; 
     }
@@ -24,6 +24,13 @@ const ReviewCard = ({ review }) => {
                 <h5>{review.reviewer_info.name || "Unknown User"} {review.reviewer_info.last_name || ""}</h5>
                 <div className="rating">{renderStars(review.score)}</div>
                 <p>{review.comment || "No comment provided."}</p>
+
+                {onEdit && onDelete && (
+                <div className="review-actions">
+                    <button className="edit-button" onClick={onEdit}>Modify</button>
+                    <button className="delete-button" onClick={onDelete}>Delete</button>
+                </div>
+                 )}
             </div>
         </div>
     );
