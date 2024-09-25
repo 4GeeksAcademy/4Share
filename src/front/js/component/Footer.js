@@ -27,6 +27,7 @@ const Footer = () => (
 				<p>Developers from 4Share</p>
 				<img src="https://res.cloudinary.com/dmkw4vacw/image/upload/v1725897267/Logo_in_White_text_ddxzuv.png" alt="4Share Logo" className="logo" />
 				<p>Our mentors from 4Geeks Academy</p>
+				<img src="https://res.cloudinary.com/dam4qhxjr/image/upload/v1727288605/4geeksacademy-logo-old_cfmpws.png" alt="4Geeks Logo" className="logo" />
 			</div>
 		</div>
 	</footer>

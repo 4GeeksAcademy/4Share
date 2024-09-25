@@ -26,7 +26,7 @@ function LoginModal({ onClose, openSignup }) {
                 localStorage.setItem('jwt-token', data.access_token);
                 actions.loginUser(email, password);
                 onClose();
-                navigate('/privateprofile'); 
+                navigate('/privateprofile');
             } else {
                 console.error('Error logging in:', data?.msg || "Unknown error");
                 setError(data?.msg || "Unknown error");
@@ -55,6 +55,7 @@ function LoginModal({ onClose, openSignup }) {
                         <button type="button" className="btn-close" onClick={onClose} aria-label="Close"></button>
                     </div>
                     <div className="modal-body text-center">
+                        <img src="https://res.cloudinary.com/dmkw4vacw/image/upload/v1725897267/Logo_in_White_text_ddxzuv.png" alt="4Share Logo" className="login-logo mb-4" />
                         <h2 className="mb-4">Log in</h2>
                         {error && <p className="error">{error}</p>}
                         {resetMessage && <p className="success">{resetMessage}</p>} {/* Show reset success message */}
@@ -81,15 +82,15 @@ function LoginModal({ onClose, openSignup }) {
                             <button className="btn btn-outline-light w-100 mb-3">
                                 <i className="fab fa-apple me-2"></i> Log in with Apple
                             </button> */}
-                            <p className="mt-4">Don't have an account? 
-                            <strong><a href="#" onClick={() => { onClose(); openSignup(); }}>Sign up</a> </strong>
+                            <p className="mt-4">Don't have an account?
+                                <strong><a href="#" onClick={() => { onClose(); openSignup(); }}> Sign up</a> </strong>
                             </p>
 
                             <p className="mt-4">
-                            <strong><a href="#" onClick={handlePasswordReset}>Send Reset Password Email</a> </strong>
+                                <strong><a href="#" onClick={handlePasswordReset}>Send Reset Password Email</a> </strong>
                             </p>
                         </form>
-                        <button type="button" className="btn btn-secondary mt-5" style={{marginLeft:"auto",marginRight:"auto"}} onClick={onClose}>
+                        <button type="button" className="btn btn-secondary mt-5" style={{ marginLeft: "auto", marginRight: "auto" }} onClick={onClose}>
                             Close
                         </button>
                     </div>
