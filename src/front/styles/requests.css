@@ -1,0 +1,132 @@
+/* Estilos básicos para a página de Requests */
+.requests-container {
+    display: flex;
+    flex-direction: column; 
+    padding-bottom: 8vw !important;
+    max-width: 1200px;
+    color: white;
+    padding-top: 0 !important;
+    margin-top: 5rem !important;
+
+    p{
+        color: rgb(255, 255, 255);
+    }
+    
+    
+}
+
+.requestsMainContent{
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+}
+
+.custom-title {
+    display: flex;
+    justify-content: center;
+}
+
+.custom-title {
+    margin-top: 60px;
+    background-color: #ffffff;
+    box-shadow: 3px 3px #f2c3b6;
+    border-radius: 30px;
+    padding: 10px 30px;
+    font-size: 24px;
+    color: #6F7CB2;
+    display: inline-block;
+    font-family: Arial, sans-serif;
+}
+
+
+/* Estilos para My Requests */
+.request-list .request-item, .contacts-list .contact-item {
+    display: flex;
+    align-items: center;
+    background-color: rgba(250, 250, 250, 0.9);
+    box-shadow: 4px 4px #f2c3b6;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.request-img, .contact-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.request-info, .contact-info {
+    p{
+        color: black !important;
+    }
+    flex: 1;
+}
+
+.request-info h3, .contact-info h3 {
+    margin-bottom: 10px;
+    color: black;
+}
+
+.rating {
+    display: flex;
+    color: #FFD700;
+    margin-bottom: 10px;
+}
+
+.skills span {
+    display: block;
+    margin-bottom: 5px;
+    color: black;
+}
+
+.request-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.accept-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.decline-btn {
+    background-color: #F44336;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.accept-btn:hover, .decline-btn:hover {
+    opacity: 0.9;
+}
+
+.contact-info p {
+    margin: 5px 0;
+    color: black;
+}
+
+.contact-details{
+    color: black;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .request-item, .contact-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .request-actions {
+        flex-direction: row;
+        gap: 20px;
+    }
+}

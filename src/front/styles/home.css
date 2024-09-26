@@ -1,7 +1,265 @@
-/*
-    home.css: This website contains selectors only used in home.css
+/* General style */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+body {
+    margin-top: 40px;
+    background-color: #1B1328;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.titlesBorder {
+    background-color: #f0c8c0;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    border-radius: 30px;
+    transform: rotate(2deg);
+    margin-bottom: 5vw;
+}
+
+.titles {
+    background-color: white;
+    border-radius: 30px;
+    transform: rotate(-1deg);
+    padding: 10px;
+    color: black;
+}
+
+.mainHome {
+    background-color: #1B1328;
+    z-index: 3;
+    position: relative;
+    padding-top: 400px;
+}
+
+@media (max-width: 768px) {
+    .mainHome {
+        padding-top: 100px;
+    }
+}
+
+@media (max-width: 570px) {
+    .mainHome {
+        padding-top: 0px;
+    }
+}
+
+@media (max-width: 425px) {
+    .mainHome {
+        padding-top: -125px;
+    }
+}
+
+@media (max-width: 320px) {
+    .mainHome {
+        padding-top: -170px;
+    }
+}
+
+.mainHome h2 {
+    color: white;
+    font-size: 3rem;
+}
+
+.mainHome p {
+    color: white;
+    font-size: 1rem;
+}
+
+.container-fluid {
+    padding: 0px !important;
+}
+
+.container {
+    padding: 0 !important;
+}
+
+/* Parallax Home */
+.parallax {
+    margin-top: 4vh;
+    position: relative;
+    background-color: #1B1328;
+
+    width: 100%;
+
+    height: 100vh;
+    overflow: hidden;
+}
+
+@media (max-width: 770px) {
+    .parallax {
+        height: 50vh;
+    }
+}
+
+.parallax img {
+    position: absolute;
+    padding-top: 20px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+}
+
+/* Image with text Jumbotron */
+.imageTextContainer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.imageTextContainer img {
+    width: 90%;
+}
+
+.jumboOne {
+    display: block;
+}
+
+.jumboTwo {
+    display: none;
+}
+
+@media (max-width: 426px) {
+    .jumboOne {
+        display: none;
+    }
+
+    .jumboTwo {
+        display: block;
+    }
+}
+
+/* Search Bar */
+.search {
+    height: 100%;
+    background: linear-gradient(to right, #FFF8F9, #F0C6BD);
+    border: 0.12rem solid black;
+    display: flex;
+    align-items: center;
+
+}
+.searchBar{
+    .btn{
+        margin-top: auto !important;
+        margin-bottom: auto !important;
+        padding-top: 17px;
+        padding-bottom: 17px;
+    }
+}
+
+.search:hover {
+    transform: scaleY(1.1);
+}
+
+.searchBar input {
+    width: 80%;
+    padding: 0.75vw 0.3vw;
+
+}
+
+/* Background for main sections */
+.backgroundMain {
+    background-color: #1B1328;
+    padding-top: 5vw;
+    padding-bottom: 25vw;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-image: url("https://res.cloudinary.com/dmkw4vacw/image/upload/v1726071694/BackgroundMain_jimbrk.png");
+}
+
+.categoriesHome p {
+    color: #1B1328;
+    font-size: 0.85rem !important;
+    margin: auto;
+    display: initial;
+}
+
+@media (max-width: 770px) {
+    .categoriesHome a {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+}
+
+
+@media (max-width: 770px) {
+    .categoriesHome {
+        p {
+            display: none;
+        }
+    }
+}
+
+/* For the cards in home */
+.rating {
+    display: flex;
+    direction: row;
+}
+
+.rating .fa-star {
+    color: #dcdcdc;
+    font-size: 1.3rem;
+}
+
+.rating .fa-star.filled {
+    color: #F0C6BD;
+}
+
+.cardsBorder {
+    background-color: #f0c8c0;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    border-radius: 30px;
+    transform: rotate(-1deg);
+    margin-bottom: 5vw;
+}
+
+.cards {
+    background-color: white;
+    border-radius: 30px;
+    transform: rotate(1deg);
+    padding: 10px;
+}
+
+.imageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 10vw;
+    height: 10vw;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    background-color: #f0f0f0;
+}
+
+.imageContainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.categoriesHome {
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: space-between;
+}
+
+.categoriesHome .btn {
+    flex: 1; 
+    min-width: 100px; 
+    margin: 5px; 
+}

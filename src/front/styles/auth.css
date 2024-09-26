@@ -1,0 +1,102 @@
+/* General Modal Styles */
+.modal-content {
+    background-image: linear-gradient(135deg, #8f6ddf, #2c2c54); 
+    color: white;
+    border-radius: 20px;
+    padding: 20px;
+    
+}
+
+/* Logo Modal */
+.login-logo {
+    display: block;
+    margin: 0 auto; 
+    width: 80px; 
+    height: auto; 
+}
+
+.modal-header {
+    border-bottom: none; /* Remove default border */
+}
+
+.custom-btn {
+    background-color: #ff4081 !important; /* Fucsia */
+    border: none;
+    border-radius: 10px;
+    color: white; /* Text color inside button */
+}
+
+.custom-input {
+    background-color: white;
+    color: #333;
+    border-radius: 10px;
+    border: none;
+}
+
+.custom-input::placeholder {
+    color: #aaa;
+}
+
+.divider {
+    margin: 10px 0;
+    text-align: center;
+    color: #aaa;
+    position: relative;
+}
+
+.divider::before, .divider::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background: #aaa;
+}
+
+.divider::before {
+    left: 0;
+}
+
+.divider::after {
+    right: 0;
+}
+
+.btn-outline-light {
+    border-color: white;
+    color: white;
+}
+
+strong{
+    text-decoration: underline;
+}
+
+/* Modal Button Styles */
+.btn-primary {
+    background-color: #ff4081; /* Fucsia */
+    border: none;
+    border-radius: 10px;
+}
+
+.btn-outline-light {
+    border-color: white;
+   
+}
+
+.btn{
+    color: black  !important;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 576px) {
+    .custom-input {
+        font-size: 0.8rem;
+    }
+
+    .custom-btn {
+        font-size: 0.8rem;
+    }
+
+    .divider {
+        font-size: 0.8rem;
+    }
+}

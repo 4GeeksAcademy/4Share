@@ -1,39 +1,55 @@
-import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ScrollToTop from "./component/scrollToTop";
-import { BackendURL } from "./component/backendURL";
-
-import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
+import React, { useEffect } from "react";
+import { BrowserRouter, Route, Routes, useLocation, Navigate } from "react-router-dom";
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
+import Home from "./pages/Home";
+import Requests from "./pages/Requests";
+import ResetPassword from "./pages/ResetPassword";
+ import PublicProfile from "./pages/PublicProfile";
+import PrivateProfile from "./pages/PrivateProfile";
+import ProfileSearch from "./pages/ProfileSearch";
+import Navbar from "./component/Navbar";
+import Footer from "./component/Footer";
+import LoginModal from "./component/LoginModal";
+import SignupModal from "./component/SignupModal";
+import ProtectedRoute from './component/ProtectedRoute';
 
-//create your first component
+const ScrollToTop = () => {
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [pathname]);
+
+    return null;
+};
+
 const Layout = () => {
-    //the basename is used when your project is published in a subdirectory and not in the root of the domain
-    // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
     const basename = process.env.BASENAME || "";
 
-    if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
+    if (!process.env.BACKEND_URL || process.env.BACKEND_URL === "") {
+        return <BackendURL />;
+    }
 
     return (
-        <div>
-            <BrowserRouter basename={basename}>
-                <ScrollToTop>
-                    <Navbar />
-                    <Routes>
-                        <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
-                        <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<h1>Not found!</h1>} />
-                    </Routes>
-                    <Footer />
-                </ScrollToTop>
-            </BrowserRouter>
-        </div>
+        <BrowserRouter basename={basename}>
+            <ScrollToTop />
+            <Navbar />
+            <Routes>
+                <Route element={<Home />} path="/" />
+                <Route element={<ProtectedRoute />}>
+                    <Route path="/requests" element={<Requests />} />
+                    <Route path="/profilesearch/:type" element={<ProfileSearch />} />
+                    <Route path="/publicprofile/:user_id" element={<PublicProfile />} />
+                    <Route path="/privateprofile"  element={<PrivateProfile />} /> 
+                </Route>
+                <Route element={<LoginModal />} path="/login" />
+                <Route element={<SignupModal />} path="/signup" />
+                <Route path="/resetpassword" element={<ResetPassword />} />
+                <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+            <Footer />
+        </BrowserRouter>
     );
 };
 
