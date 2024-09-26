@@ -90,14 +90,14 @@ a {
 
 /* Modal styles */
 .custom-modal {
-    background-color: #2c2c54; /* Morado oscuro */
+    background-color: #2c2c54; 
     color: white;
     border-radius: 20px;
     padding: 20px;
 }
 
 .custom-btn {
-    background-color: #ff4081 !important; /* Fucsia */
+    background-color: #ff4081 !important;
     border: none;
     border-radius: 10px;
 }

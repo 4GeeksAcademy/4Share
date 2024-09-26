@@ -1,3 +1,5 @@
+import Swal from 'sweetalert2';
+
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
@@ -7,6 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             incomingRequests: [],
             outgoingRequests: [],
             acceptedContacts: [],
+            currentUser: null
         },
         actions: {
 
@@ -24,19 +27,19 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const data = await response.json();
 
                     if (response.ok) {
-                        console.log('Usuario registrado exitosamente:', data);
+                        Swal.fire('Success', 'User successfully registered', 'success');
                         return data;
                     } else {
-                        console.error('Error al registrar:', data?.msg || "Error desconocido");
+                        Swal.fire('Error', data?.msg || 'Unknown error during registration', 'error');
                         return null;
                     }
                 } catch (error) {
-                    console.error('Error durante la solicitud de registro:', error);
+                    Swal.fire('Error', 'Error during registration request', 'error');
                     return null;
                 }
             },
 
-            // Acción send singup email
+            // Action: Send signup email
             sendConfirmationEmail: async (email) => {
                 try {
                     const emailResponse = await fetch(`${process.env.BACKEND_URL}send-email`, {
@@ -44,18 +47,17 @@ const getState = ({ getStore, getActions, setStore }) => {
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ email }) // Have to send email as an object
+                        body: JSON.stringify({ email })
                     });
 
                     if (emailResponse.ok) {
                         const emailData = await emailResponse.json();
-                        console.log('Correo enviado:', emailData);
                     } else {
                         const errorData = await emailResponse.json();
-                        console.error('Error al enviar el correo:', errorData);
+                        Swal.fire('Error', errorData?.msg || 'Error sending email', 'error');
                     }
                 } catch (error) {
-                    console.error('Error al enviar el correo:', error);
+                    Swal.fire('Error', 'Error sending email', 'error');
                 }
             },
 
@@ -71,13 +73,14 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const data = await response.json();
                     if (response.ok) {
                         localStorage.setItem('jwt-token', data.access_token);
+                        Swal.fire('Success', 'Login successful', 'success');
                         return data;
                     } else {
-                        console.error('Error logging in:', data?.msg || "Unknown error");
+                        Swal.fire('Error', data?.msg || 'Unknown error during login', 'error');
                         return null;
                     }
                 } catch (error) {
-                    console.error('Error during login request:', error);
+                    Swal.fire('Error', 'Error during login request', 'error');
                     return null;
                 }
             },
@@ -97,8 +100,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                         description
                     };
 
-                    console.log("Sending request body:", requestBody);
-
                     const response = await fetch(`${process.env.BACKEND_URL}update_user`, {
                         method: 'PUT',
                         headers: {
@@ -111,19 +112,19 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const data = await response.json();
 
                     if (response.ok) {
-                        console.log('Profile updated successfully:', data);
+                        Swal.fire('Success', 'Profile updated successfully', 'success');
                         return data;
                     } else {
-                        console.error('Error updating profile:', data?.msg || data?.message || "Unknown error");
+                        Swal.fire('Error', data?.msg || 'Unknown error during profile update', 'error');
                         return null;
                     }
                 } catch (error) {
-                    console.error('Error during the update request:', error);
+                    Swal.fire('Error', 'Error during profile update', 'error');
                     return null;
                 }
             },
 
-            // Get one specific user profile, can be anyone
+            //Action: Get one specific user profile
             getUserProfile: async (userId) => {
                 const token = localStorage.getItem('jwt-token');
                 try {
@@ -137,20 +138,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     const data = await response.json();
 
-
                     if (response.ok) {
                         return data.user_data;
                     } else {
-                        console.error(`Error fetching user profile:`, data?.msg || "Unknown error");
+                        Swal.fire('Error', data?.msg || 'Unknown error retrieving profile', 'error');
                         return null;
                     }
                 } catch (error) {
-                    console.error(`Error fetching user profile:`, error);
+                    Swal.fire('Error', 'Error retrieving user profile', 'error');
                     return null;
                 }
             },
 
-            // Get your user with the jwt-token
+            //Action: Get your user profile
             getYourUserProfile: async () => {
                 const token = localStorage.getItem('jwt-token');
                 try {
@@ -166,13 +166,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     if (response.ok) {
                         const data = JSON.parse(text);
+                        setStore({ currentUser: data.user_data });
                         return data.user_data;
                     } else {
-                        console.error(`Error fetching user profile:`, text);
+                        Swal.fire('Error', 'Error retrieving your user profile', 'error');
                         return null;
                     }
                 } catch (error) {
-                    console.error(`Error fetching user profile:`, error);
+                    Swal.fire('Error', 'Error retrieving your user profile', 'error');
                     return null;
                 }
             },
@@ -195,11 +196,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                         setStore({ userReviews: data.reviews || [] });
                         return data.reviews || [];
                     } else {
-                        console.error(`Error fetching user reviews:`, data.msg || "Unknown error");
+                        Swal.fire('Error', data.msg || 'Unknown error retrieving reviews', 'error');
                         return [];
                     }
                 } catch (error) {
-                    console.error(`Error fetching user reviews:`, error);
+                    Swal.fire('Error', 'Error retrieving user reviews', 'error');
                     return [];
                 }
             },
@@ -219,22 +220,24 @@ const getState = ({ getStore, getActions, setStore }) => {
                             comment: reviewData.comment,
                         }),
                     });
-            
+
                     const result = await response.json();
-                    console.log("Response from server:", result);
-            
+
                     if (response.ok) {
+                        Swal.fire('Success', 'Review saved successfully', 'success');
                         return result;
                     } else {
-                        console.error("Error saving review:", result);
+                        Swal.fire('Error', 'Error saving review', 'error');
                         return null;
                     }
                 } catch (error) {
-                    console.error("Error saving review:", error);
+                    Swal.fire('Error', 'Error saving review', 'error');
                     return null;
                 }
             },
-            
+
+
+
             updateReview: async (reviewId, reviewData) => {
                 const token = localStorage.getItem("jwt-token");
                 try {
@@ -249,22 +252,22 @@ const getState = ({ getStore, getActions, setStore }) => {
                             comment: reviewData.comment,
                         }),
                     });
-            
+
                     const result = await response.json();
-                    console.log("Response from server:", result);
-            
+
                     if (response.ok) {
+                        Swal.fire('Success', 'Review updated successfully!', 'success');
                         return result;
                     } else {
-                        console.error("Error updating review:", result);
+                        Swal.fire('Error', result?.msg || "Error updating review", 'error');
                         return null;
                     }
                 } catch (error) {
-                    console.error("Error updating review:", error);
+                    Swal.fire('Error', 'Error updating review', 'error');
                     return null;
                 }
             },
-            
+
             deleteReview: async (reviewId) => {
                 const token = localStorage.getItem("jwt-token");
                 try {
@@ -274,23 +277,22 @@ const getState = ({ getStore, getActions, setStore }) => {
                             Authorization: `Bearer ${token}`,
                         },
                     });
-            
+
                     const result = await response.json();
-                    console.log("Response from server:", result);
-            
+
                     if (response.ok) {
+                        Swal.fire('Deleted!', 'Your review has been deleted.', 'success');
                         return result;
                     } else {
-                        console.error("Error deleting review:", result);
+                        Swal.fire('Error', result?.msg || "Error deleting review", 'error');
                         return null;
                     }
                 } catch (error) {
-                    console.error("Error deleting review:", error);
+                    Swal.fire('Error', 'Error deleting review', 'error');
                     return null;
                 }
             },
 
-            // Action: Get all Users
             getAllUsers: async () => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}users`);
@@ -301,33 +303,28 @@ const getState = ({ getStore, getActions, setStore }) => {
                             setStore({ users: data.users });
                         }
                     } else {
-                        console.error("Error fetching all users:", data?.msg || "Unknown error");
+                        Swal.fire('Error', data?.msg || "Error fetching all users", 'error');
                     }
                 } catch (error) {
-                    console.error("Error fetching all users:", error);
+                    Swal.fire('Error', 'Error fetching all users', 'error');
                 }
             },
 
-            // Action: Search users by query
             searchUsers: async (query) => {
                 if (!query) return;
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}search/users?query=${query}`);
                     const data = await response.json();
                     if (response.ok && data?.users) {
-                        const currentUsers = getStore().users;
-                        if (JSON.stringify(currentUsers) !== JSON.stringify(data.users)) {
-                            setStore({ users: data.users });
-                        }
+                        setStore({ users: data.users });
                     } else {
-                        console.error("Error searching users:", data?.msg || "Unknown error");
+                        Swal.fire('Error', data?.msg || "Error searching users", 'error');
                     }
                 } catch (error) {
-                    console.error("Error searching users:", error);
+                    Swal.fire('Error', 'Error searching users', 'error');
                 }
             },
 
-            // Action: Search users by skill
             searchUsersBySkill: async (skill) => {
                 if (!skill) return;
                 try {
@@ -336,16 +333,14 @@ const getState = ({ getStore, getActions, setStore }) => {
                     if (response.ok && data?.users) {
                         setStore({ users: data.users });
                     } else {
-                        console.warn("No users found for the specified skill:", data?.msg || "Unknown error");
                         setStore({ users: [] });
                     }
                 } catch (error) {
-                    console.error(`Error fetching users by skill (${skill}):`, error);
+                    Swal.fire('Error', `Error fetching users by skill (${skill})`, 'error');
                     setStore({ users: [] });
                 }
             },
 
-            // Action: Get Best Sharers
             getTopRatedUsers: async () => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}bestsharers`);
@@ -353,14 +348,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                     if (response.ok) {
                         setStore({ bestSharers: data.best_sharers });
                     } else {
-                        console.error(data?.msg || "Unknown error");
+                        Swal.fire('Error', data?.msg || "Error fetching top-rated users", 'error');
                     }
                 } catch (error) {
-                    console.error('Error fetching top-rated users:', error);
+                    Swal.fire('Error', 'Error fetching top-rated users', 'error');
                 }
             },
 
-            // Action: Get our profiles
             fetchCreators: async () => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}our/profiles`);
@@ -368,14 +362,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                     if (response.ok) {
                         setStore({ creators: data.profiles });
                     } else {
-                        console.error(data?.msg || "Unknown error");
+                        Swal.fire('Error', data?.msg || "Error fetching creators", 'error');
                     }
                 } catch (error) {
-                    console.error("Error fetching creators:", error);
+                    Swal.fire('Error', 'Error fetching creators', 'error');
                 }
             },
 
-            //Action: Get the 3 types of requests
             getRequests: async (type) => {
                 const token = localStorage.getItem('jwt-token');
                 try {
@@ -383,8 +376,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                         method: 'GET',
                         headers: {
                             Authorization: 'Bearer ' + token,
-                            'Content-Type': 'application/json'
-                        }
+                            'Content-Type': 'application/json',
+                        },
                     });
                     const data = await response.json();
                     if (response.ok) {
@@ -396,14 +389,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                             setStore({ acceptedContacts: data });
                         }
                     } else {
-                        console.error(`Error fetching ${type} requests:`, data?.msg || "Unknown error");
+                        Swal.fire('Error', `Error fetching ${type} requests`, 'error');
                     }
                 } catch (error) {
-                    console.error(`Error fetching ${type} requests:`, error);
+                    Swal.fire('Error', `Error fetching ${type} requests`, 'error');
                 }
             },
 
-            // Action: Get specific match between you and the public profile
             getMatchStatus: async (publicUserId) => {
                 const token = localStorage.getItem('jwt-token');
                 try {
@@ -424,7 +416,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                         })
                     ]);
 
-
                     const outgoingMatches = await outgoingResponse.json();
                     const acceptedMatches = await acceptedResponse.json();
                     const outgoingMatch = outgoingMatches.find(match => match.match_to_id == publicUserId);
@@ -441,13 +432,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return { status: 'none' };
 
                 } catch (error) {
-                    console.error(`Error fetching match status:`, error);
+                    Swal.fire('Error', `Error fetching match status: ${error.message}`, 'error');
                     return null;
                 }
             },
 
-
-            // Action: Create friend request
             createMatch: async (matchToId) => {
                 const token = localStorage.getItem('jwt-token');
                 try {
@@ -461,17 +450,16 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
                     const data = await response.json();
                     if (response.ok) {
-                        console.log("Match request sent successfully:", data);
+                        Swal.fire('Success', 'Friend request sent successfully!', 'success');
                         return data;
                     } else {
-                        console.error("Error creating match:", data?.msg || "Unknown error");
+                        Swal.fire('Error', data?.msg || 'Unknown error occurred while creating the match.', 'error');
                     }
                 } catch (error) {
-                    console.error("Error during match creation:", error);
+                    Swal.fire('Error', `Error during match creation: ${error.message}`, 'error');
                 }
             },
 
-            // Action: Accept a match request
             acceptRequest: async (matchId) => {
                 const token = localStorage.getItem('jwt-token');
                 try {
@@ -485,18 +473,17 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
                     const data = await response.json();
                     if (response.ok) {
-                        console.log("Request accepted:", data);
+                        Swal.fire('Success', 'Match request accepted!', 'success');
                         getActions().getRequests('incoming');
                         getActions().getRequests('accepted');
                     } else {
-                        console.error("Error accepting request:", data?.msg || "Unknown error");
+                        Swal.fire('Error', data?.msg || 'Error accepting match request.', 'error');
                     }
                 } catch (error) {
-                    console.error("Error accepting request:", error);
+                    Swal.fire('Error', `Error accepting match request: ${error.message}`, 'error');
                 }
             },
 
-            // Action: Decline a match request
             declineRequest: async (matchId) => {
                 const token = localStorage.getItem('jwt-token');
                 try {
@@ -509,17 +496,16 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
                     const data = await response.json();
                     if (response.ok) {
-                        console.log("Request declined:", data);
+                        Swal.fire('Success', 'Match request declined.', 'success');
                         getActions().getRequests('incoming');
                     } else {
-                        console.error("Error declining request:", data?.msg || "Unknown error");
+                        Swal.fire('Error', data?.msg || 'Error declining match request.', 'error');
                     }
                 } catch (error) {
-                    console.error("Error declining request:", error);
+                    Swal.fire('Error', `Error declining match request: ${error.message}`, 'error');
                 }
             },
 
-            // Action: cancel a friend request that you sent
             cancelRequest: async (matchId) => {
                 const token = localStorage.getItem('jwt-token');
                 try {
@@ -532,16 +518,16 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
                     const data = await response.json();
                     if (response.ok) {
-                        console.log("Request cancelled:", data);
+                        Swal.fire('Success', 'Friend request cancelled.', 'success');
                         getActions().getRequests('outgoing');
                     } else {
-                        console.error("Error cancelling request:", data?.msg || "Unknown error");
+                        Swal.fire('Error', data?.msg || 'Error cancelling friend request.', 'error');
                     }
                 } catch (error) {
-                    console.error("Error cancelling request:", error);
+                    Swal.fire('Error', `Error cancelling friend request: ${error.message}`, 'error');
                 }
             },
-            // Action: to request a password reset
+
             requestPasswordReset: async (email) => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}reset-password`, {
@@ -551,15 +537,16 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
 
                     if (response.ok) {
+                        Swal.fire('Success', 'Password reset email sent!', 'success');
                         const data = await response.json();
                         return data;
                     } else {
                         const data = await response.json();
-                        console.error('Error sending password reset email:', data?.msg || "Unknown error");
+                        Swal.fire('Error', data?.msg || 'Error sending password reset email.', 'error');
                         return null;
                     }
                 } catch (error) {
-                    console.error('Error requesting password reset:', error);
+                    Swal.fire('Error', `Error requesting password reset: ${error.message}`, 'error');
                     return null;
                 }
             },

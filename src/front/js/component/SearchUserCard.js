@@ -1,12 +1,12 @@
 import React from 'react';
 import "../../styles/home.css";
 
-const SearchUserCard = ({ user }) => {
+const SearchUserCard = ({ user, currentUser }) => {
     const {
         description = "This user currently has no description.",
         profile_pic: userImg,
-        name, 
-        last_name, 
+        name,
+        last_name,
         average_score: rating = 0
     } = user;
 
@@ -20,6 +20,8 @@ const SearchUserCard = ({ user }) => {
             </span>
         ));
     };
+    
+    const profileLink = user.id === currentUser?.id ? `/privateprofile` : `/publicprofile/${user.id}`;
 
     return (
         <div className="card cardsBorder">
@@ -35,7 +37,7 @@ const SearchUserCard = ({ user }) => {
                     {renderStars(rating)}
                 </div>
                 <div className="d-flex justify-content-center">
-                    <a href={`/publicprofile/${user.id}`} className="btn mt-2">View Profile</a>
+                    <a href={profileLink} className="btn mt-2">View Profile</a>
                 </div>
             </div>
         </div>

@@ -1,26 +1,79 @@
 .request-item {
-    display: flex; /* Alinear los elementos en una fila */
-    align-items: center; /* Centrar verticalmente */
-    border: 1px solid #ddd; /* Borde alrededor de la tarjeta */
-    border-radius: 8px; /* Esquinas redondeadas */
-    padding: 15px; /* Espaciado interno */
-    margin-bottom: 15px; /* Espaciado entre tarjetas */
-    background-color: #f9f9f9; /* Color de fondo */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    display: flex; 
+    align-items: center;
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    padding: 15px; 
+    margin-bottom: 15px;
+    background-color: #f9f9f9; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
 }
-
+.request-item:hover {
+    transform: translateY(-3px); 
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+}
 .request-img {
-    width: 60px; /* Ajusta el tamaño según tus necesidades */
-    height: 60px; /* Ajusta el tamaño según tus necesidades */
-    border-radius: 50%; /* Para que sea un círculo */
-    margin-right: 15px; /* Espaciado entre la imagen y el texto */
+    width: 60px; 
+    height: 60px; 
+    border-radius: 50%; 
+    margin-right: 15px; 
+    object-fit: cover; 
 }
-
 .request-info {
-    flex-grow: 1; /* Permitir que la información crezca y ocupe espacio */
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+}
+.rating {
+    color: #FFD700; 
+    margin: 5px 0; 
+}
+.rating .star {
+    font-size: 1.2rem; 
+    margin-right: 2px; 
 }
 
-.rating {
-    color: #FFD700; /* Color de las estrellas */
-    margin: 5px 0; /* Espaciado entre la calificación y el comentario */
+
+@media (max-width: 768px) {
+    .request-item {
+        flex-direction: column; 
+        align-items: flex-start; 
+        padding: 10px; 
+    }
+    .request-img {
+        width: 50px; 
+        height: 50px; 
+        margin-bottom: 10px; 
+        margin-right: 0; 
+    }
+    .request-info {
+        text-align: center; 
+        width: 100%; 
+    }
+    .rating .star {
+        font-size: 1rem; 
+    }
+} 
+
+@media (max-width: 576px) {
+    .request-item {
+        padding: 8px; 
+        margin-bottom: 12px; 
+    }
+    .request-img {
+        width: 40px; 
+        height: 40px; 
+        margin-bottom: 8px; 
+    }
+    .request-info {
+        text-align: left; 
+    }
+    .rating {
+        font-size: 0.9rem;
+    }
+    .rating .star {
+        font-size: 0.9rem; 
+    }
 }

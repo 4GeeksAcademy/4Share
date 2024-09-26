@@ -41,6 +41,7 @@ function SignupModal({ onClose, openLogin }) {
                         <button type="button" className="btn-close" onClick={onClose} aria-label="Close"></button>
                     </div>
                     <div className="modal-body text-center">
+                    <img src="https://res.cloudinary.com/dmkw4vacw/image/upload/v1725897267/Logo_in_White_text_ddxzuv.png" alt="4Share Logo" className="login-logo mb-4" />
                         <h2 className="mb-4">Register</h2>
                         {error && <p className="error">{error}</p>}
                         <form onSubmit={handleSignup}>
@@ -67,7 +68,7 @@ function SignupModal({ onClose, openLogin }) {
                                 <i className="fab fa-apple me-2"></i> Sign up with Apple
                             </button> */}
                             <p className="mt-4">Already have an account?
-                                <strong><a href="#" onClick={() => { onClose(); openLogin(); }}>Log in</a></strong>
+                                <strong><a href="#" onClick={() => { onClose(); openLogin(); }}> Log in</a></strong>
                             </p>
                         </form>
                         <button type="button" className="btn btn-secondary mt-5" style={{marginLeft:"auto",marginRight:"auto"}} onClick={onClose}>

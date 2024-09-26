@@ -88,7 +88,7 @@ const RequestsPage = () => {
                                         <h3>{userFrom.name || "Unknown User"} {userFrom.last_name || ""}  </h3>
                                         <p>{userFrom.description || "No description"}</p>
                                         <div className="skills">
-                                            <span>Message: {userFrom.message || "No message provided"}</span>
+                                            {/* <span>Message: {userFrom.message || "No message provided"}</span> */}
                                         </div>
                                     </div>
                                     <div className="request-actions">
@@ -124,7 +124,7 @@ const RequestsPage = () => {
                                         <h3>{userTo.name || "Unknown User"} {userTo.last_name || ""}</h3>
                                         <p>{userTo.description || "No description"}</p>
                                         <div className="skills">
-                                            <span>Message: {userTo.message || "No message provided"}</span>
+                                            {/* <span>Message: {userTo.message || "No message provided"}</span> */}
                                         </div>
                                     </div>
                                     <div className="request-actions">
@@ -161,7 +161,7 @@ const RequestsPage = () => {
                                             <span>Email: {userContact.email || "Not provided"}</span>
                                         </div>
                                         <div className="skills">
-                                            <span>Message: {userContact.message || "No message provided"}</span>
+                                            {/* <span>Message: {userContact.message || "No message provided"}</span> */}
                                         </div>
                                     </div>
                                 </div>

@@ -76,8 +76,8 @@ export const Home = () => {
 
             <div className="mainHome">
                 <div className="imageTextContainer backgroundMain">
-                    <img className="jumboTwo" src="https://res.cloudinary.com/dmkw4vacw/image/upload/v1726064828/7bfd621f88bcf22b8a27b87f84297228_xg9m1i.png" alt="Image 1" />
-                    <img className="jumboOne" src="https://res.cloudinary.com/dmkw4vacw/image/upload/v1726054101/2429e1b1914a898551911a26c60f563a_fv26mn.png" alt="Image 2" />
+                    <img className="jumboTwo" src="https://res.cloudinary.com/dmkw4vacw/image/upload/v1727355009/drilldown_1_pan772.png" alt="Image 1" />
+                    <img className="jumboOne" src="https://res.cloudinary.com/dmkw4vacw/image/upload/v1727355009/drilldown_u10x6v.png" alt="Image 2" />
                 </div>
 
                 <div className="d-flex flex-column justify-content-center align-items-center backgroundMain">
@@ -99,9 +99,9 @@ export const Home = () => {
                             <i className="fas fa-search"></i>
                         </button>
                     </div>
-
+ 
                     <div className="d-flex justify-content-between row w-100 px-5 categoriesHome">
-                        {["all", "cooking", "languages", "music", "sports", "others"].map((category) => (
+                        {["all"/*, "cooking", "languages", "music", "sports", "others" */].map((category) => (
                             <button
                                 key={category}
                                 className="col-1 col-sm-2 btn d-flex justify-content-center"

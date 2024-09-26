@@ -1,4 +1,3 @@
-/* Estilos generales para la página del perfil */
 .profile-page {
     margin-top: 3rem;
     display: flex;
@@ -7,8 +6,6 @@
     align-items: center;
     margin-top: 5rem !important;
 }
-
-/* Contenedor principal */
 .content-wrapper,
 .profile-wrapper {
     display: flex;
@@ -16,75 +13,69 @@
     justify-content: space-between;
     gap: 20px;
     padding: 20px;
-    background: linear-gradient(to right, #241E32, #322A45, #6D5B98) !important;
+    background: rgba(36, 30, 50, 0.8); 
+    background: linear-gradient(to right, rgba(36, 30, 50, 0.8), rgba(50, 42, 69, 0.8), rgba(109, 91, 152, 0.8)) !important;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin: 20px 0;
     max-width: 1200px;
 }
-
-/* Lado izquierdo y derecho del perfil en pantallas grandes */
 .profile-left, .profile-right {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
-
 /* Ajuste del perfil en pantallas pequeñas (móviles) */
 @media (max-width: 768px) {
     .profile-wrapper {
-        flex-direction: column; /* Apilar secciones una debajo de la otra */
-        align-items: center; /* Alinear los elementos en el centro */
+        flex-direction: column; 
+        align-items: center; 
     }
-
     .profile-left, .profile-right {
-        width: 100%; /* Asegurarse de que ocupen todo el ancho del contenedor */
+        width: 100%; 
     }
-
     .profile-left {
-        margin-bottom: 20px; /* Añadir espacio entre las dos secciones */
+        margin-bottom: 20px; 
     }
-
     .profile-img {
-        width: 80px;  /* Reducir el tamaño de la imagen del perfil en móviles */
+        width: 80px;  
         height: 80px;
-        margin: 0 auto; /* Centrar la imagen */
+        margin: 0 auto; 
     }
-
     textarea.auto-expand {
-        min-height: 150px; /* Reducir la altura mínima del textarea en móviles */
+        min-height: 150px; 
     }
-
     button, .save-btn {
-        width: 100%; /* Los botones ocupan todo el ancho en móviles */
+        width: 100%; 
     }
 }
-
-/* Estilo general de las imágenes del perfil */
 .profile-img {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
-    margin-bottom: 10px;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border: 3px solid #ff0066; 
+    transition: border-color 0.3s ease;
 }
-
-/* Texto centrado en la descripción */
+.profile-img:hover {
+    border-color: #e6005c;
+}
 .profile-description {
     text-align: center;
+    margin-bottom: 20px; 
+    padding-bottom: 10px; 
 }
-
-/* Estilos adicionales */
 .general-info,
 .postal-address,
 .section {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.9); /* Menos opaco */
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
 }
-
 input {
     display: block;
     width: 100%;
@@ -94,7 +85,6 @@ input {
     border: 1px solid #ccc;
     font-size: 14px;
 }
-
 button, .save-btn {
     background-color: #ff0066;
     color: white;
@@ -104,46 +94,26 @@ button, .save-btn {
     cursor: pointer;
     margin-top: 10px;
 }
-
 button:hover, .save-btn:hover {
     background-color: #e6005c;
 }
-
-/* Estilo general de la imagen en la descripción del perfil */
-.profile-description img {
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
+.upload-photo-btn {
+    background-color: #ff0066;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    display: inline-block;
+    margin-top: 15px;
 }
-
-/* Estilos para los iconos de hobbies y la lista de habilidades */
-.hobby-icons, .skills-list {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
+.upload-photo-btn:hover {
+    background-color: #e6005c;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-
-.hobby-icons {
-    font-size: 24px;
-    color: #ff8fa1;
-}
-
-.skills-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-}
-
-.skill-card {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-/* Barra de navegación secundaria */
 .secondNavbar {
     display: flex;
     justify-content: space-around;
@@ -151,7 +121,6 @@ button:hover, .save-btn:hover {
     max-width: 1200px;
     width: 100%;
 }
-
 .secondNavbar-btn {
     color: white;
     font-size: 16px;
@@ -159,50 +128,77 @@ button:hover, .save-btn:hover {
     background: none;
     cursor: pointer;
 }
-
-/* Título de las secciones */
 .section-title {
     margin-top: 30px;
     font-size: 24px;
     color: #6b61e3;
 }
-
 .general-info,
 .postal-address,
 .profile-description {
-    background-color: #d3d0ea;
+    background-color: rgba(211, 208, 234, 0.9); /* Menos opaco */
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
-
-/* Botón primario */
 .btn-primary {
     display: flex;
     justify-content: center;
     width: 100%;
-    background: linear-gradient(to right, #FFF8F9, #F0C6BD);
+    background: linear-gradient(to right, rgba(255, 248, 249, 0.9), rgba(240, 198, 189, 0.9));
     color: black !important;
 }
-
-/* Estilos para las estrellas en el perfil */
 .star {
     font-size: 1.5rem;
     color: rgb(110, 110, 110);
 }
-
 .star.filled {
     color: gold;
 }
-
-/* Ajustes para el textarea */
 textarea {
     width: 100%; 
     resize: none;
     overflow: hidden; 
 }
-
 textarea.auto-expand {
     height: auto; 
     min-height: 250px; 
+    margin-top: 20px; 
+}
+.hobby-icons, .skills-list {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+.hobby-icons {
+    font-size: 24px;
+    color: #ff8fa1;
+}
+.skills-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+.skill-card {
+    background-color: rgba(255, 255, 255, 0.9); 
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+/* Ajustes para pantallas aún más pequeñas */
+@media (max-width: 576px) {
+    .profile-wrapper {
+        padding: 15px;
+    }
+    .profile-img {
+        width: 60px; 
+        height: 60px;
+    }
+    .hobby-icons {
+        font-size: 20px; 
+    }
+    .skills-list {
+        grid-template-columns: 1fr; 
+    }
 }

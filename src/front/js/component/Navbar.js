@@ -56,9 +56,9 @@ export const Navbar = () => {
                         <i className="fas fa-home icon"></i>
                         <span className="m-0 h6">Home</span>
                     </button>
-                    <button className="btn" onClick={() => window.location.href = '/#aboutUs'}>
+                    <button className="btn" onClick={() => window.location.href = '/profilesearch/all'}>
                         <i className="fas fa-users icon"></i>
-                        <span className="m-0 h6">About Us</span>
+                        <span className="m-0 h6">Search</span>
                     </button>
                     {isLoggedIn ? (
                         <>

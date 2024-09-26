@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
 import "../../styles/auth.css";
-
 function LoginModal({ onClose, openSignup }) {
     const { actions } = useContext(Context);
     const [email, setEmail] = useState('');
@@ -10,11 +9,9 @@ function LoginModal({ onClose, openSignup }) {
     const [error, setError] = useState(null);
     const [resetMessage, setResetMessage] = useState(null); // New state to show reset message
     const navigate = useNavigate();
-
     const handleLogin = async (e) => {
         e.preventDefault();
         const requestBody = { email, password };
-
         try {
             const response = await fetch(`${process.env.BACKEND_URL}login`, {
                 method: 'POST',
@@ -26,7 +23,7 @@ function LoginModal({ onClose, openSignup }) {
                 localStorage.setItem('jwt-token', data.access_token);
                 actions.loginUser(email, password);
                 onClose();
-                navigate('/privateprofile'); 
+                navigate('/privateprofile');
             } else {
                 console.error('Error logging in:', data?.msg || "Unknown error");
                 setError(data?.msg || "Unknown error");
@@ -36,7 +33,6 @@ function LoginModal({ onClose, openSignup }) {
             setError("Unknown error");
         }
     };
-
     // Function to handle sending the password reset email
     const handlePasswordReset = async () => {
         const response = await actions.requestPasswordReset(email);
@@ -46,7 +42,6 @@ function LoginModal({ onClose, openSignup }) {
             setError("Failed to send reset email.");
         }
     };
-
     return (
         <div className="modal fade show d-block" id="loginModal" tabIndex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered">
@@ -55,6 +50,7 @@ function LoginModal({ onClose, openSignup }) {
                         <button type="button" className="btn-close" onClick={onClose} aria-label="Close"></button>
                     </div>
                     <div className="modal-body text-center">
+                        <img src="https://res.cloudinary.com/dmkw4vacw/image/upload/v1725897267/Logo_in_White_text_ddxzuv.png" alt="4Share Logo" className="login-logo mb-4" />
                         <h2 className="mb-4">Log in</h2>
                         {error && <p className="error">{error}</p>}
                         {resetMessage && <p className="success">{resetMessage}</p>} {/* Show reset success message */}
@@ -81,15 +77,14 @@ function LoginModal({ onClose, openSignup }) {
                             <button className="btn btn-outline-light w-100 mb-3">
                                 <i className="fab fa-apple me-2"></i> Log in with Apple
                             </button> */}
-                            <p className="mt-4">Don't have an account? 
-                            <strong><a href="#" onClick={() => { onClose(); openSignup(); }}>Sign up</a> </strong>
+                            <p className="mt-4">Don't have an account?
+                                <strong><a href="#" onClick={() => { onClose(); openSignup(); }}> Sign up</a> </strong>
                             </p>
-
                             <p className="mt-4">
-                            <strong><a href="#" onClick={handlePasswordReset}>Send Reset Password Email</a> </strong>
+                                <strong><a href="#" onClick={handlePasswordReset}>Send Reset Password Email</a> </strong>
                             </p>
                         </form>
-                        <button type="button" className="btn btn-secondary mt-5" style={{marginLeft:"auto",marginRight:"auto"}} onClick={onClose}>
+                        <button type="button" className="btn btn-secondary mt-5" style={{ marginLeft: "auto", marginRight: "auto" }} onClick={onClose}>
                             Close
                         </button>
                     </div>
@@ -98,5 +93,4 @@ function LoginModal({ onClose, openSignup }) {
         </div>
     );
 }
-
 export default LoginModal;

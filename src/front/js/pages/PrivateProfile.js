@@ -1,10 +1,9 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react"; 
 import { useNavigate } from 'react-router-dom';
-import "../../styles/profilePrivate.css";
+import "../../styles/profilePrivate.css"; // Asegúrate de tener estilos responsive aquí
 import { Context } from "../store/appContext";
 import ReviewCard from '../component/ReviewCard';
-import Cloudinary from '../component/Cloudinary'; // Keep this import
-
+import Cloudinary from '../component/Cloudinary'; // Mantener este import
 export const PrivateProfile = () => {
     const { actions } = useContext(Context);
     const navigate = useNavigate();
@@ -13,11 +12,10 @@ export const PrivateProfile = () => {
     const [isEditingProfile, setIsEditingProfile] = useState(false);
     const [editedProfile, setEditedProfile] = useState({});
     const [reviews, setReviews] = useState([]);
-    const [imageFile, setImageFile] = useState(null); // Store the image file instead of the URL
-    const [imageUrl, setImageUrl] = useState(''); // Store the image URL
+    const [imageFile, setImageFile] = useState(null); // Almacena el archivo de imagen en lugar de la URL
+    const [imageUrl, setImageUrl] = useState(''); // Almacena la URL de la imagen
     const preset_name = process.env.REACT_APP_CLOUDINARY_PRESET;
     const cloud_name = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
-
     useEffect(() => {
         const loadUserProfile = async () => {
             try {
@@ -33,10 +31,8 @@ export const PrivateProfile = () => {
                 setError("Error loading user profile: " + (err.message || "Unknown error"));
             }
         };
-
         loadUserProfile();
     }, []);
-
     const loadUserReviews = async (userId) => {
         try {
             const userReviews = await actions.getUserReviews(userId);
@@ -45,7 +41,6 @@ export const PrivateProfile = () => {
             setError("Error loading reviews: " + (error.message || "Unknown error"));
         }
     };
-
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setEditedProfile((prev) => ({
@@ -53,25 +48,22 @@ export const PrivateProfile = () => {
             [name]: value === "" ? null : value,
         }));
     };
-
     const handleSave = async () => {
         if (!editedProfile.name || !editedProfile.email || !editedProfile.phone) {
             alert("Please fill in all required fields.");
             return;
         }
-
-        // Upload the image to Cloudinary if a file is selected
+        // Subir imagen a Cloudinary si se seleccionó una
         if (imageFile) {
             try {
-                const url = await uploadImageToCloudinary(imageFile); // Function to upload to Cloudinary
+                const url = await uploadImageToCloudinary(imageFile); // Función para subir a Cloudinary
                 setImageUrl(url);
-                setEditedProfile((prev) => ({ ...prev, profile_pic: url })); // Update profile with new URL
+                setEditedProfile((prev) => ({ ...prev, profile_pic: url })); // Actualizar el perfil con la nueva URL
             } catch (err) {
                 setError("Error uploading image: " + (err.message || "Unknown error"));
-                return; // Stop execution if there is an error uploading the image
+                return; // Detener ejecución si hay error
             }
         }
-
         try {
             await actions.updateProfile(
                 editedProfile.name,
@@ -82,7 +74,7 @@ export const PrivateProfile = () => {
                 editedProfile.profile_pic,
                 editedProfile.gender,
                 editedProfile.description,
-                editedProfile.password // Add password to the update function
+                editedProfile.password // Agrega password a la función de actualización
             );
             setUserProfile(editedProfile);
             setIsEditingProfile(false);
@@ -90,47 +82,39 @@ export const PrivateProfile = () => {
             setError("Error updating profile: " + (err.message || "Unknown error"));
         }
     };
-
-    // Uploads an image file to Cloudinary and returns the secure URL
+    // Subir archivo a Cloudinary y obtener la URL segura
     const uploadImageToCloudinary = async (file) => {
         const data = new FormData();
         data.append('file', file);
-        data.append('upload_preset', preset_name); // Use the upload preset prop
-
+        data.append('upload_preset', preset_name); // Usar el preset
         const response = await fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, {
             method: 'POST',
             body: data,
         });
-
         const result = await response.json();
         if (!response.ok) {
             throw new Error(result.message || "Error uploading image");
         }
-        return result.secure_url; // Return the uploaded image URL
+        return result.secure_url; // Retorna la URL de la imagen subida
     };
-
     const handleEdit = () => setIsEditingProfile((prev) => !prev);
-
     const handleImageSelected = (e) => {
         const file = e.target.files[0];
         if (file) {
-            setImageFile(file); // Store the file in the state
-            setImageUrl(URL.createObjectURL(file)); // Show a preview of the selected image
+            setImageFile(file); // Almacena el archivo en el estado
+            setImageUrl(URL.createObjectURL(file)); // Muestra la vista previa de la imagen seleccionada
         }
     };
-
-    // Render stars based on the score information
+    // Renderiza las estrellas con base en la puntuación
     const renderStars = (score) => {
         const roundedScore = Math.round(score);
         return Array.from({ length: 5 }, (_, index) => (
             <span key={index} className={`star ${index < roundedScore ? 'filled' : ''}`}>★</span>
         ));
     };
-
     if (!userProfile) {
         return null;
     }
-
     return (
         <div className="profile-page">
             <div className="secondNavbar">
@@ -208,15 +192,6 @@ export const PrivateProfile = () => {
                             disabled={!isEditingProfile}
                             maxLength="35"
                         />
-
-                        {/* <input
-                            type="password"
-                            placeholder="Password"
-                            name="password" // Add this line
-                            onChange={handleInputChange} 
-                            disabled={!isEditingProfile}
-                            maxLength="35"
-                        /> */}
                     </div>
                     <div className="action-buttons">
                         <button onClick={handleEdit} className="edit-btn">
@@ -241,7 +216,7 @@ export const PrivateProfile = () => {
                             {isEditingProfile && (
                                 <input
                                     type="file"
-                                    onChange={handleImageSelected} // Changed this
+                                    onChange={handleImageSelected} 
                                 />
                             )}
                         </div>
@@ -252,7 +227,7 @@ export const PrivateProfile = () => {
                     <div className="postal-address section">
                         <h2>My Description</h2>
                         <div className="address-input">
-                            <i className="fas fa-map-marker-alt icon location-icon"></i>
+                
                             <textarea
                                 placeholder="Enter your Description"
                                 name="description"
@@ -284,5 +259,4 @@ export const PrivateProfile = () => {
         </div>
     );
 };
-
 export default PrivateProfile;

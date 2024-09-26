@@ -46,7 +46,7 @@ const Layout = () => {
                 <Route element={<LoginModal />} path="/login" />
                 <Route element={<SignupModal />} path="/signup" />
                 <Route path="/resetpassword" element={<ResetPassword />} />
-                {/* <Route path="*" element={<Navigate to="/" />} /> */}
+                <Route path="*" element={<Navigate to="/" />} />
             </Routes>
             <Footer />
         </BrowserRouter>

@@ -12,6 +12,14 @@ const ProfileSearch = () => {
     const location = useLocation();
 
     useEffect(() => {
+        const fetchCurrentUser = async () => {
+            await actions.getYourUserProfile();
+        };
+
+        fetchCurrentUser();
+    }, []);
+
+    useEffect(() => {
         const fetchUsers = async () => {
             setIsLoading(true);
             const path = location.pathname.split("/").pop();
@@ -84,17 +92,6 @@ const ProfileSearch = () => {
                     <p>All</p>
                     <i className="fas fa-asterisk"></i>
                 </button>
-                {["cooking", "languages", "music", "sports", "others"].map((category) => (
-                    <Link
-                        key={category}
-                        className="col-1 col-sm-2 btn d-flex justify-content-center"
-                        to={`/profilesearch/${category}`}
-                        onClick={() => handleCategorySelect(category)}
-                    >
-                        <p>{category.charAt(0).toUpperCase() + category.slice(1)}</p>
-                        <i className={`fas fa-${category === "cooking" ? "utensils" : category === "languages" ? "language" : category === "music" ? "music" : category === "sports" ? "futbol" : "ellipsis-h"}`}></i>
-                    </Link>
-                ))}
             </div>
 
             <div className="row justify-content-center mt-5">
@@ -104,7 +101,7 @@ const ProfileSearch = () => {
                     store.users && store.users.length > 0 ? (
                         store.users.map((user) => (
                             <div className="col-md-4" key={user.id}>
-                                <SearchUserCard user={user} />
+                                <SearchUserCard user={user} currentUser={store.currentUser} />
                             </div>
                         ))
                     ) : (

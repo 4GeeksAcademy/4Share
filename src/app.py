@@ -16,7 +16,7 @@ from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from datetime import timedelta
 from api.utils import APIException, generate_sitemap
-from api.models import db, User, TokenRestorePassword, Categories, Match, Review, BestSharers ,SkillNameEnum ,MatchStatus , update_best_sharers
+from api.models import db, User, TokenRestorePassword, Categories, Match, Review ,SkillNameEnum ,MatchStatus
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
