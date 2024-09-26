@@ -7,12 +7,12 @@ const Footer = () => (
 			<div className="footer-column">
 				<h4 className="custom-title-footer">About Us</h4>
 				<ul>
-					<li>We are a group of 4geeks Academy students and this is our final project. </li>
+					<li>Final project by 4Geeks Academy students</li>
 				</ul>
 			</div>
 
 			<div className="footer-column">
-				<h4 className="custom-title-footer">Knowledge Exchange</h4>
+				<h4 className="custom-title-footer">Skills we share</h4>
 				<ul>
 					<li>Dance</li>
 					<li>Sports</li>
